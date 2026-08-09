@@ -131,10 +131,10 @@
 
   /* ---------- Quick booking widget ---------- */
   .quick-book{position:relative; z-index:6; margin-top:-58px;}
-  .quick-book-inner{background:var(--panel); border:1px solid var(--border); border-radius:22px; padding:26px 28px; box-shadow:var(--shadow);}
+  .quick-book-inner{background:var(--panel); border:1px solid var(--border); border-radius:22px; padding:26px 28px; box-shadow:var(--shadow); overflow:hidden;}
   .quick-book-head{display:flex; align-items:center; gap:10px; margin-bottom:18px; font-weight:700; font-size:15px; color:var(--gold);}
-  .quick-book-form{display:grid; grid-template-columns:repeat(6,1fr); gap:16px;}
-  .qb-field{display:flex; flex-direction:column; gap:6px;}
+  .quick-book-form{display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:16px;}
+  .qb-field{display:flex; flex-direction:column; gap:6px; min-width:0;}
   .qb-field label{font-size:11.5px; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.05em;}
   .qb-field select, .qb-field input{background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:11px 12px; color:var(--text); font-family:inherit; font-size:13.5px; outline:none;}
   .qb-field select:focus, .qb-field input:focus{border-color:var(--gold);}
@@ -375,7 +375,7 @@
   /* ---------- Responsive ---------- */
   @media (max-width:980px){
     .hero-grid{grid-template-columns:1fr;}
-    .quick-book-form{grid-template-columns:repeat(2,1fr);}
+    .quick-book-form{grid-template-columns:repeat(2,minmax(0,1fr));}
     .services-grid{grid-template-columns:repeat(2,1fr);}
     .why-grid{grid-template-columns:1fr; gap:40px;}
     .fleet-grid{grid-template-columns:repeat(2,1fr);}
@@ -569,6 +569,13 @@
         <div class="qb-field">
           <label data-i18n="qb.labelPhone">Telefon</label>
           <input type="tel" id="qbPhone" placeholder="+998 33 140 28 01" required>
+        </div>
+        <div class="qb-field" id="qbSignField">
+          <label data-i18n="qb.labelSign">Ismli taxtacha bilan kutib olish</label>
+          <select id="qbSign">
+            <option value="Kerak emas" data-i18n="qb.signNo">Kerak emas</option>
+            <option value="Ha" data-i18n="qb.signYes">Ha</option>
+          </select>
         </div>
         <div class="qb-actions">
           <button type="submit" id="qbSubmit" class="btn btn-gold btn-block" data-i18n="qb.submit">📨 Zayavkani yuborish</button>
@@ -975,7 +982,8 @@
       "qb.labelDate": "Sana", "qb.placeholderDate": "kun/oy/yil", "qb.labelTime": "Vaqt", "qb.placeholderTime": "soat:daqiqa",
       "qb.labelBaggage": "Bagaj soni", "qb.labelCar": "Mashina turi",
       "qb.carComfort": "Comfort", "qb.carBusiness": "Business", "qb.carVip": "VIP Minivan",
-      "qb.labelPhone": "Telefon", "qb.submit": "📨 Zayavkani yuborish", "qb.submitting": "Yuborilmoqda...",
+      "qb.labelPhone": "Telefon", "qb.labelSign": "Ismli taxtacha bilan kutib olish", "qb.signYes": "Ha", "qb.signNo": "Kerak emas",
+      "qb.submit": "📨 Zayavkani yuborish", "qb.submitting": "Yuborilmoqda...",
       "qb.divider": "yoki to'g'ridan-to'g'ri bog'laning", "qb.telegramBtn": "Telegramdan yozish", "qb.whatsappBtn": "WhatsAppdan yozish",
       "qb.statusNotConnected": "⚠️ Onlayn qabul hali ulanmagan. Iltimos, pastdagi Telegram yoki WhatsApp orqali yozing.",
       "qb.statusSuccess": "✅ Zayavkangiz qabul qilindi! Tez orada bog'lanamiz.",
@@ -1054,14 +1062,15 @@
       "hero.desc": "We track your flight and pick you up on time. Vetted cars, professional drivers, and fixed prices — all in one place.",
       "hero.ctaOrder": "Book a ride now", "hero.ctaCall": "📞 Call us",
       "hero.trust1": "Available 24/7", "hero.trust2": "Licensed drivers", "hero.trust3": "Fixed price", "hero.trust4": "Always a clean cabin",
-      "qb.head": "⚡ Quick booking — send it in under a minute", "qb.labelDirection": "Direction",
+      "qb.head": "⚡ Quick booking — send it in under a minute", "qb.labelName": "Full name", "qb.placeholderName": "Full name", "qb.labelDirection": "Direction",
       "qb.optFromAirport": "Pickup from the airport", "qb.optToAirport": "Drop-off at the airport",
       "qb.labelFlight": "Flight number", "qb.placeholderFlight": "HY 123",
       "qb.labelAddress": "Address", "qb.placeholderAddress": "Street, house, neighborhood",
       "qb.labelDate": "Date", "qb.placeholderDate": "dd/mm/yyyy", "qb.labelTime": "Time", "qb.placeholderTime": "hh:mm",
       "qb.labelBaggage": "Luggage count", "qb.labelCar": "Car type",
       "qb.carComfort": "Comfort", "qb.carBusiness": "Business", "qb.carVip": "VIP Minivan",
-      "qb.labelPhone": "Phone", "qb.submit": "📨 Send request", "qb.submitting": "Sending...",
+      "qb.labelPhone": "Phone", "qb.labelSign": "Name signboard pickup", "qb.signYes": "Yes", "qb.signNo": "Not needed",
+      "qb.submit": "📨 Send request", "qb.submitting": "Sending...",
       "qb.divider": "or contact us directly", "qb.telegramBtn": "Message on Telegram", "qb.whatsappBtn": "Message on WhatsApp",
       "qb.statusNotConnected": "⚠️ Online booking isn't connected yet. Please message us on Telegram or WhatsApp below.",
       "qb.statusSuccess": "✅ Your request has been received! We'll contact you shortly.",
@@ -1140,14 +1149,15 @@
       "hero.desc": "Uçuşunuzu takip ediyor, sizi zamanında karşılıyoruz. Kontrolden geçmiş araçlar, profesyonel şoförler ve sabit fiyatlar — hepsi bir arada.",
       "hero.ctaOrder": "Hemen rezervasyon yapın", "hero.ctaCall": "📞 Bizi arayın",
       "hero.trust1": "7/24 hizmet", "hero.trust2": "Lisanslı şoförler", "hero.trust3": "Sabit fiyat", "hero.trust4": "Her zaman temiz kabin",
-      "qb.head": "⚡ Hızlı rezervasyon — 1 dakikada gönderin", "qb.labelDirection": "Yön",
+      "qb.head": "⚡ Hızlı rezervasyon — 1 dakikada gönderin", "qb.labelName": "Ad Soyad", "qb.placeholderName": "Ad Soyad", "qb.labelDirection": "Yön",
       "qb.optFromAirport": "Havalimanından alış", "qb.optToAirport": "Havalimanına bırakış",
       "qb.labelFlight": "Uçuş numarası", "qb.placeholderFlight": "HY 123",
       "qb.labelAddress": "Adres", "qb.placeholderAddress": "Sokak, bina, mahalle",
       "qb.labelDate": "Tarih", "qb.placeholderDate": "gün/ay/yıl", "qb.labelTime": "Saat", "qb.placeholderTime": "saat:dakika",
       "qb.labelBaggage": "Bagaj sayısı", "qb.labelCar": "Araç tipi",
       "qb.carComfort": "Comfort", "qb.carBusiness": "Business", "qb.carVip": "VIP Minivan",
-      "qb.labelPhone": "Telefon", "qb.submit": "📨 Talebi gönder", "qb.submitting": "Gönderiliyor...",
+      "qb.labelPhone": "Telefon", "qb.labelSign": "İsimli tabela ile karşılama", "qb.signYes": "Evet", "qb.signNo": "Gerekmiyor",
+      "qb.submit": "📨 Talebi gönder", "qb.submitting": "Gönderiliyor...",
       "qb.divider": "veya doğrudan iletişime geçin", "qb.telegramBtn": "Telegram'dan yazın", "qb.whatsappBtn": "WhatsApp'tan yazın",
       "qb.statusNotConnected": "⚠️ Online rezervasyon henüz bağlı değil. Lütfen aşağıdan Telegram veya WhatsApp ile yazın.",
       "qb.statusSuccess": "✅ Talebiniz alındı! Kısa süre içinde sizinle iletişime geçeceğiz.",
@@ -1226,14 +1236,15 @@
       "hero.desc": "Отслеживаем ваш рейс и встречаем вовремя. Проверенные автомобили, профессиональные водители и фиксированные цены — всё в одном месте.",
       "hero.ctaOrder": "Заказать прямо сейчас", "hero.ctaCall": "📞 Позвонить",
       "hero.trust1": "Работаем 24/7", "hero.trust2": "Лицензированные водители", "hero.trust3": "Фиксированная цена", "hero.trust4": "Всегда чистый салон",
-      "qb.head": "⚡ Быстрый заказ — отправьте за 1 минуту", "qb.labelDirection": "Направление",
+      "qb.head": "⚡ Быстрый заказ — отправьте за 1 минуту", "qb.labelName": "Имя Фамилия", "qb.placeholderName": "Имя Фамилия", "qb.labelDirection": "Направление",
       "qb.optFromAirport": "Из аэропорта", "qb.optToAirport": "В аэропорт",
       "qb.labelFlight": "Номер рейса", "qb.placeholderFlight": "HY 123",
       "qb.labelAddress": "Адрес", "qb.placeholderAddress": "Улица, дом, квартал",
       "qb.labelDate": "Дата", "qb.placeholderDate": "день/месяц/год", "qb.labelTime": "Время", "qb.placeholderTime": "часы:минуты",
       "qb.labelBaggage": "Количество багажа", "qb.labelCar": "Класс автомобиля",
       "qb.carComfort": "Комфорт", "qb.carBusiness": "Бизнес", "qb.carVip": "VIP Минивэн",
-      "qb.labelPhone": "Телефон", "qb.submit": "📨 Отправить заявку", "qb.submitting": "Отправка...",
+      "qb.labelPhone": "Телефон", "qb.labelSign": "Встреча с табличкой с именем", "qb.signYes": "Да", "qb.signNo": "Не нужно",
+      "qb.submit": "📨 Отправить заявку", "qb.submitting": "Отправка...",
       "qb.divider": "или свяжитесь напрямую", "qb.telegramBtn": "Написать в Telegram", "qb.whatsappBtn": "Написать в WhatsApp",
       "qb.statusNotConnected": "⚠️ Онлайн-приём заявок ещё не подключён. Напишите нам в Telegram или WhatsApp ниже.",
       "qb.statusSuccess": "✅ Ваша заявка принята! Скоро свяжемся с вами.",
@@ -1312,14 +1323,15 @@
       "hero.desc": "نتابع رحلتك ونستقبلك في الوقت المحدد. سيارات مفحوصة، سائقون محترفون، وأسعار ثابتة — كل ذلك في مكان واحد.",
       "hero.ctaOrder": "احجز الآن", "hero.ctaCall": "📞 اتصل بنا",
       "hero.trust1": "خدمة على مدار الساعة", "hero.trust2": "سائقون مرخصون", "hero.trust3": "سعر ثابت", "hero.trust4": "مقصورة نظيفة دائمًا",
-      "qb.head": "⚡ حجز سريع — أرسله خلال دقيقة واحدة", "qb.labelDirection": "الاتجاه",
+      "qb.head": "⚡ حجز سريع — أرسله خلال دقيقة واحدة", "qb.labelName": "الاسم الكامل", "qb.placeholderName": "الاسم الكامل", "qb.labelDirection": "الاتجاه",
       "qb.optFromAirport": "من المطار", "qb.optToAirport": "إلى المطار",
       "qb.labelFlight": "رقم الرحلة", "qb.placeholderFlight": "HY 123",
       "qb.labelAddress": "العنوان", "qb.placeholderAddress": "الشارع، المبنى، الحي",
       "qb.labelDate": "التاريخ", "qb.placeholderDate": "يوم/شهر/سنة", "qb.labelTime": "الوقت", "qb.placeholderTime": "ساعة:دقيقة",
       "qb.labelBaggage": "عدد الحقائب", "qb.labelCar": "نوع السيارة",
       "qb.carComfort": "كومفورت", "qb.carBusiness": "بزنس", "qb.carVip": "VIP فان",
-      "qb.labelPhone": "رقم الهاتف", "qb.submit": "📨 إرسال الطلب", "qb.submitting": "جارٍ الإرسال...",
+      "qb.labelPhone": "رقم الهاتف", "qb.labelSign": "الاستقبال بلوحة تحمل الاسم", "qb.signYes": "نعم", "qb.signNo": "غير مطلوب",
+      "qb.submit": "📨 إرسال الطلب", "qb.submitting": "جارٍ الإرسال...",
       "qb.divider": "أو تواصل معنا مباشرة", "qb.telegramBtn": "راسلنا عبر تيليجرام", "qb.whatsappBtn": "راسلنا عبر واتساب",
       "qb.statusNotConnected": "⚠️ الحجز الإلكتروني غير مفعّل بعد. يرجى مراسلتنا عبر تيليجرام أو واتساب أدناه.",
       "qb.statusSuccess": "✅ تم استلام طلبك! سنتواصل معك قريبًا.",
@@ -1493,17 +1505,22 @@
   const qbFlightEl = document.getElementById('qbFlight');
   const qbDateEl = document.getElementById('qbDate');
   const qbTimeEl = document.getElementById('qbTime');
+  const qbSignField = document.getElementById('qbSignField');
+  const qbSignEl = document.getElementById('qbSign');
 
-  // Yo'nalish: "Aeroportdan olib ketish" (index 0) tanlansa reys raqami majburiy,
-  // "Aeroportga eltish" (index 1) tanlansa reys raqami maydoni yashiriladi.
+  // Yo'nalish: "Aeroportdan olib ketish" (index 0) tanlansa reys raqami majburiy
+  // va "Ismli taxtacha bilan kutib olish" maydoni ko'rinadi;
+  // "Aeroportga eltish" (index 1) tanlansa ikkalasi ham yashiriladi.
   function toggleFlightField(){
     const isFromAirport = qbDirectionEl.selectedIndex === 0;
     qbFlightField.classList.toggle('qb-hidden', !isFromAirport);
+    qbSignField.classList.toggle('qb-hidden', !isFromAirport);
     if (isFromAirport) {
       qbFlightEl.setAttribute('required', 'required');
     } else {
       qbFlightEl.removeAttribute('required');
       qbFlightEl.value = '';
+      qbSignEl.value = 'Kerak emas';
     }
   }
   if (qbDirectionEl) {
@@ -1568,7 +1585,8 @@
       time: qbTimeEl.value,
       baggage: document.getElementById('qbBaggage').value,
       car: document.getElementById('qbCar').value,
-      phone: document.getElementById('qbPhone').value
+      phone: document.getElementById('qbPhone').value,
+      sign: qbSignEl.value
     };
 
     qbSubmit.disabled = true;
