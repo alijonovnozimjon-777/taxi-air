@@ -111,12 +111,12 @@
     background-position:center;
   }
   .hero-grid{display:grid; grid-template-columns:1fr; position:relative; z-index:1;}
-  .hero-grid > div{max-width:620px;}
+  .hero-grid > div{max-width:740px;}
   .hero h1{font-size:clamp(34px,4.6vw,54px); font-weight:800; margin-bottom:20px;}
   .hero h1 span{background:linear-gradient(135deg,var(--gold-2),var(--gold)); -webkit-background-clip:text; background-clip:text; color:transparent;}
   .hero p{color:var(--muted); font-size:17px; max-width:480px; margin-bottom:34px;}
   .hero-cta{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:44px;}
-  .trust-row{display:flex; flex-wrap:wrap; gap:22px;}
+  .trust-row{display:flex; flex-wrap:wrap; gap:22px; margin-bottom:10px;}
   .trust-item{display:flex; align-items:center; gap:9px; font-size:13.5px; color:var(--muted); font-weight:600;}
   .trust-item .dot{width:8px; height:8px; border-radius:50%; background:var(--gold);}
   .float-badge{
@@ -130,7 +130,7 @@
   @keyframes float-y{0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);}}
 
   /* ---------- Quick booking widget ---------- */
-  .quick-book{position:relative; z-index:6; margin-top:-58px;}
+  .quick-book{position:relative; z-index:6; margin-top:-8px;}
   .quick-book-inner{background:var(--panel); border:1px solid var(--border); border-radius:22px; padding:26px 28px; box-shadow:var(--shadow); overflow:hidden;}
   .quick-book-head{display:flex; align-items:center; gap:10px; margin-bottom:18px; font-weight:700; font-size:15px; color:var(--gold);}
   .quick-book-form{display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:16px;}
@@ -394,7 +394,7 @@
     .burger{display:flex;}
     section{padding:70px 0;}
     .quick-book-form{grid-template-columns:1fr;}
-    .quick-book{margin-top:-30px;}
+    .quick-book{margin-top:0;}
     .services-grid{grid-template-columns:1fr;}
     .fleet-grid{grid-template-columns:1fr;}
     .safety-grid{grid-template-columns:1fr;}
@@ -612,10 +612,10 @@
 <div class="marquee-section">
   <div class="marquee-track">
     <div class="marquee-group">
-      <span>Toyota</span><span>Lexus</span><span>Mercedes-Benz</span><span>Chevrolet</span><span>BYD</span><span>Hongqi</span>
+      <span>Toyota</span><span>Lexus</span><span>Mercedes-Benz</span><span>Chevrolet</span><span>BYD</span><span>Hongqi</span><span>Voyah</span><span>Zeekr</span><span>Tesla</span><span>Kia</span>
     </div>
     <div class="marquee-group" aria-hidden="true">
-      <span>Toyota</span><span>Lexus</span><span>Mercedes-Benz</span><span>Chevrolet</span><span>BYD</span><span>Hongqi</span>
+      <span>Toyota</span><span>Lexus</span><span>Mercedes-Benz</span><span>Chevrolet</span><span>BYD</span><span>Hongqi</span><span>Voyah</span><span>Zeekr</span><span>Tesla</span><span>Kia</span>
     </div>
   </div>
 </div>
@@ -781,6 +781,18 @@
     </div>
   </div>
 </section>
+
+<!-- CATALOG MODELS MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <div class="marquee-group">
+      <span>Mercedes Benz W222</span><span>Chevrolet Tahoe 1</span><span>Chevrolet Tahoe 2</span><span>Chevrolet Traverse</span><span>Lexus LX570</span><span>Toyota</span><span>Tesla Model Y</span><span>KIA Carnival</span><span>Voyah Free</span><span>Voyah Dreamer</span><span>Zeekr</span>
+    </div>
+    <div class="marquee-group" aria-hidden="true">
+      <span>Mercedes Benz W222</span><span>Chevrolet Tahoe 1</span><span>Chevrolet Tahoe 2</span><span>Chevrolet Traverse</span><span>Lexus LX570</span><span>Toyota</span><span>Tesla Model Y</span><span>KIA Carnival</span><span>Voyah Free</span><span>Voyah Dreamer</span><span>Zeekr</span>
+    </div>
+  </div>
+</div>
 
 <!-- SAFETY & CLEANLINESS -->
 <section id="safety" class="safety-section">
