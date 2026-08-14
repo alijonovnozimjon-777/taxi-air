@@ -228,8 +228,7 @@
   .why-visual .blob{position:absolute; inset:0; border-radius:50%; background:radial-gradient(circle at 30% 30%, rgba(240,182,74,.32), rgba(240,182,74,.04) 65%);}
   .why-visual .ring{position:absolute; inset:26px; border:1.5px dashed rgba(240,182,74,.35); border-radius:50%; animation:spin-slow 34s linear infinite;}
   .why-visual .ring.ring-2{inset:52px; border-color:rgba(74,193,240,.3); animation-duration:26s; animation-direction:reverse;}
-  .why-visual .core{position:absolute; inset:92px; border-radius:50%; background:linear-gradient(135deg,var(--panel-2),var(--panel)); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:58px; box-shadow:var(--shadow); overflow:hidden;}
-  .why-visual .core img{width:84%; height:auto; display:block;}
+  .why-visual .why-car-photo{position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:82%; height:auto; filter:drop-shadow(0 24px 34px rgba(0,0,0,.55));}
   @keyframes spin-slow{to{transform:rotate(360deg);}}
   .check-list{display:flex; flex-direction:column; gap:16px; margin:28px 0 6px;}
   .check-list li{display:flex; align-items:flex-start; gap:12px; font-size:15px; color:var(--text);}
@@ -697,9 +696,7 @@
   <div class="container why-grid">
     <div class="why-visual reveal">
       <div class="blob"></div>
-      <div class="ring"></div>
-      <div class="ring ring-2"></div>
-      <div class="core"><img src="why-car-web.png" alt="Taxi Airport avtomobili" loading="lazy"></div>
+      <img src="why-car-web.png" alt="Taxi Airport avtomobili" loading="lazy" class="why-car-photo">
       <div class="float-badge b1" data-i18n="why.badge1">📍 GPS kuzatuv</div>
       <div class="float-badge b2" data-i18n="why.badge2">✨ Har doim ozoda salon</div>
     </div>
