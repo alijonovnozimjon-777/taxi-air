@@ -228,7 +228,8 @@
   .why-visual .blob{position:absolute; inset:0; border-radius:50%; background:radial-gradient(circle at 30% 30%, rgba(240,182,74,.32), rgba(240,182,74,.04) 65%);}
   .why-visual .ring{position:absolute; inset:26px; border:1.5px dashed rgba(240,182,74,.35); border-radius:50%; animation:spin-slow 34s linear infinite;}
   .why-visual .ring.ring-2{inset:52px; border-color:rgba(74,193,240,.3); animation-duration:26s; animation-direction:reverse;}
-  .why-visual .core{position:absolute; inset:92px; border-radius:50%; background:linear-gradient(135deg,var(--panel-2),var(--panel)); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:58px; box-shadow:var(--shadow);}
+  .why-visual .core{position:absolute; inset:92px; border-radius:50%; background:linear-gradient(135deg,var(--panel-2),var(--panel)); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:58px; box-shadow:var(--shadow); overflow:hidden;}
+  .why-visual .core img{width:84%; height:auto; display:block;}
   @keyframes spin-slow{to{transform:rotate(360deg);}}
   .check-list{display:flex; flex-direction:column; gap:16px; margin:28px 0 6px;}
   .check-list li{display:flex; align-items:flex-start; gap:12px; font-size:15px; color:var(--text);}
@@ -578,7 +579,7 @@
           </select>
         </div>
         <div class="qb-actions">
-          <button type="submit" id="qbSubmit" class="btn btn-gold btn-block" data-i18n="qb.submit">📨 Zayavkani yuborish</button>
+          <button type="submit" id="qbSubmit" class="btn btn-gold btn-block" data-i18n="qb.submit">Zayavkani yuborish</button>
         </div>
         <p class="qb-status" id="qbStatus"></p>
       </form>
@@ -668,27 +669,22 @@
     <p class="section-sub reveal" data-i18n="services.desc">Aeroportdan yoki aeroportga — sayohatingizning har bir bosqichini qulay qildik.</p>
     <div class="services-grid">
       <div class="card reveal">
-        <div class="card-icon">🛬</div>
         <h3 data-i18n="services.c1title">Aeroportdan olib ketish</h3>
         <p data-i18n="services.c1desc">Parvoz raqamingiz kuzatiladi — kechiksangiz ham sizni kutamiz, qo'shimcha to'lovsiz.</p>
       </div>
       <div class="card reveal">
-        <div class="card-icon">🛫</div>
         <h3 data-i18n="services.c2title">Aeroportga eltish</h3>
         <p data-i18n="services.c2desc">Manzilingizdan belgilangan vaqtda olib ketamiz, parvozga ulgurishingizga kafolat beramiz.</p>
       </div>
       <div class="card reveal">
-        <div class="card-icon">🪧</div>
         <h3 data-i18n="services.c3title">Ismli taxtacha bilan kutib olish</h3>
         <p data-i18n="services.c3desc">Chiqish eshigida ismingiz yozilgan taxtacha bilan kutib olamiz — VIP mehmonlar uchun qulay.</p>
       </div>
       <div class="card reveal">
-        <div class="card-icon">🧳</div>
         <h3 data-i18n="services.c4title">Katta bagaj uchun joy</h3>
         <p data-i18n="services.c4desc">Katta va ko'p chamadonlar uchun keng bagaj bo'limiga ega mashinalar.</p>
       </div>
       <div class="card reveal">
-        <div class="card-icon">💳</div>
         <h3 data-i18n="services.c5title">Qulay to'lov usullari</h3>
         <p data-i18n="services.c5desc">Naqd pul, Click, Payme yoki bank kartasi — o'zingizga qulay usulda to'lang.</p>
       </div>
@@ -703,7 +699,7 @@
       <div class="blob"></div>
       <div class="ring"></div>
       <div class="ring ring-2"></div>
-      <div class="core">🚕</div>
+      <div class="core"><img src="why-car-web.png" alt="Taxi Airport avtomobili" loading="lazy"></div>
       <div class="float-badge b1" data-i18n="why.badge1">📍 GPS kuzatuv</div>
       <div class="float-badge b2" data-i18n="why.badge2">✨ Har doim ozoda salon</div>
     </div>
@@ -802,27 +798,22 @@
     <p class="section-sub reveal" data-i18n="safety.desc">Har bir mashina va haydovchi qat'iy standartlarga javob beradi.</p>
     <div class="safety-grid">
       <div class="safety-item reveal">
-        <div class="card-icon">✨</div>
         <h4 data-i18n="safety.i1title">Ozoda va xushbo'y salon</h4>
         <p data-i18n="safety.i1desc">Har bir mashina safardan oldin sinchiklab tozalanadi — toza va yoqimli salonda qulay sayohat qiling.</p>
       </div>
       <div class="safety-item reveal">
-        <div class="card-icon">📍</div>
         <h4 data-i18n="safety.i2title">GPS orqali kuzatiladigan safar</h4>
         <p data-i18n="safety.i2desc">Har bir sayohat real vaqtda kuzatiladi va qayd etiladi.</p>
       </div>
       <div class="safety-item reveal">
-        <div class="card-icon">🪪</div>
         <h4 data-i18n="safety.i3title">Tekshirilgan haydovchilar</h4>
         <p data-i18n="safety.i3desc">Barcha haydovchilar hujjatlari va tajribasi bo'yicha tekshiruvdan o'tadi.</p>
       </div>
       <div class="safety-item reveal">
-        <div class="card-icon">🔧</div>
         <h4 data-i18n="safety.i5title">Muntazam texnik ko'rik</h4>
         <p data-i18n="safety.i5desc">Mashinalar texnik holati doimiy nazorat qilinadi.</p>
       </div>
       <div class="safety-item reveal">
-        <div class="card-icon">☎️</div>
         <h4 data-i18n="safety.i6title">24/7 qo'llab-quvvatlash</h4>
         <p data-i18n="safety.i6desc">Savol yoki muammo bo'lsa, aloqa markazimiz doim yordamga tayyor.</p>
       </div>
@@ -901,15 +892,12 @@
     <div class="booking-grid booking-grid-centered">
       <div class="booking-side booking-side-row reveal">
         <div class="contact-card">
-          <div class="card-icon">📞</div>
           <div><b>+998 33 140 28 01</b><b>+998 33 140 28 02</b><span data-i18n="booking.callLabel">Qo'ng'iroq qiling, 24/7</span></div>
         </div>
         <div class="contact-card">
-          <div class="card-icon">💬</div>
           <div><b>@airporttaxi_uz</b><b>@taxiairport_uz</b><span data-i18n="booking.telegramLabel">Telegram orqali yozing</span></div>
         </div>
         <div class="contact-card">
-          <div class="card-icon">✉️</div>
           <div><b>taxiairporttashkent@outlook.com</b><span data-i18n="booking.emailLabel">Elektron pochta</span></div>
         </div>
       </div>
@@ -926,7 +914,6 @@
     <div class="footer-grid">
       <div>
         <div class="logo">
-          <div class="logo-badge">🚕</div>
           <div>Taxi Airport<small>TASHKENT · 24/7</small></div>
         </div>
         <p data-i18n="footer.tagline">Toshkent Xalqaro aeroporti uchun ishonchli, xavfsiz va qulay taksi xizmati.</p>
@@ -995,7 +982,7 @@
       "qb.labelBaggage": "Bagaj soni", "qb.labelCar": "Mashina turi",
       "qb.carComfort": "Comfort", "qb.carBusiness": "Business", "qb.carVip": "VIP Minivan",
       "qb.labelPhone": "Telefon", "qb.labelSign": "Ismli taxtacha bilan kutib olish", "qb.signYes": "Ha", "qb.signNo": "Kerak emas",
-      "qb.submit": "📨 Zayavkani yuborish", "qb.submitting": "Yuborilmoqda...",
+      "qb.submit": "Zayavkani yuborish", "qb.submitting": "Yuborilmoqda...",
       "qb.divider": "yoki to'g'ridan-to'g'ri bog'laning", "qb.telegramBtn": "Telegramdan yozish", "qb.whatsappBtn": "WhatsAppdan yozish",
       "qb.statusNotConnected": "⚠️ Onlayn qabul hali ulanmagan. Iltimos, pastdagi Telegram yoki WhatsApp orqali yozing.",
       "qb.statusSuccess": "✅ Zayavkangiz qabul qilindi! Tez orada bog'lanamiz.",
@@ -1082,7 +1069,7 @@
       "qb.labelBaggage": "Luggage count", "qb.labelCar": "Car type",
       "qb.carComfort": "Comfort", "qb.carBusiness": "Business", "qb.carVip": "VIP Minivan",
       "qb.labelPhone": "Phone", "qb.labelSign": "Name signboard pickup", "qb.signYes": "Yes", "qb.signNo": "Not needed",
-      "qb.submit": "📨 Send request", "qb.submitting": "Sending...",
+      "qb.submit": "Send request", "qb.submitting": "Sending...",
       "qb.divider": "or contact us directly", "qb.telegramBtn": "Message on Telegram", "qb.whatsappBtn": "Message on WhatsApp",
       "qb.statusNotConnected": "⚠️ Online booking isn't connected yet. Please message us on Telegram or WhatsApp below.",
       "qb.statusSuccess": "✅ Your request has been received! We'll contact you shortly.",
@@ -1169,7 +1156,7 @@
       "qb.labelBaggage": "Bagaj sayısı", "qb.labelCar": "Araç tipi",
       "qb.carComfort": "Comfort", "qb.carBusiness": "Business", "qb.carVip": "VIP Minivan",
       "qb.labelPhone": "Telefon", "qb.labelSign": "İsimli tabela ile karşılama", "qb.signYes": "Evet", "qb.signNo": "Gerekmiyor",
-      "qb.submit": "📨 Talebi gönder", "qb.submitting": "Gönderiliyor...",
+      "qb.submit": "Talebi gönder", "qb.submitting": "Gönderiliyor...",
       "qb.divider": "veya doğrudan iletişime geçin", "qb.telegramBtn": "Telegram'dan yazın", "qb.whatsappBtn": "WhatsApp'tan yazın",
       "qb.statusNotConnected": "⚠️ Online rezervasyon henüz bağlı değil. Lütfen aşağıdan Telegram veya WhatsApp ile yazın.",
       "qb.statusSuccess": "✅ Talebiniz alındı! Kısa süre içinde sizinle iletişime geçeceğiz.",
@@ -1256,7 +1243,7 @@
       "qb.labelBaggage": "Количество багажа", "qb.labelCar": "Класс автомобиля",
       "qb.carComfort": "Комфорт", "qb.carBusiness": "Бизнес", "qb.carVip": "VIP Минивэн",
       "qb.labelPhone": "Телефон", "qb.labelSign": "Встреча с табличкой с именем", "qb.signYes": "Да", "qb.signNo": "Не нужно",
-      "qb.submit": "📨 Отправить заявку", "qb.submitting": "Отправка...",
+      "qb.submit": "Отправить заявку", "qb.submitting": "Отправка...",
       "qb.divider": "или свяжитесь напрямую", "qb.telegramBtn": "Написать в Telegram", "qb.whatsappBtn": "Написать в WhatsApp",
       "qb.statusNotConnected": "⚠️ Онлайн-приём заявок ещё не подключён. Напишите нам в Telegram или WhatsApp ниже.",
       "qb.statusSuccess": "✅ Ваша заявка принята! Скоро свяжемся с вами.",
@@ -1343,7 +1330,7 @@
       "qb.labelBaggage": "عدد الحقائب", "qb.labelCar": "نوع السيارة",
       "qb.carComfort": "كومفورت", "qb.carBusiness": "بزنس", "qb.carVip": "VIP فان",
       "qb.labelPhone": "رقم الهاتف", "qb.labelSign": "الاستقبال بلوحة تحمل الاسم", "qb.signYes": "نعم", "qb.signNo": "غير مطلوب",
-      "qb.submit": "📨 إرسال الطلب", "qb.submitting": "جارٍ الإرسال...",
+      "qb.submit": "إرسال الطلب", "qb.submitting": "جارٍ الإرسال...",
       "qb.divider": "أو تواصل معنا مباشرة", "qb.telegramBtn": "راسلنا عبر تيليجرام", "qb.whatsappBtn": "راسلنا عبر واتساب",
       "qb.statusNotConnected": "⚠️ الحجز الإلكتروني غير مفعّل بعد. يرجى مراسلتنا عبر تيليجرام أو واتساب أدناه.",
       "qb.statusSuccess": "✅ تم استلام طلبك! سنتواصل معك قريبًا.",
