@@ -1617,6 +1617,12 @@
     }).then(() => {
       qbStatus.textContent = TRANSLATIONS[currentLang]['qb.statusSuccess'];
       qbStatus.className = 'qb-status success';
+      if (typeof gtag === 'function') {
+        gtag('event', 'generate_lead', {
+          event_category: 'booking_form',
+          event_label: payload.direction || 'unknown'
+        });
+      }
       quickBookForm.reset();
       toggleFlightField();
     }).catch(() => {
@@ -1625,6 +1631,21 @@
     }).finally(() => {
       qbSubmit.disabled = false;
       qbSubmit.textContent = TRANSLATIONS[currentLang]['qb.submit'];
+    });
+  });
+
+  // === GA4: qo'ng'iroq / Telegram / WhatsApp havolalari bosilganda "lead" hodisasini yuborish ===
+  document.addEventListener('click', function (e) {
+    const link = e.target.closest('a[href^="tel:"], a[href*="wa.me"], a[href*="t.me"]');
+    if (!link || typeof gtag !== 'function') return;
+    const href = link.getAttribute('href') || '';
+    let method = 'other';
+    if (href.startsWith('tel:')) method = 'phone';
+    else if (href.indexOf('wa.me') !== -1) method = 'whatsapp';
+    else if (href.indexOf('t.me') !== -1) method = 'telegram';
+    gtag('event', 'generate_lead', {
+      event_category: 'contact_click',
+      event_label: method
     });
   });
 </script>
