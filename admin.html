@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin panel — Taxi Airport Tashkent</title>
+<link rel="icon" type="image/png" href="favicon-tat-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cabinet.css">
+</head>
+<body>
+
+<header class="cab-header">
+  <div class="cab-nav">
+    <a class="logo" href="index.html">
+      <div>Taxi Airport<small>TASHKENT · 24/7</small></div>
+    </a>
+    <div class="cab-nav-right">
+      <a href="member.html" class="btn btn-outline">Kabinetim</a>
+      <button type="button" class="btn btn-danger-outline" id="logoutBtn">Chiqish</button>
+    </div>
+  </div>
+</header>
+
+<main class="container cab-wrap">
+
+  <div class="cab-head">
+    <div>
+      <h1>Admin panel</h1>
+      <div class="sub">Barcha mijozlar buyurtmalari — narx va holatni shu yerdan boshqarasiz.</div>
+    </div>
+  </div>
+
+  <div id="deniedBox" style="display:none;">
+    <div class="card">
+      <h3>Ruxsat yo'q</h3>
+      <p style="color:var(--muted); font-size:14.5px;">Bu sahifa faqat administrator uchun. <a href="member.html" style="color:var(--gold); font-weight:700;">Kabinetimga qaytish</a></p>
+    </div>
+  </div>
+
+  <div id="adminBox" style="display:none;">
+    <div class="summary-row" id="summaryRow"></div>
+
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Yuborilgan</th>
+            <th>Sana / Vaqt</th>
+            <th>Reys</th>
+            <th>Yo'nalish</th>
+            <th>Manzil</th>
+            <th>Mashina</th>
+            <th>Mijoz</th>
+            <th>Telefon</th>
+            <th>Bagaj</th>
+            <th>Narx (so'm)</th>
+            <th>Holat</th>
+          </tr>
+        </thead>
+        <tbody id="bookingsTbody">
+          <tr><td colspan="11" style="text-align:center; color:var(--muted); padding:30px;">Yuklanmoqda...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="auth.js"></script>
+<script>
+  const STATUS_OPTIONS = [
+    { value: 'yuborildi', label: 'Yuborildi' },
+    { value: 'tasdiqlandi', label: 'Tasdiqlandi' },
+    { value: 'bajarildi', label: 'Bajarildi' },
+    { value: 'bekor', label: 'Bekor qilindi' }
+  ];
+
+  requireAuth(async (user) => {
+    if (!isAdminUser(user)) {
+      document.getElementById('deniedBox').style.display = '';
+      return;
+    }
+    document.getElementById('adminBox').style.display = '';
+    await loadAllBookings();
+  });
+
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+    await logoutUser();
+    window.location.href = 'index.html';
+  });
+
+  function escapeHtml(str) {
+    return String(str == null ? '' : str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  async function loadAllBookings() {
+    const tbody = document.getElementById('bookingsTbody');
+    try {
+      const bookings = await getAllBookingsAdmin();
+
+      // Summary
+      const total = bookings.length;
+      const pending = bookings.filter(b => b.status === 'yuborildi').length;
+      const done = bookings.filter(b => b.status === 'bajarildi').length;
+      const revenue = bookings.reduce((sum, b) => sum + (Number(b.price) || 0), 0);
+      document.getElementById('summaryRow').innerHTML = `
+        <div class="summary-pill"><b>${total}</b><span>Jami buyurtmalar</span></div>
+        <div class="summary-pill"><b>${pending}</b><span>Kutilmoqda</span></div>
+        <div class="summary-pill"><b>${done}</b><span>Bajarilgan</span></div>
+        <div class="summary-pill"><b>${revenue.toLocaleString('ru-RU')} so'm</b><span>Belgilangan narxlar yig'indisi</span></div>
+      `;
+
+      if (bookings.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="11" style="text-align:center; color:var(--muted); padding:30px;">Hali buyurtmalar yo\'q.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = bookings.map(b => {
+        const dt = b.createdAt && b.createdAt.toDate ? b.createdAt.toDate().toLocaleString('uz-UZ') : '';
+        const statusOptionsHtml = STATUS_OPTIONS.map(o =>
+          `<option value="${o.value}" ${b.status === o.value ? 'selected' : ''}>${o.label}</option>`
+        ).join('');
+        return `<tr data-id="${b.id}">
+          <td>${dt}</td>
+          <td>${escapeHtml(b.date)} ${escapeHtml(b.time)}</td>
+          <td>${escapeHtml(b.flight) || '—'}</td>
+          <td>${escapeHtml(b.direction)}</td>
+          <td>${escapeHtml(b.address)}</td>
+          <td>${escapeHtml(b.car)}</td>
+          <td>${escapeHtml(b.name)}</td>
+          <td>${escapeHtml(b.phone)}</td>
+          <td>${escapeHtml(b.baggage)}</td>
+          <td>
+            <input type="number" class="admin-price-input" value="${b.price != null ? b.price : ''}" placeholder="—" data-field="price">
+            <span class="admin-save-note">Saqlandi</span>
+          </td>
+          <td>
+            <select class="admin-status-select" data-field="status">${statusOptionsHtml}</select>
+          </td>
+        </tr>`;
+      }).join('');
+
+      // Wire up inline editing
+      tbody.querySelectorAll('tr[data-id]').forEach(row => {
+        const bookingId = row.dataset.id;
+        const priceInput = row.querySelector('input[data-field="price"]');
+        const statusSelect = row.querySelector('select[data-field="status"]');
+        const note = row.querySelector('.admin-save-note');
+
+        const save = async (payload) => {
+          try {
+            await updateBookingAdmin(bookingId, payload);
+            note.classList.add('show');
+            setTimeout(() => note.classList.remove('show'), 1500);
+          } catch (err) {
+            alert('Saqlashda xatolik: ' + err.message);
+          }
+        };
+
+        priceInput.addEventListener('change', () => {
+          const val = priceInput.value === '' ? null : Number(priceInput.value);
+          save({ price: val });
+        });
+        statusSelect.addEventListener('change', () => {
+          save({ status: statusSelect.value });
+        });
+      });
+    } catch (err) {
+      tbody.innerHTML = '<tr><td colspan="11" style="text-align:center; color:var(--danger); padding:30px;">Xatolik: ' + err.message + '</td></tr>';
+    }
+  }
+</script>
+</body>
+</html>

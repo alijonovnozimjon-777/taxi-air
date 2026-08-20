@@ -18,6 +18,7 @@
     </a>
     <div class="cab-nav-right">
       <a href="index.html" class="btn btn-outline">Bosh sahifa</a>
+      <a href="admin.html" class="btn btn-outline" id="adminNavLink" style="display:none;">Admin panel</a>
       <button type="button" class="btn btn-danger-outline" id="logoutBtn">Chiqish</button>
     </div>
   </div>
@@ -163,6 +164,9 @@
     currentUser = user;
     document.getElementById('greeting').textContent = 'Salom, ' + (user.displayName || 'mijoz') + '!';
     document.getElementById('greetingEmail').textContent = user.email;
+    if (isAdminUser(user)) {
+      document.getElementById('adminNavLink').style.display = '';
+    }
 
     const profile = await getUserProfile(user.uid);
     if (profile) {
@@ -290,11 +294,14 @@
         const dt = b.createdAt && b.createdAt.toDate ? b.createdAt.toDate().toLocaleString('uz-UZ') : '';
         const statusKey = (b.status || 'yuborildi').replace(' ', '');
         const statusLabel = STATUS_LABELS[b.status] || b.status;
+        const priceLabel = (b.price === null || b.price === undefined || b.price === '')
+          ? 'Narx: belgilanmagan' : 'Narx: ' + Number(b.price).toLocaleString('ru-RU') + ' so\'m';
         return `<div class="booking-item">
           <div class="bi-main">
             <b>${b.direction || ''} — ${b.date || ''} ${b.time || ''}</b>
             <span>📍 ${b.address || ''}</span>
             <span>🚗 ${b.car || ''} · 🧳 ${b.baggage || ''} bagaj${b.flight ? ' · ✈️ ' + b.flight : ''}</span>
+            <span>💰 ${priceLabel}</span>
             <span>Yuborilgan: ${dt}</span>
           </div>
           <span class="status-pill ${statusKey}">${statusLabel}</span>
