@@ -979,7 +979,7 @@
     uz: {
       "nav.services": "Xizmatlar", "nav.why": "Nega biz", "nav.fleet": "Avtoparkimiz", "nav.safety": "Xavfsizlik",
       "nav.how": "Qanday ishlaydi", "nav.faq": "Savollar", "nav.reviews": "Sharhlar", "nav.callLabel": "Qo'ng'iroq qiling",
-      "nav.orderBtn": "Buyurtma berish",
+      "nav.orderBtn": "Buyurtma berish", "nav.login": "Kirish", "nav.member": "Kabinetim",
       "visa.eyebrow": "Xalqaro hamkorlik", "visa.title": "VISA bilan hamkorlikda — Premium mijozlarga bepul transfer",
       "visa.desc": "Quyidagi Visa Premium karta egalari uchun aeroport transferi mutlaqo bepul taqdim etiladi.",
       "visa.platinumTag": "Visa Platinum Business", "visa.note": "Barcha buyurtmalar eng kamida 3 soat oldindan Telegram dagi VisaConciergeBot orqali qabul qilinadi.", "visa.botBtn": "Botga o'tish →",
@@ -1066,7 +1066,7 @@
     en: {
       "nav.services": "Services", "nav.why": "Why us", "nav.fleet": "Our Fleet", "nav.safety": "Safety",
       "nav.how": "How it works", "nav.faq": "FAQ", "nav.reviews": "Reviews", "nav.callLabel": "Call us",
-      "nav.orderBtn": "Book Now",
+      "nav.orderBtn": "Book Now", "nav.login": "Login", "nav.member": "My Account",
       "visa.eyebrow": "International Partnership", "visa.title": "In partnership with VISA — free transfers for Premium cardholders",
       "visa.desc": "Airport transfer is provided completely free of charge for holders of the following Visa Premium cards.",
       "visa.platinumTag": "Visa Platinum Business", "visa.note": "All requests are accepted at least 3 hours in advance via VisaConciergeBot on Telegram.", "visa.botBtn": "Open the bot →",
@@ -1153,7 +1153,7 @@
     tr: {
       "nav.services": "Hizmetler", "nav.why": "Neden biz", "nav.fleet": "Araç Filomuz", "nav.safety": "Güvenlik",
       "nav.how": "Nasıl çalışır", "nav.faq": "Sık Sorulanlar", "nav.reviews": "Yorumlar", "nav.callLabel": "Bizi arayın",
-      "nav.orderBtn": "Rezervasyon Yap",
+      "nav.orderBtn": "Rezervasyon Yap", "nav.login": "Giriş", "nav.member": "Hesabım",
       "visa.eyebrow": "Uluslararası İş Birliği", "visa.title": "VISA iş birliğiyle — Premium kart sahiplerine ücretsiz transfer",
       "visa.desc": "Aşağıdaki Visa Premium kart sahipleri için havalimanı transferi tamamen ücretsiz sağlanır.",
       "visa.platinumTag": "Visa Platinum Business", "visa.note": "Tüm talepler en az 3 saat önceden Telegram'daki VisaConciergeBot üzerinden iletilmelidir.", "visa.botBtn": "Bota git →",
@@ -1240,7 +1240,7 @@
     ru: {
       "nav.services": "Услуги", "nav.why": "Почему мы", "nav.fleet": "Наш автопарк", "nav.safety": "Безопасность",
       "nav.how": "Как это работает", "nav.faq": "Вопросы", "nav.reviews": "Отзывы", "nav.callLabel": "Позвоните нам",
-      "nav.orderBtn": "Заказать",
+      "nav.orderBtn": "Заказать", "nav.login": "Войти", "nav.member": "Личный кабинет",
       "visa.eyebrow": "Международное партнёрство", "visa.title": "В партнёрстве с VISA — бесплатный трансфер для держателей Premium карт",
       "visa.desc": "Для держателей следующих премиальных карт Visa трансфер до аэропорта предоставляется совершенно бесплатно.",
       "visa.platinumTag": "Visa Platinum Business", "visa.note": "Все заявки принимаются минимум за 3 часа через VisaConciergeBot в Telegram.", "visa.botBtn": "Перейти в бот →",
@@ -1327,7 +1327,7 @@
     ar: {
       "nav.services": "خدماتنا", "nav.why": "لماذا نحن", "nav.fleet": "أسطول السيارات", "nav.safety": "السلامة",
       "nav.how": "كيف نعمل", "nav.faq": "الأسئلة الشائعة", "nav.reviews": "التقييمات", "nav.callLabel": "اتصل بنا",
-      "nav.orderBtn": "احجز الآن",
+      "nav.orderBtn": "احجز الآن", "nav.login": "تسجيل الدخول", "nav.member": "حسابي",
       "visa.eyebrow": "شراكة دولية", "visa.title": "بالشراكة مع VISA — نقل مجاني لحاملي بطاقات Premium",
       "visa.desc": "يتم توفير خدمة النقل إلى المطار مجانًا تمامًا لحاملي بطاقات Visa Premium التالية.",
       "visa.platinumTag": "Visa Platinum Business", "visa.note": "يتم قبول جميع الطلبات قبل 3 ساعات على الأقل عبر VisaConciergeBot على تيليجرام.", "visa.botBtn": "← الانتقال إلى البوت",
@@ -1415,6 +1415,17 @@
 
   const LANG_NAMES = { uz: "UZ", en: "EN", tr: "TR", ru: "RU", ar: "AR" };
   let currentLang = localStorage.getItem('taxiLang') || 'uz';
+  let isLoggedIn = false;
+
+  function updateAuthNavLabel() {
+    const dict = TRANSLATIONS[currentLang] || TRANSLATIONS.uz;
+    const label = isLoggedIn ? dict['nav.member'] : dict['nav.login'];
+    const href = isLoggedIn ? 'member.html' : 'login.html';
+    document.querySelectorAll('#authNavLink, #authNavLinkMobile').forEach(el => {
+      el.textContent = label;
+      el.href = href;
+    });
+  }
 
   function applyLang(lang) {
     if (!TRANSLATIONS[lang]) lang = 'uz';
@@ -1436,6 +1447,7 @@
       btn.classList.toggle('active', btn.dataset.lang === lang);
     });
     localStorage.setItem('taxiLang', lang);
+    updateAuthNavLabel();
   }
 
   document.querySelectorAll('#langMenu button, #langSwitchMobile button').forEach(btn => {
@@ -1658,7 +1670,10 @@
 <script src="firebase-config.js"></script>
 <script src="auth.js"></script>
 <script>
-  initHeaderAuthState('#authNavLink, #authNavLinkMobile');
+  auth.onAuthStateChanged((user) => {
+    isLoggedIn = !!user;
+    updateAuthNavLabel();
+  });
 </script>
 </body>
 </html>
