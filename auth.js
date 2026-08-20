@@ -56,6 +56,7 @@ async function createBooking(uid, payload) {
     uid: uid,
     ...payload,
     price: null, // narx hali belgilanmagan — admin panelidan (admin.html) qo'lda kiritiladi
+    paymentLink: null, // to'lov havolasi ham admin panelidan qo'lda kiritiladi
     status: 'yuborildi', // yuborildi -> tasdiqlandi -> bajarildi -> bekor (admin.html orqali o'zgartiriladi)
     createdAt: firebase.firestore.FieldValue.serverTimestamp()
   });
@@ -83,10 +84,11 @@ async function getAllBookingsAdmin() {
   return snap.docs.map(d => ({ id: d.id, ...d.data() }));
 }
 
-async function updateBookingAdmin(bookingId, { status, price }) {
+async function updateBookingAdmin(bookingId, { status, price, paymentLink }) {
   const data = {};
   if (status !== undefined) data.status = status;
   if (price !== undefined) data.price = price;
+  if (paymentLink !== undefined) data.paymentLink = paymentLink;
   await db.collection('bookings').doc(bookingId).update(data);
 }
 
