@@ -224,6 +224,20 @@
   const DATE_RE = /^([0-2]\d|3[01])\/(0\d|1[0-2])\/20\d{2}$/;
   const TIME_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
 
+  // ---------- Google Sheets'ga ham yozish (bosh sahifadagi mehmon formasi bilan bir xil manzil) ----------
+  const SHEET_ENDPOINT_URL = "https://script.google.com/macros/s/AKfycbwzafZ8KHGoiouMK63TM0XOpCB87MtnZblVaMQyk50Db2p-zIoXMFZ4c2GX3OTW7WvfEw/exec";
+
+  function sendToSheet(payload) {
+    try {
+      fetch(SHEET_ENDPOINT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      }).catch(() => {});
+    } catch (e) {}
+  }
+
   // ---------- Yangi buyurtma yuborish ----------
   const bookingForm = document.getElementById('bookingForm');
   const bookingStatus = document.getElementById('bookingStatus');
@@ -258,6 +272,7 @@
 
     try {
       await createBooking(currentUser.uid, payload);
+      sendToSheet(payload);
       bookingStatus.textContent = 'Buyurtma yuborildi! Bonusingiz yangilandi.';
       bookingStatus.className = 'form-status success';
       bookingForm.reset();
