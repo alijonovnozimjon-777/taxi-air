@@ -1,4 +1,9 @@
-const BONUS_PER_BOOKING = 5000;
+const BONUS_PER_BOOKING = 5000; // har bir yuborilgan buyurtma uchun beriladigan bonus (so'm). O'zingizga moslab o'zgartiring.
+const ADMIN_EMAIL = 'alijonovnozimjon@gmail.com'; // admin panelga (admin.html) faqat shu email bilan kirgan foydalanuvchi kira oladi
+
+function isAdminUser(user) {
+  return !!user && user.email === ADMIN_EMAIL;
+}
 
 async function registerUser({ name, phone, email, password }) {
   const cred = await auth.createUserWithEmailAndPassword(email, password);
@@ -38,9 +43,11 @@ async function createBooking(uid, payload) {
   await db.collection('bookings').add({
     uid: uid,
     ...payload,
-    status: 'yuborildi',
+    price: null, // narx hali belgilanmagan — admin panelidan (admin.html) qo'lda kiritiladi
+    status: 'yuborildi', // yuborildi -> tasdiqlandi -> bajarildi -> bekor (admin.html orqali o'zgartiriladi)
     createdAt: firebase.firestore.FieldValue.serverTimestamp()
   });
+  // Har bir buyurtma uchun sodiqlik bonusi qo'shamiz
   await db.collection('users').doc(uid).update({
     bonus: firebase.firestore.FieldValue.increment(BONUS_PER_BOOKING)
   });
@@ -52,6 +59,21 @@ async function getUserBookings(uid) {
     .orderBy('createdAt', 'desc')
     .get();
   return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+// ---------- ADMIN: barcha buyurtmalarni ko'rish/boshqarish (faqat ADMIN_EMAIL uchun) ----------
+async function getAllBookingsAdmin() {
+  const snap = await db.collection('bookings')
+    .orderBy('createdAt', 'desc')
+    .get();
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+async function updateBookingAdmin(bookingId, { status, price }) {
+  const data = {};
+  if (status !== undefined) data.status = status;
+  if (price !== undefined) data.price = price;
+  await db.collection('bookings').doc(bookingId).update(data);
 }
 
 function requireAuth(onReady) {
