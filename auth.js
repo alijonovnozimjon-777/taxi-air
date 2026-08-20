@@ -1,3 +1,10 @@
+// =====================================================================
+// AUTH.JS — Taxi Airport Tashkent shaxsiy kabineti uchun umumiy logika
+// =====================================================================
+// Bu fayl index.html, login.html, register.html va member.html sahifalarida
+// bir xilda ishlatiladi. firebase-config.js dan KEYIN ulanishi shart.
+// =====================================================================
+
 const BONUS_PER_BOOKING = 5000; // har bir yuborilgan buyurtma uchun beriladigan bonus (so'm). O'zingizga moslab o'zgartiring.
 const ADMIN_EMAIL = 'alijonovnozimjon@gmail.com'; // admin panelga (admin.html) faqat shu email bilan kirgan foydalanuvchi kira oladi
 
@@ -5,6 +12,7 @@ function isAdminUser(user) {
   return !!user && user.email === ADMIN_EMAIL;
 }
 
+// ---------- RO'YXATDAN O'TISH ----------
 async function registerUser({ name, phone, email, password }) {
   const cred = await auth.createUserWithEmailAndPassword(email, password);
   await cred.user.updateProfile({ displayName: name });
@@ -18,27 +26,31 @@ async function registerUser({ name, phone, email, password }) {
   return cred.user;
 }
 
+// ---------- KIRISH ----------
 async function loginUser(email, password) {
   const cred = await auth.signInWithEmailAndPassword(email, password);
   return cred.user;
 }
 
+// ---------- CHIQISH ----------
 async function logoutUser() {
   await auth.signOut();
 }
 
+// ---------- PROFIL ----------
 async function getUserProfile(uid) {
   const snap = await db.collection('users').doc(uid).get();
   return snap.exists ? snap.data() : null;
 }
 
 async function updateUserProfile(uid, { name, phone }) {
-  await db.collection('users').doc(uid).update({ name, phone });
+  await db.collection('users').doc(uid).set({ name, phone }, { merge: true });
   if (auth.currentUser) {
     await auth.currentUser.updateProfile({ displayName: name });
   }
 }
 
+// ---------- BUYURTMALAR ----------
 async function createBooking(uid, payload) {
   await db.collection('bookings').add({
     uid: uid,
@@ -47,10 +59,12 @@ async function createBooking(uid, payload) {
     status: 'yuborildi', // yuborildi -> tasdiqlandi -> bajarildi -> bekor (admin.html orqali o'zgartiriladi)
     createdAt: firebase.firestore.FieldValue.serverTimestamp()
   });
-  // Har bir buyurtma uchun sodiqlik bonusi qo'shamiz
-  await db.collection('users').doc(uid).update({
+  // Har bir buyurtma uchun sodiqlik bonusi qo'shamiz.
+  // set(..., {merge:true}) ishlatilyapti — agar profil hujjati (users/{uid})
+  // biror sababdan mavjud bo'lmasa ham xatolik bermay, avtomatik yaratadi.
+  await db.collection('users').doc(uid).set({
     bonus: firebase.firestore.FieldValue.increment(BONUS_PER_BOOKING)
-  });
+  }, { merge: true });
 }
 
 async function getUserBookings(uid) {
@@ -76,6 +90,8 @@ async function updateBookingAdmin(bookingId, { status, price }) {
   await db.collection('bookings').doc(bookingId).update(data);
 }
 
+// ---------- SAHIFANI HIMOYALASH / YO'NALTIRISH ----------
+// member.html boshida chaqiriladi: login qilinmagan bo'lsa login.html'ga yo'naltiradi
 function requireAuth(onReady) {
   auth.onAuthStateChanged((user) => {
     if (!user) {
@@ -86,6 +102,7 @@ function requireAuth(onReady) {
   });
 }
 
+// login.html / register.html boshida chaqiriladi: login qilingan bo'lsa kabinetga yo'naltiradi
 function redirectIfLoggedIn() {
   auth.onAuthStateChanged((user) => {
     if (user) {
@@ -94,6 +111,7 @@ function redirectIfLoggedIn() {
   });
 }
 
+// index.html header'idagi "Kirish / Kabinet" havolasini holatga qarab yangilaydi
 function initHeaderAuthState(linkSelector) {
   document.querySelectorAll(linkSelector).forEach((el) => {
     auth.onAuthStateChanged((user) => {
@@ -108,6 +126,7 @@ function initHeaderAuthState(linkSelector) {
   });
 }
 
+// Xatolik xabarlarini o'zbek tiliga tarjima qilib beradi (Firebase xato kodlari bo'yicha)
 function friendlyAuthError(err) {
   const code = err && err.code ? err.code : '';
   const map = {
