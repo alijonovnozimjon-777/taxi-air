@@ -56,11 +56,12 @@
             <th>Telefon</th>
             <th>Bagaj</th>
             <th>Narx (so'm)</th>
+            <th>To'lov havolasi</th>
             <th>Holat</th>
           </tr>
         </thead>
         <tbody id="bookingsTbody">
-          <tr><td colspan="11" style="text-align:center; color:var(--muted); padding:30px;">Yuklanmoqda...</td></tr>
+          <tr><td colspan="12" style="text-align:center; color:var(--muted); padding:30px;">Yuklanmoqda...</td></tr>
         </tbody>
       </table>
     </div>
@@ -119,7 +120,7 @@
       `;
 
       if (bookings.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="11" style="text-align:center; color:var(--muted); padding:30px;">Hali buyurtmalar yo\'q.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="12" style="text-align:center; color:var(--muted); padding:30px;">Hali buyurtmalar yo\'q.</td></tr>';
         return;
       }
 
@@ -140,6 +141,9 @@
           <td>${escapeHtml(b.baggage)}</td>
           <td>
             <input type="number" class="admin-price-input" value="${b.price != null ? b.price : ''}" placeholder="—" data-field="price">
+          </td>
+          <td>
+            <input type="text" class="admin-price-input" style="width:180px;" value="${escapeHtml(b.paymentLink || '')}" placeholder="Payme/Click havolasi" data-field="paymentLink">
             <span class="admin-save-note">Saqlandi</span>
           </td>
           <td>
@@ -152,6 +156,7 @@
       tbody.querySelectorAll('tr[data-id]').forEach(row => {
         const bookingId = row.dataset.id;
         const priceInput = row.querySelector('input[data-field="price"]');
+        const paymentLinkInput = row.querySelector('input[data-field="paymentLink"]');
         const statusSelect = row.querySelector('select[data-field="status"]');
         const note = row.querySelector('.admin-save-note');
 
@@ -169,12 +174,15 @@
           const val = priceInput.value === '' ? null : Number(priceInput.value);
           save({ price: val });
         });
+        paymentLinkInput.addEventListener('change', () => {
+          save({ paymentLink: paymentLinkInput.value.trim() || null });
+        });
         statusSelect.addEventListener('change', () => {
           save({ status: statusSelect.value });
         });
       });
     } catch (err) {
-      tbody.innerHTML = '<tr><td colspan="11" style="text-align:center; color:var(--danger); padding:30px;">Xatolik: ' + err.message + '</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="12" style="text-align:center; color:var(--danger); padding:30px;">Xatolik: ' + err.message + '</td></tr>';
     }
   }
 </script>

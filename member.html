@@ -228,6 +228,8 @@
   const SHEET_ENDPOINT_URL = "https://script.google.com/macros/s/AKfycbwzafZ8KHGoiouMK63TM0XOpCB87MtnZblVaMQyk50Db2p-zIoXMFZ4c2GX3OTW7WvfEw/exec";
 
   function sendToSheet(payload) {
+    // mode:'no-cors' bo'lgani uchun javobni o'qib bo'lmaydi — xatolik chiqsa ham
+    // Firestore'ga yozish jarayoniga xalaqit bermasin deb try/catch bilan o'raymiz.
     try {
       fetch(SHEET_ENDPOINT_URL, {
         method: 'POST',
@@ -311,12 +313,15 @@
         const statusLabel = STATUS_LABELS[b.status] || b.status;
         const priceLabel = (b.price === null || b.price === undefined || b.price === '')
           ? 'Narx: belgilanmagan' : 'Narx: ' + Number(b.price).toLocaleString('ru-RU') + ' so\'m';
+        const payBtn = b.paymentLink
+          ? `<a href="${b.paymentLink}" target="_blank" rel="noopener" class="btn btn-gold" style="padding:8px 18px; font-size:12.5px; margin-left:10px;">To'lash</a>`
+          : '';
         return `<div class="booking-item">
           <div class="bi-main">
             <b>${b.direction || ''} — ${b.date || ''} ${b.time || ''}</b>
             <span>📍 ${b.address || ''}</span>
             <span>🚗 ${b.car || ''} · 🧳 ${b.baggage || ''} bagaj${b.flight ? ' · ✈️ ' + b.flight : ''}</span>
-            <span>💰 ${priceLabel}</span>
+            <span>💰 ${priceLabel}${payBtn}</span>
             <span>Yuborilgan: ${dt}</span>
           </div>
           <span class="status-pill ${statusKey}">${statusLabel}</span>
