@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ro'yxatdan o'tish — Taxi Airport Tashkent</title>
+<link rel="icon" type="image/png" href="favicon-tat-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cabinet.css">
+</head>
+<body>
+
+<header class="cab-header">
+  <div class="cab-nav">
+    <a class="logo" href="index.html">
+      <div>Taxi Airport<small>TASHKENT · 24/7</small></div>
+    </a>
+    <div class="cab-nav-right">
+      <a href="index.html" class="btn btn-outline">Bosh sahifa</a>
+    </div>
+  </div>
+</header>
+
+<main class="auth-wrap">
+  <div class="auth-card">
+    <div class="eyebrow">Shaxsiy kabinet</div>
+    <h1>Ro'yxatdan o'tish</h1>
+    <p class="sub">Hisob oching — buyurtmalaringiz tarixini saqlang va har bir buyurtma uchun bonus to'plang.</p>
+
+    <form id="registerForm" novalidate>
+      <div class="field">
+        <label>Ism Familiya</label>
+        <input type="text" id="regName" placeholder="Ism Familiya" required autocomplete="name">
+      </div>
+      <div class="field">
+        <label>Telefon</label>
+        <input type="tel" id="regPhone" placeholder="+998 33 140 28 01" required autocomplete="tel">
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="regEmail" placeholder="email@misol.uz" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label>Parol</label>
+        <input type="password" id="regPassword" placeholder="Kamida 6 ta belgi" required autocomplete="new-password" minlength="6">
+      </div>
+      <p class="form-status" id="regStatus"></p>
+      <button type="submit" class="btn btn-gold btn-block" id="regSubmit">Ro'yxatdan o'tish</button>
+    </form>
+
+    <div class="auth-switch">
+      Hisobingiz bormi? <a href="login.html">Kirish</a>
+    </div>
+  </div>
+</main>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="auth.js"></script>
+<script>
+  redirectIfLoggedIn();
+
+  const registerForm = document.getElementById('registerForm');
+  const regStatus = document.getElementById('regStatus');
+  const regSubmit = document.getElementById('regSubmit');
+
+  registerForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('regName').value.trim();
+    const phone = document.getElementById('regPhone').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const password = document.getElementById('regPassword').value;
+
+    regSubmit.disabled = true;
+    regSubmit.textContent = 'Yaratilmoqda...';
+    regStatus.textContent = '';
+    regStatus.className = 'form-status';
+
+    try {
+      await registerUser({ name, phone, email, password });
+      regStatus.textContent = 'Hisob yaratildi! Kabinetga yo\'naltirilmoqda...';
+      regStatus.className = 'form-status success';
+      window.location.href = 'member.html';
+    } catch (err) {
+      regStatus.textContent = friendlyAuthError(err);
+      regStatus.className = 'form-status error';
+      regSubmit.disabled = false;
+      regSubmit.textContent = 'Ro\'yxatdan o\'tish';
+    }
+  });
+</script>
+</body>
+</html>

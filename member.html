@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kabinetim — Taxi Airport Tashkent</title>
+<link rel="icon" type="image/png" href="favicon-tat-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cabinet.css">
+</head>
+<body>
+
+<header class="cab-header">
+  <div class="cab-nav">
+    <a class="logo" href="index.html">
+      <div>Taxi Airport<small>TASHKENT · 24/7</small></div>
+    </a>
+    <div class="cab-nav-right">
+      <a href="index.html" class="btn btn-outline">Bosh sahifa</a>
+      <button type="button" class="btn btn-danger-outline" id="logoutBtn">Chiqish</button>
+    </div>
+  </div>
+</header>
+
+<main class="container cab-wrap">
+
+  <div class="cab-head">
+    <div>
+      <h1 id="greeting">Salom!</h1>
+      <div class="sub" id="greetingEmail"></div>
+    </div>
+    <div class="bonus-pill">
+      <span>🎁</span>
+      <div>
+        <b id="bonusAmount">0 so'm</b>
+        <span>Bonus balansingiz</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cab-tabs">
+    <button type="button" class="cab-tab-btn active" data-tab="new">Yangi buyurtma</button>
+    <button type="button" class="cab-tab-btn" data-tab="history">Buyurtmalar tarixi</button>
+    <button type="button" class="cab-tab-btn" data-tab="profile">Profil</button>
+  </div>
+
+  <!-- YANGI BUYURTMA -->
+  <section class="cab-panel active" id="panel-new">
+    <div class="card">
+      <h3>⚡ Tezkor buyurtma</h3>
+      <form id="bookingForm" class="qb-grid">
+        <div class="field">
+          <label>Ism-Familiya</label>
+          <input type="text" id="bkName" required>
+        </div>
+        <div class="field">
+          <label>Yo'nalish</label>
+          <select id="bkDirection">
+            <option value="Aeroportdan olib ketish">Aeroportdan olib ketish</option>
+            <option value="Aeroportga eltish">Aeroportga eltish</option>
+          </select>
+        </div>
+        <div class="field" id="bkFlightField">
+          <label>Reys raqami</label>
+          <input type="text" id="bkFlight" placeholder="HY 123">
+        </div>
+        <div class="field">
+          <label>Manzil</label>
+          <input type="text" id="bkAddress" placeholder="Ko'cha, uy, mahalla" required>
+        </div>
+        <div class="field">
+          <label>Sana</label>
+          <input type="text" id="bkDate" inputmode="numeric" maxlength="10" placeholder="kun/oy/yil" required>
+        </div>
+        <div class="field">
+          <label>Vaqt</label>
+          <input type="text" id="bkTime" inputmode="numeric" maxlength="5" placeholder="soat:daqiqa" required>
+        </div>
+        <div class="field">
+          <label>Bagaj soni</label>
+          <select id="bkBaggage">
+            <option value="0">0</option>
+            <option value="1" selected>1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5+">5+</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Mashina turi</label>
+          <select id="bkCar">
+            <option value="Comfort">Comfort</option>
+            <option value="Business">Business</option>
+            <option value="VIP Minivan">VIP Minivan</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Telefon</label>
+          <input type="tel" id="bkPhone" placeholder="+998 33 140 28 01" required>
+        </div>
+        <div class="field">
+          <label>Ismli taxtacha bilan kutib olish</label>
+          <select id="bkSign">
+            <option value="Kerak emas">Kerak emas</option>
+            <option value="Ha">Ha</option>
+          </select>
+        </div>
+        <p class="form-status" id="bookingStatus" style="grid-column:1/-1;"></p>
+        <div class="qb-actions">
+          <button type="submit" class="btn btn-gold btn-block" id="bookingSubmit">Zayavkani yuborish</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- BUYURTMALAR TARIXI -->
+  <section class="cab-panel" id="panel-history">
+    <div class="card">
+      <h3>Buyurtmalar tarixi</h3>
+      <div class="booking-list" id="bookingList">
+        <p class="empty-state">Yuklanmoqda...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROFIL -->
+  <section class="cab-panel" id="panel-profile">
+    <div class="card">
+      <h3>Profil ma'lumotlari</h3>
+      <form id="profileForm">
+        <div class="field">
+          <label>Ism Familiya</label>
+          <input type="text" id="pfName" required>
+        </div>
+        <div class="field">
+          <label>Telefon</label>
+          <input type="tel" id="pfPhone" required>
+        </div>
+        <div class="field">
+          <label>Email (o'zgartirib bo'lmaydi)</label>
+          <input type="email" id="pfEmail" disabled>
+        </div>
+        <p class="form-status" id="profileStatus"></p>
+        <button type="submit" class="btn btn-gold" id="profileSubmit">Saqlash</button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="auth.js"></script>
+<script>
+  let currentUser = null;
+
+  requireAuth(async (user) => {
+    currentUser = user;
+    document.getElementById('greeting').textContent = 'Salom, ' + (user.displayName || 'mijoz') + '!';
+    document.getElementById('greetingEmail').textContent = user.email;
+
+    const profile = await getUserProfile(user.uid);
+    if (profile) {
+      document.getElementById('bonusAmount').textContent = (profile.bonus || 0).toLocaleString('ru-RU') + ' so\'m';
+      document.getElementById('pfName').value = profile.name || '';
+      document.getElementById('pfPhone').value = profile.phone || '';
+      document.getElementById('pfEmail').value = profile.email || user.email;
+      document.getElementById('bkName').value = profile.name || '';
+      document.getElementById('bkPhone').value = profile.phone || '';
+    }
+
+    loadBookings();
+  });
+
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+    await logoutUser();
+    window.location.href = 'index.html';
+  });
+
+  // ---------- Tabs ----------
+  document.querySelectorAll('.cab-tab-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.cab-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.cab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // ---------- Yo'nalishga qarab reys raqami maydonini ko'rsatish/yashirish ----------
+  const bkDirectionEl = document.getElementById('bkDirection');
+  const bkFlightField = document.getElementById('bkFlightField');
+  function toggleFlightField() {
+    bkFlightField.style.display = bkDirectionEl.value === 'Aeroportga eltish' ? 'none' : 'flex';
+  }
+  bkDirectionEl.addEventListener('change', toggleFlightField);
+  toggleFlightField();
+
+  // ---------- Sana/vaqt formatlash (index.html'dagi bilan bir xil) ----------
+  const bkDateEl = document.getElementById('bkDate');
+  const bkTimeEl = document.getElementById('bkTime');
+  bkDateEl.addEventListener('input', () => {
+    let v = bkDateEl.value.replace(/\D/g, '').slice(0, 8);
+    let out = v.slice(0, 2);
+    if (v.length >= 3) out += '/' + v.slice(2, 4);
+    if (v.length >= 5) out += '/' + v.slice(4, 8);
+    bkDateEl.value = out;
+  });
+  bkTimeEl.addEventListener('input', () => {
+    let v = bkTimeEl.value.replace(/\D/g, '').slice(0, 4);
+    let out = v.slice(0, 2);
+    if (v.length >= 3) out += ':' + v.slice(2, 4);
+    bkTimeEl.value = out;
+  });
+  const DATE_RE = /^([0-2]\d|3[01])\/(0\d|1[0-2])\/20\d{2}$/;
+  const TIME_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
+
+  // ---------- Yangi buyurtma yuborish ----------
+  const bookingForm = document.getElementById('bookingForm');
+  const bookingStatus = document.getElementById('bookingStatus');
+  const bookingSubmit = document.getElementById('bookingSubmit');
+
+  bookingForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!bookingForm.reportValidity()) return;
+
+    if (!DATE_RE.test(bkDateEl.value) || !TIME_RE.test(bkTimeEl.value)) {
+      bookingStatus.textContent = 'Sana yoki vaqt formati noto\'g\'ri.';
+      bookingStatus.className = 'form-status error';
+      return;
+    }
+
+    const payload = {
+      name: document.getElementById('bkName').value,
+      direction: bkDirectionEl.value,
+      flight: document.getElementById('bkFlight').value,
+      address: document.getElementById('bkAddress').value,
+      date: bkDateEl.value,
+      time: bkTimeEl.value,
+      baggage: document.getElementById('bkBaggage').value,
+      car: document.getElementById('bkCar').value,
+      phone: document.getElementById('bkPhone').value,
+      sign: document.getElementById('bkSign').value
+    };
+
+    bookingSubmit.disabled = true;
+    bookingSubmit.textContent = 'Yuborilmoqda...';
+    bookingStatus.textContent = '';
+
+    try {
+      await createBooking(currentUser.uid, payload);
+      bookingStatus.textContent = 'Buyurtma yuborildi! Bonusingiz yangilandi.';
+      bookingStatus.className = 'form-status success';
+      bookingForm.reset();
+      toggleFlightField();
+      const profile = await getUserProfile(currentUser.uid);
+      document.getElementById('bonusAmount').textContent = (profile.bonus || 0).toLocaleString('ru-RU') + ' so\'m';
+      loadBookings();
+    } catch (err) {
+      bookingStatus.textContent = 'Xatolik: ' + err.message;
+      bookingStatus.className = 'form-status error';
+    } finally {
+      bookingSubmit.disabled = false;
+      bookingSubmit.textContent = 'Zayavkani yuborish';
+    }
+  });
+
+  // ---------- Buyurtmalar tarixi ----------
+  const STATUS_LABELS = {
+    'yuborildi': 'Yuborildi',
+    'tasdiqlandi': 'Tasdiqlandi',
+    'bajarildi': 'Bajarildi',
+    'bekor': 'Bekor qilindi'
+  };
+
+  async function loadBookings() {
+    const listEl = document.getElementById('bookingList');
+    try {
+      const bookings = await getUserBookings(currentUser.uid);
+      if (bookings.length === 0) {
+        listEl.innerHTML = '<p class="empty-state">Hali buyurtmalar yo\'q. "Yangi buyurtma" bo\'limidan birinchi zayavkangizni yuboring.</p>';
+        return;
+      }
+      listEl.innerHTML = bookings.map(b => {
+        const dt = b.createdAt && b.createdAt.toDate ? b.createdAt.toDate().toLocaleString('uz-UZ') : '';
+        const statusKey = (b.status || 'yuborildi').replace(' ', '');
+        const statusLabel = STATUS_LABELS[b.status] || b.status;
+        return `<div class="booking-item">
+          <div class="bi-main">
+            <b>${b.direction || ''} — ${b.date || ''} ${b.time || ''}</b>
+            <span>📍 ${b.address || ''}</span>
+            <span>🚗 ${b.car || ''} · 🧳 ${b.baggage || ''} bagaj${b.flight ? ' · ✈️ ' + b.flight : ''}</span>
+            <span>Yuborilgan: ${dt}</span>
+          </div>
+          <span class="status-pill ${statusKey}">${statusLabel}</span>
+        </div>`;
+      }).join('');
+    } catch (err) {
+      listEl.innerHTML = '<p class="empty-state">Buyurtmalarni yuklashda xatolik: ' + err.message + '</p>';
+    }
+  }
+
+  // ---------- Profilni saqlash ----------
+  const profileForm = document.getElementById('profileForm');
+  const profileStatus = document.getElementById('profileStatus');
+  const profileSubmit = document.getElementById('profileSubmit');
+
+  profileForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    profileSubmit.disabled = true;
+    profileStatus.textContent = '';
+    try {
+      const name = document.getElementById('pfName').value.trim();
+      const phone = document.getElementById('pfPhone').value.trim();
+      await updateUserProfile(currentUser.uid, { name, phone });
+      document.getElementById('greeting').textContent = 'Salom, ' + name + '!';
+      profileStatus.textContent = 'Saqlandi!';
+      profileStatus.className = 'form-status success';
+    } catch (err) {
+      profileStatus.textContent = 'Xatolik: ' + err.message;
+      profileStatus.className = 'form-status error';
+    } finally {
+      profileSubmit.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kirish — Taxi Airport Tashkent</title>
+<link rel="icon" type="image/png" href="favicon-tat-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cabinet.css">
+</head>
+<body>
+
+<header class="cab-header">
+  <div class="cab-nav">
+    <a class="logo" href="index.html">
+      <div>Taxi Airport<small>TASHKENT · 24/7</small></div>
+    </a>
+    <div class="cab-nav-right">
+      <a href="index.html" class="btn btn-outline">Bosh sahifa</a>
+    </div>
+  </div>
+</header>
+
+<main class="auth-wrap">
+  <div class="auth-card">
+    <div class="eyebrow">Shaxsiy kabinet</div>
+    <h1>Kirish</h1>
+    <p class="sub">Buyurtmalar tarixi, bonuslaringiz va profilingizni ko'rish uchun tizimga kiring.</p>
+
+    <form id="loginForm" novalidate>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="email@misol.uz" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label>Parol</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" required autocomplete="current-password" minlength="6">
+      </div>
+      <p class="form-status" id="loginStatus"></p>
+      <button type="submit" class="btn btn-gold btn-block" id="loginSubmit">Kirish</button>
+    </form>
+
+    <div class="auth-switch">
+      Hisobingiz yo'qmi? <a href="register.html">Ro'yxatdan o'tish</a>
+    </div>
+  </div>
+</main>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="auth.js"></script>
+<script>
+  redirectIfLoggedIn();
+
+  const loginForm = document.getElementById('loginForm');
+  const loginStatus = document.getElementById('loginStatus');
+  const loginSubmit = document.getElementById('loginSubmit');
+
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+
+    loginSubmit.disabled = true;
+    loginSubmit.textContent = 'Kirilmoqda...';
+    loginStatus.textContent = '';
+    loginStatus.className = 'form-status';
+
+    try {
+      await loginUser(email, password);
+      loginStatus.textContent = 'Muvaffaqiyatli! Kabinetga yo\'naltirilmoqda...';
+      loginStatus.className = 'form-status success';
+      window.location.href = 'member.html';
+    } catch (err) {
+      loginStatus.textContent = friendlyAuthError(err);
+      loginStatus.className = 'form-status error';
+      loginSubmit.disabled = false;
+      loginSubmit.textContent = 'Kirish';
+    }
+  });
+</script>
+</body>
+</html>
