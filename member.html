@@ -17,9 +17,19 @@
       <div>Taxi Airport<small>TASHKENT · 24/7</small></div>
     </a>
     <div class="cab-nav-right">
-      <a href="index.html" class="btn btn-outline">Bosh sahifa</a>
-      <a href="admin.html" class="btn btn-outline" id="adminNavLink" style="display:none;">Admin panel</a>
-      <button type="button" class="btn btn-danger-outline" id="logoutBtn">Chiqish</button>
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" class="lang-current" id="langCurrent">UZ <span>▾</span></button>
+        <div class="lang-menu" id="langMenu">
+          <button type="button" data-lang="uz">UZ — O'zbekcha</button>
+          <button type="button" data-lang="en">EN — English</button>
+          <button type="button" data-lang="tr">TR — Türkçe</button>
+          <button type="button" data-lang="ru">RU — Русский</button>
+          <button type="button" data-lang="ar">AR — العربية</button>
+        </div>
+      </div>
+      <a href="index.html" class="btn btn-outline" data-i18n="nav.home">Bosh sahifa</a>
+      <a href="admin.html" class="btn btn-outline" id="adminNavLink" style="display:none;" data-i18n="nav.admin">Admin panel</a>
+      <button type="button" class="btn btn-danger-outline" id="logoutBtn" data-i18n="nav.logout">Chiqish</button>
     </div>
   </div>
 </header>
@@ -35,51 +45,51 @@
       <span>🎁</span>
       <div>
         <b id="bonusAmount">0 so'm</b>
-        <span>Bonus balansingiz</span>
+        <span data-i18n="member.bonusLabel">Bonus balansingiz</span>
       </div>
     </div>
   </div>
 
   <div class="cab-tabs">
-    <button type="button" class="cab-tab-btn active" data-tab="new">Yangi buyurtma</button>
-    <button type="button" class="cab-tab-btn" data-tab="history">Buyurtmalar tarixi</button>
-    <button type="button" class="cab-tab-btn" data-tab="profile">Profil</button>
+    <button type="button" class="cab-tab-btn active" data-tab="new" data-i18n="member.tabNew">Yangi buyurtma</button>
+    <button type="button" class="cab-tab-btn" data-tab="history" data-i18n="member.tabHistory">Buyurtmalar tarixi</button>
+    <button type="button" class="cab-tab-btn" data-tab="profile" data-i18n="member.tabProfile">Profil</button>
   </div>
 
   <!-- YANGI BUYURTMA -->
   <section class="cab-panel active" id="panel-new">
     <div class="card">
-      <h3>⚡ Tezkor buyurtma</h3>
+      <h3 data-i18n="member.quickBookTitle">⚡ Tezkor buyurtma</h3>
       <form id="bookingForm" class="qb-grid">
         <div class="field">
-          <label>Ism-Familiya</label>
+          <label data-i18n="qb.labelName">Ism-Familiya</label>
           <input type="text" id="bkName" required>
         </div>
         <div class="field">
-          <label>Yo'nalish</label>
+          <label data-i18n="qb.labelDirection">Yo'nalish</label>
           <select id="bkDirection">
-            <option value="Aeroportdan olib ketish">Aeroportdan olib ketish</option>
-            <option value="Aeroportga eltish">Aeroportga eltish</option>
+            <option value="Aeroportdan olib ketish" data-i18n="qb.optFromAirport">Aeroportdan olib ketish</option>
+            <option value="Aeroportga eltish" data-i18n="qb.optToAirport">Aeroportga eltish</option>
           </select>
         </div>
         <div class="field" id="bkFlightField">
-          <label>Reys raqami</label>
+          <label data-i18n="qb.labelFlight">Reys raqami</label>
           <input type="text" id="bkFlight" placeholder="HY 123">
         </div>
         <div class="field">
-          <label>Manzil</label>
-          <input type="text" id="bkAddress" placeholder="Ko'cha, uy, mahalla" required>
+          <label data-i18n="qb.labelAddress">Manzil</label>
+          <input type="text" id="bkAddress" data-i18n-placeholder="qb.placeholderAddress" placeholder="Ko'cha, uy, mahalla" required>
         </div>
         <div class="field">
-          <label>Sana</label>
-          <input type="text" id="bkDate" inputmode="numeric" maxlength="10" placeholder="kun/oy/yil" required>
+          <label data-i18n="qb.labelDate">Sana</label>
+          <input type="text" id="bkDate" inputmode="numeric" maxlength="10" data-i18n-placeholder="qb.placeholderDate" placeholder="kun/oy/yil" required>
         </div>
         <div class="field">
-          <label>Vaqt</label>
-          <input type="text" id="bkTime" inputmode="numeric" maxlength="5" placeholder="soat:daqiqa" required>
+          <label data-i18n="qb.labelTime">Vaqt</label>
+          <input type="text" id="bkTime" inputmode="numeric" maxlength="5" data-i18n-placeholder="qb.placeholderTime" placeholder="soat:daqiqa" required>
         </div>
         <div class="field">
-          <label>Bagaj soni</label>
+          <label data-i18n="qb.labelBaggage">Bagaj soni</label>
           <select id="bkBaggage">
             <option value="0">0</option>
             <option value="1" selected>1</option>
@@ -90,27 +100,27 @@
           </select>
         </div>
         <div class="field">
-          <label>Mashina turi</label>
+          <label data-i18n="qb.labelCar">Mashina turi</label>
           <select id="bkCar">
-            <option value="Comfort">Comfort</option>
-            <option value="Business">Business</option>
-            <option value="VIP Minivan">VIP Minivan</option>
+            <option value="Comfort" data-i18n="qb.carComfort">Comfort</option>
+            <option value="Business" data-i18n="qb.carBusiness">Business</option>
+            <option value="VIP Minivan" data-i18n="qb.carVip">VIP Minivan</option>
           </select>
         </div>
         <div class="field">
-          <label>Telefon</label>
+          <label data-i18n="qb.labelPhone">Telefon</label>
           <input type="tel" id="bkPhone" placeholder="+998 33 140 28 01" required>
         </div>
         <div class="field">
-          <label>Ismli taxtacha bilan kutib olish</label>
+          <label data-i18n="qb.labelSign">Ismli taxtacha bilan kutib olish</label>
           <select id="bkSign">
-            <option value="Kerak emas">Kerak emas</option>
-            <option value="Ha">Ha</option>
+            <option value="Kerak emas" data-i18n="qb.signNo">Kerak emas</option>
+            <option value="Ha" data-i18n="qb.signYes">Ha</option>
           </select>
         </div>
         <p class="form-status" id="bookingStatus" style="grid-column:1/-1;"></p>
         <div class="qb-actions">
-          <button type="submit" class="btn btn-gold btn-block" id="bookingSubmit">Zayavkani yuborish</button>
+          <button type="submit" class="btn btn-gold btn-block" id="bookingSubmit" data-i18n="qb.submit">Zayavkani yuborish</button>
         </div>
       </form>
     </div>
@@ -119,9 +129,9 @@
   <!-- BUYURTMALAR TARIXI -->
   <section class="cab-panel" id="panel-history">
     <div class="card">
-      <h3>Buyurtmalar tarixi</h3>
+      <h3 data-i18n="member.historyTitle">Buyurtmalar tarixi</h3>
       <div class="booking-list" id="bookingList">
-        <p class="empty-state">Yuklanmoqda...</p>
+        <p class="empty-state" data-i18n="member.loading">Yuklanmoqda...</p>
       </div>
     </div>
   </section>
@@ -129,22 +139,22 @@
   <!-- PROFIL -->
   <section class="cab-panel" id="panel-profile">
     <div class="card">
-      <h3>Profil ma'lumotlari</h3>
+      <h3 data-i18n="member.profileTitle">Profil ma'lumotlari</h3>
       <form id="profileForm">
         <div class="field">
-          <label>Ism Familiya</label>
+          <label data-i18n="reg.labelName">Ism Familiya</label>
           <input type="text" id="pfName" required>
         </div>
         <div class="field">
-          <label>Telefon</label>
+          <label data-i18n="reg.labelPhone">Telefon</label>
           <input type="tel" id="pfPhone" required>
         </div>
         <div class="field">
-          <label>Email (o'zgartirib bo'lmaydi)</label>
+          <label data-i18n="member.emailLocked">Email (o'zgartirib bo'lmaydi)</label>
           <input type="email" id="pfEmail" disabled>
         </div>
         <p class="form-status" id="profileStatus"></p>
-        <button type="submit" class="btn btn-gold" id="profileSubmit">Saqlash</button>
+        <button type="submit" class="btn btn-gold" id="profileSubmit" data-i18n="member.save">Saqlash</button>
       </form>
     </div>
   </section>
@@ -157,12 +167,120 @@
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
 <script src="firebase-config.js"></script>
 <script src="auth.js"></script>
+<script src="i18n.js"></script>
 <script>
+  const TRANSLATIONS = {
+    uz: {
+      "nav.home": "Bosh sahifa", "nav.admin": "Admin panel", "nav.logout": "Chiqish",
+      "member.bonusLabel": "Bonus balansingiz", "member.tabNew": "Yangi buyurtma", "member.tabHistory": "Buyurtmalar tarixi", "member.tabProfile": "Profil",
+      "member.quickBookTitle": "⚡ Tezkor buyurtma",
+      "qb.labelName": "Ism-Familiya", "qb.labelDirection": "Yo'nalish", "qb.optFromAirport": "Aeroportdan olib ketish", "qb.optToAirport": "Aeroportga eltish",
+      "qb.labelFlight": "Reys raqami", "qb.labelAddress": "Manzil", "qb.placeholderAddress": "Ko'cha, uy, mahalla",
+      "qb.labelDate": "Sana", "qb.placeholderDate": "kun/oy/yil", "qb.labelTime": "Vaqt", "qb.placeholderTime": "soat:daqiqa",
+      "qb.labelBaggage": "Bagaj soni", "qb.labelCar": "Mashina turi", "qb.carComfort": "Comfort", "qb.carBusiness": "Business", "qb.carVip": "VIP Minivan",
+      "qb.labelPhone": "Telefon", "qb.labelSign": "Ismli taxtacha bilan kutib olish", "qb.signNo": "Kerak emas", "qb.signYes": "Ha", "qb.submit": "Zayavkani yuborish",
+      "member.historyTitle": "Buyurtmalar tarixi", "member.loading": "Yuklanmoqda...",
+      "member.profileTitle": "Profil ma'lumotlari", "reg.labelName": "Ism Familiya", "reg.labelPhone": "Telefon", "member.emailLocked": "Email (o'zgartirib bo'lmaydi)", "member.save": "Saqlash",
+      "member.greetingPrefix": "Salom, ", "member.greetingSuffix": "!", "member.defaultName": "mijoz",
+      "member.somSuffix": " so'm", "member.bagajUnit": "bagaj", "member.pricePrefix": "Narx: ", "member.priceUnset": "belgilanmagan",
+      "member.sentAt": "Yuborilgan: ", "member.payBtn": "To'lash",
+      "member.emptyBookings": "Hali buyurtmalar yo'q. \"Yangi buyurtma\" bo'limidan birinchi zayavkangizni yuboring.",
+      "member.loadErrorPrefix": "Buyurtmalarni yuklashda xatolik: ",
+      "member.dateTimeInvalid": "Sana yoki vaqt formati noto'g'ri.", "member.sending": "Yuborilmoqda...", "member.bookingSuccess": "Buyurtma yuborildi! Bonusingiz yangilandi.",
+      "member.errorPrefix": "Xatolik: ", "member.saved": "Saqlandi!",
+      "member.statusYuborildi": "Yuborildi", "member.statusTasdiqlandi": "Tasdiqlandi", "member.statusBajarildi": "Bajarildi", "member.statusBekor": "Bekor qilindi"
+    },
+    en: {
+      "nav.home": "Home", "nav.admin": "Admin panel", "nav.logout": "Logout",
+      "member.bonusLabel": "Your bonus balance", "member.tabNew": "New booking", "member.tabHistory": "Booking history", "member.tabProfile": "Profile",
+      "member.quickBookTitle": "⚡ Quick booking",
+      "qb.labelName": "Full name", "qb.labelDirection": "Direction", "qb.optFromAirport": "Pickup from airport", "qb.optToAirport": "Drop-off at airport",
+      "qb.labelFlight": "Flight number", "qb.labelAddress": "Address", "qb.placeholderAddress": "Street, house, neighborhood",
+      "qb.labelDate": "Date", "qb.placeholderDate": "dd/mm/yyyy", "qb.labelTime": "Time", "qb.placeholderTime": "hh:mm",
+      "qb.labelBaggage": "Luggage count", "qb.labelCar": "Car type", "qb.carComfort": "Comfort", "qb.carBusiness": "Business", "qb.carVip": "VIP Minivan",
+      "qb.labelPhone": "Phone", "qb.labelSign": "Greeting with name sign", "qb.signNo": "Not needed", "qb.signYes": "Yes", "qb.submit": "Send request",
+      "member.historyTitle": "Booking history", "member.loading": "Loading...",
+      "member.profileTitle": "Profile information", "reg.labelName": "Full name", "reg.labelPhone": "Phone", "member.emailLocked": "Email (cannot be changed)", "member.save": "Save",
+      "member.greetingPrefix": "Hello, ", "member.greetingSuffix": "!", "member.defaultName": "customer",
+      "member.somSuffix": " UZS", "member.bagajUnit": "luggage", "member.pricePrefix": "Price: ", "member.priceUnset": "not set",
+      "member.sentAt": "Sent: ", "member.payBtn": "Pay",
+      "member.emptyBookings": "No bookings yet. Send your first request from the \"New booking\" tab.",
+      "member.loadErrorPrefix": "Error loading bookings: ",
+      "member.dateTimeInvalid": "Invalid date or time format.", "member.sending": "Sending...", "member.bookingSuccess": "Booking sent! Your bonus has been updated.",
+      "member.errorPrefix": "Error: ", "member.saved": "Saved!",
+      "member.statusYuborildi": "Submitted", "member.statusTasdiqlandi": "Confirmed", "member.statusBajarildi": "Completed", "member.statusBekor": "Cancelled"
+    },
+    tr: {
+      "nav.home": "Ana Sayfa", "nav.admin": "Admin panel", "nav.logout": "Çıkış",
+      "member.bonusLabel": "Bonus bakiyeniz", "member.tabNew": "Yeni rezervasyon", "member.tabHistory": "Rezervasyon geçmişi", "member.tabProfile": "Profil",
+      "member.quickBookTitle": "⚡ Hızlı rezervasyon",
+      "qb.labelName": "Ad Soyad", "qb.labelDirection": "Yön", "qb.optFromAirport": "Havalimanından alış", "qb.optToAirport": "Havalimanına bırakış",
+      "qb.labelFlight": "Uçuş numarası", "qb.labelAddress": "Adres", "qb.placeholderAddress": "Sokak, ev, mahalle",
+      "qb.labelDate": "Tarih", "qb.placeholderDate": "gg/aa/yyyy", "qb.labelTime": "Saat", "qb.placeholderTime": "ss:dd",
+      "qb.labelBaggage": "Bagaj sayısı", "qb.labelCar": "Araç türü", "qb.carComfort": "Comfort", "qb.carBusiness": "Business", "qb.carVip": "VIP Minivan",
+      "qb.labelPhone": "Telefon", "qb.labelSign": "İsim tabelasıyla karşılama", "qb.signNo": "Gerek yok", "qb.signYes": "Evet", "qb.submit": "Talebi gönder",
+      "member.historyTitle": "Rezervasyon geçmişi", "member.loading": "Yükleniyor...",
+      "member.profileTitle": "Profil bilgileri", "reg.labelName": "Ad Soyad", "reg.labelPhone": "Telefon", "member.emailLocked": "E-posta (değiştirilemez)", "member.save": "Kaydet",
+      "member.greetingPrefix": "Merhaba, ", "member.greetingSuffix": "!", "member.defaultName": "müşteri",
+      "member.somSuffix": " so'm", "member.bagajUnit": "bagaj", "member.pricePrefix": "Fiyat: ", "member.priceUnset": "belirlenmedi",
+      "member.sentAt": "Gönderildi: ", "member.payBtn": "Öde",
+      "member.emptyBookings": "Henüz rezervasyon yok. \"Yeni rezervasyon\" sekmesinden ilk talebinizi gönderin.",
+      "member.loadErrorPrefix": "Rezervasyonlar yüklenirken hata: ",
+      "member.dateTimeInvalid": "Tarih veya saat formatı hatalı.", "member.sending": "Gönderiliyor...", "member.bookingSuccess": "Rezervasyon gönderildi! Bonusunuz güncellendi.",
+      "member.errorPrefix": "Hata: ", "member.saved": "Kaydedildi!",
+      "member.statusYuborildi": "Gönderildi", "member.statusTasdiqlandi": "Onaylandı", "member.statusBajarildi": "Tamamlandı", "member.statusBekor": "İptal edildi"
+    },
+    ru: {
+      "nav.home": "Главная", "nav.admin": "Админ-панель", "nav.logout": "Выйти",
+      "member.bonusLabel": "Ваш бонусный баланс", "member.tabNew": "Новый заказ", "member.tabHistory": "История заказов", "member.tabProfile": "Профиль",
+      "member.quickBookTitle": "⚡ Быстрый заказ",
+      "qb.labelName": "Имя Фамилия", "qb.labelDirection": "Направление", "qb.optFromAirport": "Встреча в аэропорту", "qb.optToAirport": "Отправка в аэропорт",
+      "qb.labelFlight": "Номер рейса", "qb.labelAddress": "Адрес", "qb.placeholderAddress": "Улица, дом, махалля",
+      "qb.labelDate": "Дата", "qb.placeholderDate": "дд/мм/гггг", "qb.labelTime": "Время", "qb.placeholderTime": "чч:мм",
+      "qb.labelBaggage": "Количество багажа", "qb.labelCar": "Тип автомобиля", "qb.carComfort": "Comfort", "qb.carBusiness": "Business", "qb.carVip": "VIP Минивэн",
+      "qb.labelPhone": "Телефон", "qb.labelSign": "Встреча с табличкой с именем", "qb.signNo": "Не нужно", "qb.signYes": "Да", "qb.submit": "Отправить заявку",
+      "member.historyTitle": "История заказов", "member.loading": "Загрузка...",
+      "member.profileTitle": "Информация профиля", "reg.labelName": "Имя Фамилия", "reg.labelPhone": "Телефон", "member.emailLocked": "Email (нельзя изменить)", "member.save": "Сохранить",
+      "member.greetingPrefix": "Здравствуйте, ", "member.greetingSuffix": "!", "member.defaultName": "клиент",
+      "member.somSuffix": " сум", "member.bagajUnit": "багаж", "member.pricePrefix": "Цена: ", "member.priceUnset": "не указана",
+      "member.sentAt": "Отправлено: ", "member.payBtn": "Оплатить",
+      "member.emptyBookings": "Заказов пока нет. Отправьте первую заявку во вкладке «Новый заказ».",
+      "member.loadErrorPrefix": "Ошибка загрузки заказов: ",
+      "member.dateTimeInvalid": "Неверный формат даты или времени.", "member.sending": "Отправка...", "member.bookingSuccess": "Заказ отправлен! Ваш бонус обновлён.",
+      "member.errorPrefix": "Ошибка: ", "member.saved": "Сохранено!",
+      "member.statusYuborildi": "Отправлено", "member.statusTasdiqlandi": "Подтверждено", "member.statusBajarildi": "Выполнено", "member.statusBekor": "Отменено"
+    },
+    ar: {
+      "nav.home": "الرئيسية", "nav.admin": "لوحة الإدارة", "nav.logout": "تسجيل الخروج",
+      "member.bonusLabel": "رصيد المكافآت", "member.tabNew": "حجز جديد", "member.tabHistory": "سجل الحجوزات", "member.tabProfile": "الملف الشخصي",
+      "member.quickBookTitle": "⚡ حجز سريع",
+      "qb.labelName": "الاسم الكامل", "qb.labelDirection": "الاتجاه", "qb.optFromAirport": "الاستلام من المطار", "qb.optToAirport": "التوصيل إلى المطار",
+      "qb.labelFlight": "رقم الرحلة", "qb.labelAddress": "العنوان", "qb.placeholderAddress": "الشارع، المنزل، الحي",
+      "qb.labelDate": "التاريخ", "qb.placeholderDate": "يوم/شهر/سنة", "qb.labelTime": "الوقت", "qb.placeholderTime": "ساعة:دقيقة",
+      "qb.labelBaggage": "عدد الحقائب", "qb.labelCar": "نوع السيارة", "qb.carComfort": "Comfort", "qb.carBusiness": "Business", "qb.carVip": "VIP Minivan",
+      "qb.labelPhone": "الهاتف", "qb.labelSign": "الاستقبال بلافتة الاسم", "qb.signNo": "غير مطلوب", "qb.signYes": "نعم", "qb.submit": "إرسال الطلب",
+      "member.historyTitle": "سجل الحجوزات", "member.loading": "جارٍ التحميل...",
+      "member.profileTitle": "معلومات الملف الشخصي", "reg.labelName": "الاسم الكامل", "reg.labelPhone": "الهاتف", "member.emailLocked": "البريد الإلكتروني (لا يمكن تغييره)", "member.save": "حفظ",
+      "member.greetingPrefix": "مرحبًا، ", "member.greetingSuffix": "!", "member.defaultName": "عميل",
+      "member.somSuffix": " سوم", "member.bagajUnit": "حقيبة", "member.pricePrefix": "السعر: ", "member.priceUnset": "غير محدد",
+      "member.sentAt": "تم الإرسال: ", "member.payBtn": "الدفع",
+      "member.emptyBookings": "لا توجد حجوزات بعد. أرسل طلبك الأول من تبويب \"حجز جديد\".",
+      "member.loadErrorPrefix": "خطأ في تحميل الحجوزات: ",
+      "member.dateTimeInvalid": "صيغة التاريخ أو الوقت غير صحيحة.", "member.sending": "جارٍ الإرسال...", "member.bookingSuccess": "تم إرسال الحجز! تم تحديث رصيد مكافآتك.",
+      "member.errorPrefix": "خطأ: ", "member.saved": "تم الحفظ!",
+      "member.statusYuborildi": "تم الإرسال", "member.statusTasdiqlandi": "تم التأكيد", "member.statusBajarildi": "تم التنفيذ", "member.statusBekor": "ملغى"
+    }
+  };
+  const T = initLangSwitcher(TRANSLATIONS);
+  document.addEventListener('taxiLangChanged', () => {
+    if (currentUser) loadBookings();
+  });
+
   let currentUser = null;
 
   requireAuth(async (user) => {
     currentUser = user;
-    document.getElementById('greeting').textContent = 'Salom, ' + (user.displayName || 'mijoz') + '!';
+    document.getElementById('greeting').textContent = T.t('member.greetingPrefix') + (user.displayName || T.t('member.defaultName')) + T.t('member.greetingSuffix');
     document.getElementById('greetingEmail').textContent = user.email;
     if (isAdminUser(user)) {
       document.getElementById('adminNavLink').style.display = '';
@@ -170,7 +288,7 @@
 
     const profile = await getUserProfile(user.uid);
     if (profile) {
-      document.getElementById('bonusAmount').textContent = (profile.bonus || 0).toLocaleString('ru-RU') + ' so\'m';
+      document.getElementById('bonusAmount').textContent = (profile.bonus || 0).toLocaleString('ru-RU') + T.t('member.somSuffix');
       document.getElementById('pfName').value = profile.name || '';
       document.getElementById('pfPhone').value = profile.phone || '';
       document.getElementById('pfEmail').value = profile.email || user.email;
@@ -250,7 +368,7 @@
     if (!bookingForm.reportValidity()) return;
 
     if (!DATE_RE.test(bkDateEl.value) || !TIME_RE.test(bkTimeEl.value)) {
-      bookingStatus.textContent = 'Sana yoki vaqt formati noto\'g\'ri.';
+      bookingStatus.textContent = T.t('member.dateTimeInvalid');
       bookingStatus.className = 'form-status error';
       return;
     }
@@ -269,66 +387,69 @@
     };
 
     bookingSubmit.disabled = true;
-    bookingSubmit.textContent = 'Yuborilmoqda...';
+    bookingSubmit.textContent = T.t('member.sending');
     bookingStatus.textContent = '';
 
     try {
       await createBooking(currentUser.uid, payload);
       sendToSheet(payload);
-      bookingStatus.textContent = 'Buyurtma yuborildi! Bonusingiz yangilandi.';
+      bookingStatus.textContent = T.t('member.bookingSuccess');
       bookingStatus.className = 'form-status success';
       bookingForm.reset();
       toggleFlightField();
       const profile = await getUserProfile(currentUser.uid);
-      document.getElementById('bonusAmount').textContent = (profile.bonus || 0).toLocaleString('ru-RU') + ' so\'m';
+      document.getElementById('bonusAmount').textContent = (profile.bonus || 0).toLocaleString('ru-RU') + T.t('member.somSuffix');
       loadBookings();
     } catch (err) {
-      bookingStatus.textContent = 'Xatolik: ' + err.message;
+      bookingStatus.textContent = T.t('member.errorPrefix') + err.message;
       bookingStatus.className = 'form-status error';
     } finally {
       bookingSubmit.disabled = false;
-      bookingSubmit.textContent = 'Zayavkani yuborish';
+      bookingSubmit.textContent = T.t('qb.submit');
     }
   });
 
   // ---------- Buyurtmalar tarixi ----------
-  const STATUS_LABELS = {
-    'yuborildi': 'Yuborildi',
-    'tasdiqlandi': 'Tasdiqlandi',
-    'bajarildi': 'Bajarildi',
-    'bekor': 'Bekor qilindi'
-  };
+  function statusLabelFor(status) {
+    const map = {
+      'yuborildi': 'member.statusYuborildi',
+      'tasdiqlandi': 'member.statusTasdiqlandi',
+      'bajarildi': 'member.statusBajarildi',
+      'bekor': 'member.statusBekor'
+    };
+    return map[status] ? T.t(map[status]) : status;
+  }
 
   async function loadBookings() {
     const listEl = document.getElementById('bookingList');
     try {
       const bookings = await getUserBookings(currentUser.uid);
       if (bookings.length === 0) {
-        listEl.innerHTML = '<p class="empty-state">Hali buyurtmalar yo\'q. "Yangi buyurtma" bo\'limidan birinchi zayavkangizni yuboring.</p>';
+        listEl.innerHTML = '<p class="empty-state">' + T.t('member.emptyBookings') + '</p>';
         return;
       }
       listEl.innerHTML = bookings.map(b => {
         const dt = b.createdAt && b.createdAt.toDate ? b.createdAt.toDate().toLocaleString('uz-UZ') : '';
         const statusKey = (b.status || 'yuborildi').replace(' ', '');
-        const statusLabel = STATUS_LABELS[b.status] || b.status;
+        const statusLabel = statusLabelFor(b.status || 'yuborildi');
         const priceLabel = (b.price === null || b.price === undefined || b.price === '')
-          ? 'Narx: belgilanmagan' : 'Narx: ' + Number(b.price).toLocaleString('ru-RU') + ' so\'m';
+          ? T.t('member.pricePrefix') + T.t('member.priceUnset') : T.t('member.pricePrefix') + Number(b.price).toLocaleString('ru-RU') + T.t('member.somSuffix');
         const payBtn = b.paymentLink
-          ? `<a href="${b.paymentLink}" target="_blank" rel="noopener" class="btn btn-gold" style="padding:8px 18px; font-size:12.5px; margin-left:10px;">To'lash</a>`
+          ? `<a href="${b.paymentLink}" target="_blank" rel="noopener" class="btn btn-gold" style="padding:8px 18px; font-size:12.5px; margin-left:10px;">${T.t('member.payBtn')}</a>`
           : '';
         return `<div class="booking-item">
           <div class="bi-main">
             <b>${b.direction || ''} — ${b.date || ''} ${b.time || ''}</b>
             <span>📍 ${b.address || ''}</span>
-            <span>🚗 ${b.car || ''} · 🧳 ${b.baggage || ''} bagaj${b.flight ? ' · ✈️ ' + b.flight : ''}</span>
+            <span>🚗 ${b.car || ''} · 🧳 ${b.baggage || ''} ${T.t('member.bagajUnit')}${b.flight ? ' · ✈️ ' + b.flight : ''}</span>
             <span>💰 ${priceLabel}${payBtn}</span>
-            <span>Yuborilgan: ${dt}</span>
+            <span>${T.t('member.sentAt')}${dt}</span>
           </div>
           <span class="status-pill ${statusKey}">${statusLabel}</span>
         </div>`;
       }).join('');
     } catch (err) {
-      listEl.innerHTML = '<p class="empty-state">Buyurtmalarni yuklashda xatolik: ' + err.message + '</p>';
+      listEl.innerHTML = '<p class="empty-state">' + T.t('member.loadErrorPrefix') + err.message + '</p>';
     }
   }
 
@@ -345,11 +466,11 @@
       const name = document.getElementById('pfName').value.trim();
       const phone = document.getElementById('pfPhone').value.trim();
       await updateUserProfile(currentUser.uid, { name, phone });
-      document.getElementById('greeting').textContent = 'Salom, ' + name + '!';
-      profileStatus.textContent = 'Saqlandi!';
+      document.getElementById('greeting').textContent = T.t('member.greetingPrefix') + name + T.t('member.greetingSuffix');
+      profileStatus.textContent = T.t('member.saved');
       profileStatus.className = 'form-status success';
     } catch (err) {
-      profileStatus.textContent = 'Xatolik: ' + err.message;
+      profileStatus.textContent = T.t('member.errorPrefix') + err.message;
       profileStatus.className = 'form-status error';
     } finally {
       profileSubmit.disabled = false;

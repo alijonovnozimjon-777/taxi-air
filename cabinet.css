@@ -59,6 +59,18 @@ header.cab-header{
 .logo small{display:block; font-size:10px; font-weight:600; letter-spacing:.2em; color:var(--muted);}
 .cab-nav-right{display:flex; align-items:center; gap:14px;}
 
+/* ---------- Language switcher (shared across cabinet pages) ---------- */
+.lang-switch{position:relative;}
+.lang-current{display:flex; align-items:center; gap:6px; background:var(--panel); border:1px solid var(--border); color:var(--text); font-family:inherit; font-weight:700; font-size:13px; padding:9px 14px; border-radius:999px; cursor:pointer;}
+.lang-current:hover{border-color:rgba(240,182,74,.4);}
+.lang-current span{font-size:10px; color:var(--muted); transition:transform .2s;}
+.lang-switch.open .lang-current span{transform:rotate(180deg);}
+.lang-menu{position:absolute; top:calc(100% + 10px); right:0; min-width:170px; background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:8px; box-shadow:var(--shadow); display:none; flex-direction:column; gap:2px; z-index:50;}
+.lang-switch.open .lang-menu{display:flex;}
+.lang-menu button{background:none; border:none; color:var(--text); font-family:inherit; font-size:13.5px; font-weight:600; text-align:left; padding:9px 12px; border-radius:8px; cursor:pointer;}
+.lang-menu button:hover{background:var(--panel-2); color:var(--gold);}
+.lang-menu button.active{color:var(--gold); background:var(--panel-2);}
+
 /* ---------- Auth pages (login/register) ---------- */
 .auth-wrap{
   min-height:100vh; display:flex; align-items:center; justify-content:center;

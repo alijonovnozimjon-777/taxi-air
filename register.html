@@ -17,40 +17,50 @@
       <div>Taxi Airport<small>TASHKENT · 24/7</small></div>
     </a>
     <div class="cab-nav-right">
-      <a href="index.html" class="btn btn-outline">Bosh sahifa</a>
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" class="lang-current" id="langCurrent">UZ <span>▾</span></button>
+        <div class="lang-menu" id="langMenu">
+          <button type="button" data-lang="uz">UZ — O'zbekcha</button>
+          <button type="button" data-lang="en">EN — English</button>
+          <button type="button" data-lang="tr">TR — Türkçe</button>
+          <button type="button" data-lang="ru">RU — Русский</button>
+          <button type="button" data-lang="ar">AR — العربية</button>
+        </div>
+      </div>
+      <a href="index.html" class="btn btn-outline" data-i18n="nav.home">Bosh sahifa</a>
     </div>
   </div>
 </header>
 
 <main class="auth-wrap">
   <div class="auth-card">
-    <div class="eyebrow">Shaxsiy kabinet</div>
-    <h1>Ro'yxatdan o'tish</h1>
-    <p class="sub">Hisob oching — buyurtmalaringiz tarixini saqlang va har bir buyurtma uchun bonus to'plang.</p>
+    <div class="eyebrow" data-i18n="reg.eyebrow">Shaxsiy kabinet</div>
+    <h1 data-i18n="reg.title">Ro'yxatdan o'tish</h1>
+    <p class="sub" data-i18n="reg.sub">Hisob oching — buyurtmalaringiz tarixini saqlang va har bir buyurtma uchun bonus to'plang.</p>
 
     <form id="registerForm" novalidate>
       <div class="field">
-        <label>Ism Familiya</label>
+        <label data-i18n="reg.labelName">Ism Familiya</label>
         <input type="text" id="regName" placeholder="Ism Familiya" required autocomplete="name">
       </div>
       <div class="field">
-        <label>Telefon</label>
+        <label data-i18n="reg.labelPhone">Telefon</label>
         <input type="tel" id="regPhone" placeholder="+998 33 140 28 01" required autocomplete="tel">
       </div>
       <div class="field">
-        <label>Email</label>
+        <label data-i18n="reg.labelEmail">Email</label>
         <input type="email" id="regEmail" placeholder="email@misol.uz" required autocomplete="email">
       </div>
       <div class="field">
-        <label>Parol</label>
+        <label data-i18n="reg.labelPassword">Parol</label>
         <input type="password" id="regPassword" placeholder="Kamida 6 ta belgi" required autocomplete="new-password" minlength="6">
       </div>
       <p class="form-status" id="regStatus"></p>
-      <button type="submit" class="btn btn-gold btn-block" id="regSubmit">Ro'yxatdan o'tish</button>
+      <button type="submit" class="btn btn-gold btn-block" id="regSubmit" data-i18n="reg.submit">Ro'yxatdan o'tish</button>
     </form>
 
     <div class="auth-switch">
-      Hisobingiz bormi? <a href="login.html">Kirish</a>
+      <span data-i18n="reg.haveAccount">Hisobingiz bormi?</span> <a href="login.html" data-i18n="reg.loginLink">Kirish</a>
     </div>
   </div>
 </main>
@@ -61,7 +71,17 @@
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
 <script src="firebase-config.js"></script>
 <script src="auth.js"></script>
+<script src="i18n.js"></script>
 <script>
+  const TRANSLATIONS = {
+    uz: { "nav.home": "Bosh sahifa", "reg.eyebrow": "Shaxsiy kabinet", "reg.title": "Ro'yxatdan o'tish", "reg.sub": "Hisob oching — buyurtmalaringiz tarixini saqlang va har bir buyurtma uchun bonus to'plang.", "reg.labelName": "Ism Familiya", "reg.labelPhone": "Telefon", "reg.labelEmail": "Email", "reg.labelPassword": "Parol", "reg.submit": "Ro'yxatdan o'tish", "reg.haveAccount": "Hisobingiz bormi?", "reg.loginLink": "Kirish", "reg.creating": "Yaratilmoqda...", "reg.success": "Hisob yaratildi! Kabinetga yo'naltirilmoqda..." },
+    en: { "nav.home": "Home", "reg.eyebrow": "Personal account", "reg.title": "Register", "reg.sub": "Create an account — keep your booking history and earn a bonus for every ride.", "reg.labelName": "Full name", "reg.labelPhone": "Phone", "reg.labelEmail": "Email", "reg.labelPassword": "Password", "reg.submit": "Register", "reg.haveAccount": "Already have an account?", "reg.loginLink": "Login", "reg.creating": "Creating...", "reg.success": "Account created! Redirecting to your account..." },
+    tr: { "nav.home": "Ana Sayfa", "reg.eyebrow": "Kişisel Hesap", "reg.title": "Kayıt Ol", "reg.sub": "Hesap oluşturun — rezervasyon geçmişinizi saklayın ve her seyahat için bonus kazanın.", "reg.labelName": "Ad Soyad", "reg.labelPhone": "Telefon", "reg.labelEmail": "E-posta", "reg.labelPassword": "Şifre", "reg.submit": "Kayıt Ol", "reg.haveAccount": "Zaten hesabınız var mı?", "reg.loginLink": "Giriş", "reg.creating": "Oluşturuluyor...", "reg.success": "Hesap oluşturuldu! Yönlendiriliyorsunuz..." },
+    ru: { "nav.home": "Главная", "reg.eyebrow": "Личный кабинет", "reg.title": "Регистрация", "reg.sub": "Создайте аккаунт — сохраняйте историю заказов и получайте бонус за каждую поездку.", "reg.labelName": "Имя Фамилия", "reg.labelPhone": "Телефон", "reg.labelEmail": "Email", "reg.labelPassword": "Пароль", "reg.submit": "Регистрация", "reg.haveAccount": "Уже есть аккаунт?", "reg.loginLink": "Войти", "reg.creating": "Создание...", "reg.success": "Аккаунт создан! Перенаправление в кабинет..." },
+    ar: { "nav.home": "الرئيسية", "reg.eyebrow": "الحساب الشخصي", "reg.title": "إنشاء حساب", "reg.sub": "أنشئ حسابًا — احتفظ بسجل حجوزاتك واحصل على مكافأة عن كل رحلة.", "reg.labelName": "الاسم الكامل", "reg.labelPhone": "الهاتف", "reg.labelEmail": "البريد الإلكتروني", "reg.labelPassword": "كلمة المرور", "reg.submit": "إنشاء حساب", "reg.haveAccount": "لديك حساب بالفعل؟", "reg.loginLink": "تسجيل الدخول", "reg.creating": "جارٍ الإنشاء...", "reg.success": "تم إنشاء الحساب! جارٍ التوجيه إلى حسابك..." }
+  };
+  const T = initLangSwitcher(TRANSLATIONS);
+
   redirectIfLoggedIn();
 
   const registerForm = document.getElementById('registerForm');
@@ -76,20 +96,20 @@
     const password = document.getElementById('regPassword').value;
 
     regSubmit.disabled = true;
-    regSubmit.textContent = 'Yaratilmoqda...';
+    regSubmit.textContent = T.t('reg.creating');
     regStatus.textContent = '';
     regStatus.className = 'form-status';
 
     try {
       await registerUser({ name, phone, email, password });
-      regStatus.textContent = 'Hisob yaratildi! Kabinetga yo\'naltirilmoqda...';
+      regStatus.textContent = T.t('reg.success');
       regStatus.className = 'form-status success';
       window.location.href = 'member.html';
     } catch (err) {
       regStatus.textContent = friendlyAuthError(err);
       regStatus.className = 'form-status error';
       regSubmit.disabled = false;
-      regSubmit.textContent = 'Ro\'yxatdan o\'tish';
+      regSubmit.textContent = T.t('reg.submit');
     }
   });
 </script>

@@ -17,32 +17,42 @@
       <div>Taxi Airport<small>TASHKENT · 24/7</small></div>
     </a>
     <div class="cab-nav-right">
-      <a href="index.html" class="btn btn-outline">Bosh sahifa</a>
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" class="lang-current" id="langCurrent">UZ <span>▾</span></button>
+        <div class="lang-menu" id="langMenu">
+          <button type="button" data-lang="uz">UZ — O'zbekcha</button>
+          <button type="button" data-lang="en">EN — English</button>
+          <button type="button" data-lang="tr">TR — Türkçe</button>
+          <button type="button" data-lang="ru">RU — Русский</button>
+          <button type="button" data-lang="ar">AR — العربية</button>
+        </div>
+      </div>
+      <a href="index.html" class="btn btn-outline" data-i18n="nav.home">Bosh sahifa</a>
     </div>
   </div>
 </header>
 
 <main class="auth-wrap">
   <div class="auth-card">
-    <div class="eyebrow">Shaxsiy kabinet</div>
-    <h1>Kirish</h1>
-    <p class="sub">Buyurtmalar tarixi, bonuslaringiz va profilingizni ko'rish uchun tizimga kiring.</p>
+    <div class="eyebrow" data-i18n="login.eyebrow">Shaxsiy kabinet</div>
+    <h1 data-i18n="login.title">Kirish</h1>
+    <p class="sub" data-i18n="login.sub">Buyurtmalar tarixi, bonuslaringiz va profilingizni ko'rish uchun tizimga kiring.</p>
 
     <form id="loginForm" novalidate>
       <div class="field">
-        <label>Email</label>
+        <label data-i18n="login.labelEmail">Email</label>
         <input type="email" id="loginEmail" placeholder="email@misol.uz" required autocomplete="email">
       </div>
       <div class="field">
-        <label>Parol</label>
+        <label data-i18n="login.labelPassword">Parol</label>
         <input type="password" id="loginPassword" placeholder="••••••••" required autocomplete="current-password" minlength="6">
       </div>
       <p class="form-status" id="loginStatus"></p>
-      <button type="submit" class="btn btn-gold btn-block" id="loginSubmit">Kirish</button>
+      <button type="submit" class="btn btn-gold btn-block" id="loginSubmit" data-i18n="login.submit">Kirish</button>
     </form>
 
     <div class="auth-switch">
-      Hisobingiz yo'qmi? <a href="register.html">Ro'yxatdan o'tish</a>
+      <span data-i18n="login.noAccount">Hisobingiz yo'qmi?</span> <a href="register.html" data-i18n="login.registerLink">Ro'yxatdan o'tish</a>
     </div>
   </div>
 </main>
@@ -53,7 +63,17 @@
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
 <script src="firebase-config.js"></script>
 <script src="auth.js"></script>
+<script src="i18n.js"></script>
 <script>
+  const TRANSLATIONS = {
+    uz: { "nav.home": "Bosh sahifa", "login.eyebrow": "Shaxsiy kabinet", "login.title": "Kirish", "login.sub": "Buyurtmalar tarixi, bonuslaringiz va profilingizni ko'rish uchun tizimga kiring.", "login.labelEmail": "Email", "login.labelPassword": "Parol", "login.submit": "Kirish", "login.noAccount": "Hisobingiz yo'qmi?", "login.registerLink": "Ro'yxatdan o'tish", "login.loggingIn": "Kirilmoqda...", "login.success": "Muvaffaqiyatli! Kabinetga yo'naltirilmoqda..." },
+    en: { "nav.home": "Home", "login.eyebrow": "Personal account", "login.title": "Login", "login.sub": "Sign in to see your booking history, bonuses and profile.", "login.labelEmail": "Email", "login.labelPassword": "Password", "login.submit": "Login", "login.noAccount": "Don't have an account?", "login.registerLink": "Register", "login.loggingIn": "Logging in...", "login.success": "Success! Redirecting to your account..." },
+    tr: { "nav.home": "Ana Sayfa", "login.eyebrow": "Kişisel Hesap", "login.title": "Giriş", "login.sub": "Rezervasyon geçmişinizi, bonuslarınızı ve profilinizi görmek için giriş yapın.", "login.labelEmail": "E-posta", "login.labelPassword": "Şifre", "login.submit": "Giriş", "login.noAccount": "Hesabınız yok mu?", "login.registerLink": "Kayıt olun", "login.loggingIn": "Giriş yapılıyor...", "login.success": "Başarılı! Hesabınıza yönlendiriliyorsunuz..." },
+    ru: { "nav.home": "Главная", "login.eyebrow": "Личный кабинет", "login.title": "Вход", "login.sub": "Войдите, чтобы видеть историю заказов, бонусы и профиль.", "login.labelEmail": "Email", "login.labelPassword": "Пароль", "login.submit": "Войти", "login.noAccount": "Нет аккаунта?", "login.registerLink": "Регистрация", "login.loggingIn": "Выполняется вход...", "login.success": "Успешно! Перенаправление в кабинет..." },
+    ar: { "nav.home": "الرئيسية", "login.eyebrow": "الحساب الشخصي", "login.title": "تسجيل الدخول", "login.sub": "سجّل الدخول لعرض سجل حجوزاتك ومكافآتك وملفك الشخصي.", "login.labelEmail": "البريد الإلكتروني", "login.labelPassword": "كلمة المرور", "login.submit": "تسجيل الدخول", "login.noAccount": "ليس لديك حساب؟", "login.registerLink": "إنشاء حساب", "login.loggingIn": "جارٍ تسجيل الدخول...", "login.success": "تم بنجاح! جارٍ التوجيه إلى حسابك..." }
+  };
+  const T = initLangSwitcher(TRANSLATIONS);
+
   redirectIfLoggedIn();
 
   const loginForm = document.getElementById('loginForm');
@@ -66,20 +86,20 @@
     const password = document.getElementById('loginPassword').value;
 
     loginSubmit.disabled = true;
-    loginSubmit.textContent = 'Kirilmoqda...';
+    loginSubmit.textContent = T.t('login.loggingIn');
     loginStatus.textContent = '';
     loginStatus.className = 'form-status';
 
     try {
       await loginUser(email, password);
-      loginStatus.textContent = 'Muvaffaqiyatli! Kabinetga yo\'naltirilmoqda...';
+      loginStatus.textContent = T.t('login.success');
       loginStatus.className = 'form-status success';
       window.location.href = 'member.html';
     } catch (err) {
       loginStatus.textContent = friendlyAuthError(err);
       loginStatus.className = 'form-status error';
       loginSubmit.disabled = false;
-      loginSubmit.textContent = 'Kirish';
+      loginSubmit.textContent = T.t('login.submit');
     }
   });
 </script>

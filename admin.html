@@ -17,8 +17,18 @@
       <div>Taxi Airport<small>TASHKENT · 24/7</small></div>
     </a>
     <div class="cab-nav-right">
-      <a href="member.html" class="btn btn-outline">Kabinetim</a>
-      <button type="button" class="btn btn-danger-outline" id="logoutBtn">Chiqish</button>
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" class="lang-current" id="langCurrent">UZ <span>▾</span></button>
+        <div class="lang-menu" id="langMenu">
+          <button type="button" data-lang="uz">UZ — O'zbekcha</button>
+          <button type="button" data-lang="en">EN — English</button>
+          <button type="button" data-lang="tr">TR — Türkçe</button>
+          <button type="button" data-lang="ru">RU — Русский</button>
+          <button type="button" data-lang="ar">AR — العربية</button>
+        </div>
+      </div>
+      <a href="member.html" class="btn btn-outline" data-i18n="nav.member">Kabinetim</a>
+      <button type="button" class="btn btn-danger-outline" id="logoutBtn" data-i18n="nav.logout">Chiqish</button>
     </div>
   </div>
 </header>
@@ -27,15 +37,15 @@
 
   <div class="cab-head">
     <div>
-      <h1>Admin panel</h1>
-      <div class="sub">Barcha mijozlar buyurtmalari — narx va holatni shu yerdan boshqarasiz.</div>
+      <h1 data-i18n="admin.title">Admin panel</h1>
+      <div class="sub" data-i18n="admin.sub">Barcha mijozlar buyurtmalari — narx va holatni shu yerdan boshqarasiz.</div>
     </div>
   </div>
 
   <div id="deniedBox" style="display:none;">
     <div class="card">
-      <h3>Ruxsat yo'q</h3>
-      <p style="color:var(--muted); font-size:14.5px;">Bu sahifa faqat administrator uchun. <a href="member.html" style="color:var(--gold); font-weight:700;">Kabinetimga qaytish</a></p>
+      <h3 data-i18n="admin.denied">Ruxsat yo'q</h3>
+      <p style="color:var(--muted); font-size:14.5px;"><span data-i18n="admin.deniedText">Bu sahifa faqat administrator uchun.</span> <a href="member.html" style="color:var(--gold); font-weight:700;" data-i18n="admin.deniedLink">Kabinetimga qaytish</a></p>
     </div>
   </div>
 
@@ -46,22 +56,22 @@
       <table class="admin-table">
         <thead>
           <tr>
-            <th>Yuborilgan</th>
-            <th>Sana / Vaqt</th>
-            <th>Reys</th>
-            <th>Yo'nalish</th>
-            <th>Manzil</th>
-            <th>Mashina</th>
-            <th>Mijoz</th>
-            <th>Telefon</th>
-            <th>Bagaj</th>
-            <th>Narx (so'm)</th>
-            <th>To'lov havolasi</th>
-            <th>Holat</th>
+            <th data-i18n="admin.thSent">Yuborilgan</th>
+            <th data-i18n="admin.thDateTime">Sana / Vaqt</th>
+            <th data-i18n="admin.thFlight">Reys</th>
+            <th data-i18n="admin.thDirection">Yo'nalish</th>
+            <th data-i18n="admin.thAddress">Manzil</th>
+            <th data-i18n="admin.thCar">Mashina</th>
+            <th data-i18n="admin.thClient">Mijoz</th>
+            <th data-i18n="admin.thPhone">Telefon</th>
+            <th data-i18n="admin.thBaggage">Bagaj</th>
+            <th data-i18n="admin.thPrice">Narx (so'm)</th>
+            <th data-i18n="admin.thPaymentLink">To'lov havolasi</th>
+            <th data-i18n="admin.thStatus">Holat</th>
           </tr>
         </thead>
         <tbody id="bookingsTbody">
-          <tr><td colspan="12" style="text-align:center; color:var(--muted); padding:30px;">Yuklanmoqda...</td></tr>
+          <tr><td colspan="12" style="text-align:center; color:var(--muted); padding:30px;" data-i18n="member.loading">Yuklanmoqda...</td></tr>
         </tbody>
       </table>
     </div>
@@ -75,13 +85,88 @@
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
 <script src="firebase-config.js"></script>
 <script src="auth.js"></script>
+<script src="i18n.js"></script>
 <script>
-  const STATUS_OPTIONS = [
-    { value: 'yuborildi', label: 'Yuborildi' },
-    { value: 'tasdiqlandi', label: 'Tasdiqlandi' },
-    { value: 'bajarildi', label: 'Bajarildi' },
-    { value: 'bekor', label: 'Bekor qilindi' }
-  ];
+  const TRANSLATIONS = {
+    uz: {
+      "nav.member": "Kabinetim", "nav.logout": "Chiqish",
+      "admin.title": "Admin panel", "admin.sub": "Barcha mijozlar buyurtmalari — narx va holatni shu yerdan boshqarasiz.",
+      "admin.denied": "Ruxsat yo'q", "admin.deniedText": "Bu sahifa faqat administrator uchun.", "admin.deniedLink": "Kabinetimga qaytish",
+      "admin.thSent": "Yuborilgan", "admin.thDateTime": "Sana / Vaqt", "admin.thFlight": "Reys", "admin.thDirection": "Yo'nalish",
+      "admin.thAddress": "Manzil", "admin.thCar": "Mashina", "admin.thClient": "Mijoz", "admin.thPhone": "Telefon",
+      "admin.thBaggage": "Bagaj", "admin.thPrice": "Narx (so'm)", "admin.thPaymentLink": "To'lov havolasi", "admin.thStatus": "Holat",
+      "member.loading": "Yuklanmoqda...",
+      "admin.summaryTotal": "Jami buyurtmalar", "admin.summaryPending": "Kutilmoqda", "admin.summaryDone": "Bajarilgan", "admin.summaryRevenue": "Belgilangan narxlar yig'indisi",
+      "admin.noBookings": "Hali buyurtmalar yo'q.", "admin.paymentPlaceholder": "Payme/Click havolasi", "admin.saved": "Saqlandi",
+      "admin.saveError": "Saqlashda xatolik: ", "admin.loadError": "Xatolik: ", "member.somSuffix": " so'm",
+      "member.statusYuborildi": "Yuborildi", "member.statusTasdiqlandi": "Tasdiqlandi", "member.statusBajarildi": "Bajarildi", "member.statusBekor": "Bekor qilindi"
+    },
+    en: {
+      "nav.member": "My Account", "nav.logout": "Logout",
+      "admin.title": "Admin panel", "admin.sub": "All customer bookings — manage price and status right here.",
+      "admin.denied": "Access denied", "admin.deniedText": "This page is for administrators only.", "admin.deniedLink": "Back to My Account",
+      "admin.thSent": "Sent", "admin.thDateTime": "Date / Time", "admin.thFlight": "Flight", "admin.thDirection": "Direction",
+      "admin.thAddress": "Address", "admin.thCar": "Car", "admin.thClient": "Client", "admin.thPhone": "Phone",
+      "admin.thBaggage": "Luggage", "admin.thPrice": "Price (UZS)", "admin.thPaymentLink": "Payment link", "admin.thStatus": "Status",
+      "member.loading": "Loading...",
+      "admin.summaryTotal": "Total bookings", "admin.summaryPending": "Pending", "admin.summaryDone": "Completed", "admin.summaryRevenue": "Total set prices",
+      "admin.noBookings": "No bookings yet.", "admin.paymentPlaceholder": "Payme/Click link", "admin.saved": "Saved",
+      "admin.saveError": "Save error: ", "admin.loadError": "Error: ", "member.somSuffix": " UZS",
+      "member.statusYuborildi": "Submitted", "member.statusTasdiqlandi": "Confirmed", "member.statusBajarildi": "Completed", "member.statusBekor": "Cancelled"
+    },
+    tr: {
+      "nav.member": "Hesabım", "nav.logout": "Çıkış",
+      "admin.title": "Admin panel", "admin.sub": "Tüm müşteri rezervasyonları — fiyat ve durumu buradan yönetin.",
+      "admin.denied": "Erişim yok", "admin.deniedText": "Bu sayfa yalnızca yöneticiler içindir.", "admin.deniedLink": "Hesabıma dön",
+      "admin.thSent": "Gönderildi", "admin.thDateTime": "Tarih / Saat", "admin.thFlight": "Uçuş", "admin.thDirection": "Yön",
+      "admin.thAddress": "Adres", "admin.thCar": "Araç", "admin.thClient": "Müşteri", "admin.thPhone": "Telefon",
+      "admin.thBaggage": "Bagaj", "admin.thPrice": "Fiyat (so'm)", "admin.thPaymentLink": "Ödeme bağlantısı", "admin.thStatus": "Durum",
+      "member.loading": "Yükleniyor...",
+      "admin.summaryTotal": "Toplam rezervasyon", "admin.summaryPending": "Bekliyor", "admin.summaryDone": "Tamamlandı", "admin.summaryRevenue": "Belirlenen fiyatlar toplamı",
+      "admin.noBookings": "Henüz rezervasyon yok.", "admin.paymentPlaceholder": "Payme/Click bağlantısı", "admin.saved": "Kaydedildi",
+      "admin.saveError": "Kaydetme hatası: ", "admin.loadError": "Hata: ", "member.somSuffix": " so'm",
+      "member.statusYuborildi": "Gönderildi", "member.statusTasdiqlandi": "Onaylandı", "member.statusBajarildi": "Tamamlandı", "member.statusBekor": "İptal edildi"
+    },
+    ru: {
+      "nav.member": "Личный кабинет", "nav.logout": "Выйти",
+      "admin.title": "Админ-панель", "admin.sub": "Все заказы клиентов — управляйте ценой и статусом прямо здесь.",
+      "admin.denied": "Доступ запрещён", "admin.deniedText": "Эта страница только для администратора.", "admin.deniedLink": "Вернуться в кабинет",
+      "admin.thSent": "Отправлено", "admin.thDateTime": "Дата / Время", "admin.thFlight": "Рейс", "admin.thDirection": "Направление",
+      "admin.thAddress": "Адрес", "admin.thCar": "Машина", "admin.thClient": "Клиент", "admin.thPhone": "Телефон",
+      "admin.thBaggage": "Багаж", "admin.thPrice": "Цена (сум)", "admin.thPaymentLink": "Ссылка на оплату", "admin.thStatus": "Статус",
+      "member.loading": "Загрузка...",
+      "admin.summaryTotal": "Всего заказов", "admin.summaryPending": "В ожидании", "admin.summaryDone": "Выполнено", "admin.summaryRevenue": "Сумма установленных цен",
+      "admin.noBookings": "Заказов пока нет.", "admin.paymentPlaceholder": "Ссылка Payme/Click", "admin.saved": "Сохранено",
+      "admin.saveError": "Ошибка сохранения: ", "admin.loadError": "Ошибка: ", "member.somSuffix": " сум",
+      "member.statusYuborildi": "Отправлено", "member.statusTasdiqlandi": "Подтверждено", "member.statusBajarildi": "Выполнено", "member.statusBekor": "Отменено"
+    },
+    ar: {
+      "nav.member": "حسابي", "nav.logout": "تسجيل الخروج",
+      "admin.title": "لوحة الإدارة", "admin.sub": "جميع حجوزات العملاء — أدر السعر والحالة من هنا.",
+      "admin.denied": "الوصول مرفوض", "admin.deniedText": "هذه الصفحة مخصصة للمسؤول فقط.", "admin.deniedLink": "العودة إلى حسابي",
+      "admin.thSent": "تم الإرسال", "admin.thDateTime": "التاريخ / الوقت", "admin.thFlight": "الرحلة", "admin.thDirection": "الاتجاه",
+      "admin.thAddress": "العنوان", "admin.thCar": "السيارة", "admin.thClient": "العميل", "admin.thPhone": "الهاتف",
+      "admin.thBaggage": "الحقائب", "admin.thPrice": "السعر (سوم)", "admin.thPaymentLink": "رابط الدفع", "admin.thStatus": "الحالة",
+      "member.loading": "جارٍ التحميل...",
+      "admin.summaryTotal": "إجمالي الحجوزات", "admin.summaryPending": "قيد الانتظار", "admin.summaryDone": "مكتمل", "admin.summaryRevenue": "إجمالي الأسعار المحددة",
+      "admin.noBookings": "لا توجد حجوزات بعد.", "admin.paymentPlaceholder": "رابط Payme/Click", "admin.saved": "تم الحفظ",
+      "admin.saveError": "خطأ في الحفظ: ", "admin.loadError": "خطأ: ", "member.somSuffix": " سوم",
+      "member.statusYuborildi": "تم الإرسال", "member.statusTasdiqlandi": "تم التأكيد", "member.statusBajarildi": "تم التنفيذ", "member.statusBekor": "ملغى"
+    }
+  };
+  const T = initLangSwitcher(TRANSLATIONS);
+  document.addEventListener('taxiLangChanged', () => {
+    if (document.getElementById('adminBox').style.display !== 'none') loadAllBookings();
+  });
+
+  function statusOptions() {
+    return [
+      { value: 'yuborildi', label: T.t('member.statusYuborildi') },
+      { value: 'tasdiqlandi', label: T.t('member.statusTasdiqlandi') },
+      { value: 'bajarildi', label: T.t('member.statusBajarildi') },
+      { value: 'bekor', label: T.t('member.statusBekor') }
+    ];
+  }
 
   requireAuth(async (user) => {
     if (!isAdminUser(user)) {
@@ -113,20 +198,20 @@
       const done = bookings.filter(b => b.status === 'bajarildi').length;
       const revenue = bookings.reduce((sum, b) => sum + (Number(b.price) || 0), 0);
       document.getElementById('summaryRow').innerHTML = `
-        <div class="summary-pill"><b>${total}</b><span>Jami buyurtmalar</span></div>
-        <div class="summary-pill"><b>${pending}</b><span>Kutilmoqda</span></div>
-        <div class="summary-pill"><b>${done}</b><span>Bajarilgan</span></div>
-        <div class="summary-pill"><b>${revenue.toLocaleString('ru-RU')} so'm</b><span>Belgilangan narxlar yig'indisi</span></div>
+        <div class="summary-pill"><b>${total}</b><span>${T.t('admin.summaryTotal')}</span></div>
+        <div class="summary-pill"><b>${pending}</b><span>${T.t('admin.summaryPending')}</span></div>
+        <div class="summary-pill"><b>${done}</b><span>${T.t('admin.summaryDone')}</span></div>
+        <div class="summary-pill"><b>${revenue.toLocaleString('ru-RU')}${T.t('member.somSuffix')}</b><span>${T.t('admin.summaryRevenue')}</span></div>
       `;
 
       if (bookings.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="12" style="text-align:center; color:var(--muted); padding:30px;">Hali buyurtmalar yo\'q.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="12" style="text-align:center; color:var(--muted); padding:30px;">' + T.t('admin.noBookings') + '</td></tr>';
         return;
       }
 
       tbody.innerHTML = bookings.map(b => {
         const dt = b.createdAt && b.createdAt.toDate ? b.createdAt.toDate().toLocaleString('uz-UZ') : '';
-        const statusOptionsHtml = STATUS_OPTIONS.map(o =>
+        const statusOptionsHtml = statusOptions().map(o =>
           `<option value="${o.value}" ${b.status === o.value ? 'selected' : ''}>${o.label}</option>`
         ).join('');
         return `<tr data-id="${b.id}">
@@ -143,8 +228,8 @@
             <input type="number" class="admin-price-input" value="${b.price != null ? b.price : ''}" placeholder="—" data-field="price">
           </td>
           <td>
-            <input type="text" class="admin-price-input" style="width:180px;" value="${escapeHtml(b.paymentLink || '')}" placeholder="Payme/Click havolasi" data-field="paymentLink">
-            <span class="admin-save-note">Saqlandi</span>
+            <input type="text" class="admin-price-input" style="width:180px;" value="${escapeHtml(b.paymentLink || '')}" placeholder="${T.t('admin.paymentPlaceholder')}" data-field="paymentLink">
+            <span class="admin-save-note">${T.t('admin.saved')}</span>
           </td>
           <td>
             <select class="admin-status-select" data-field="status">${statusOptionsHtml}</select>
@@ -166,7 +251,7 @@
             note.classList.add('show');
             setTimeout(() => note.classList.remove('show'), 1500);
           } catch (err) {
-            alert('Saqlashda xatolik: ' + err.message);
+            alert(T.t('admin.saveError') + err.message);
           }
         };
 
@@ -182,7 +267,7 @@
         });
       });
     } catch (err) {
-      tbody.innerHTML = '<tr><td colspan="12" style="text-align:center; color:var(--danger); padding:30px;">Xatolik: ' + err.message + '</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="12" style="text-align:center; color:var(--danger); padding:30px;">' + T.t('admin.loadError') + err.message + '</td></tr>';
     }
   }
 </script>
