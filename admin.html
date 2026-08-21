@@ -33,7 +33,7 @@
   </div>
 </header>
 
-<main class="container cab-wrap">
+<main class="container-wide cab-wrap">
 
   <div class="cab-head">
     <div>
@@ -50,31 +50,111 @@
   </div>
 
   <div id="adminBox" style="display:none;">
-    <div class="summary-row" id="summaryRow"></div>
 
-    <div class="admin-table-wrap">
-      <table class="admin-table">
-        <thead>
-          <tr>
-            <th data-i18n="admin.thSent">Yuborilgan</th>
-            <th data-i18n="admin.thDateTime">Sana / Vaqt</th>
-            <th data-i18n="admin.thFlight">Reys</th>
-            <th data-i18n="admin.thDirection">Yo'nalish</th>
-            <th data-i18n="admin.thAddress">Manzil</th>
-            <th data-i18n="admin.thCar">Mashina</th>
-            <th data-i18n="admin.thClient">Mijoz</th>
-            <th data-i18n="admin.thPhone">Telefon</th>
-            <th data-i18n="admin.thBaggage">Bagaj</th>
-            <th data-i18n="admin.thPrice">Narx (so'm)</th>
-            <th data-i18n="admin.thPaymentLink">To'lov havolasi</th>
-            <th data-i18n="admin.thStatus">Holat</th>
-          </tr>
-        </thead>
-        <tbody id="bookingsTbody">
-          <tr><td colspan="12" style="text-align:center; color:var(--muted); padding:30px;" data-i18n="member.loading">Yuklanmoqda...</td></tr>
-        </tbody>
-      </table>
+    <div class="cab-tabs">
+      <button type="button" class="cab-tab-btn active" data-tab="bookings" data-i18n="admin.tabBookings">Buyurtmalar</button>
+      <button type="button" class="cab-tab-btn" data-tab="customers" data-i18n="admin.tabCustomers">Mijozlar &amp; Bonuslar</button>
+      <button type="button" class="cab-tab-btn" data-tab="admins" id="adminsTabBtn" style="display:none;" data-i18n="admin.tabAdmins">Adminlar</button>
     </div>
+
+    <!-- ================= BUYURTMALAR ================= -->
+    <section class="cab-panel active" id="panel-bookings">
+      <div class="summary-row" id="summaryRow"></div>
+
+      <div class="filter-bar">
+        <div class="filter-field">
+          <label data-i18n="admin.filterFrom">Sanadan</label>
+          <input type="date" id="filterFrom">
+        </div>
+        <div class="filter-field">
+          <label data-i18n="admin.filterTo">Sanagacha</label>
+          <input type="date" id="filterTo">
+        </div>
+        <button type="button" class="btn btn-outline" id="filterBtn" data-i18n="admin.filterBtn">Filtrlash</button>
+        <button type="button" class="btn btn-outline" id="filterResetBtn" data-i18n="admin.filterReset">Barchasi</button>
+        <button type="button" class="btn btn-gold" id="exportExcelBtn" style="margin-left:auto;" data-i18n="admin.exportExcel">⬇ Excelga yuklash</button>
+      </div>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th data-i18n="admin.thSent">Yuborilgan</th>
+              <th data-i18n="admin.thDateTime">Sana / Vaqt</th>
+              <th data-i18n="admin.thFlight">Reys</th>
+              <th data-i18n="admin.thDirection">Yo'nalish</th>
+              <th data-i18n="admin.thAddress">Manzil</th>
+              <th data-i18n="admin.thCar">Mashina</th>
+              <th data-i18n="admin.thClient">Mijoz</th>
+              <th data-i18n="admin.thEmail">Email</th>
+              <th data-i18n="admin.thPhone">Telefon</th>
+              <th data-i18n="admin.thBaggage">Bagaj</th>
+              <th data-i18n="admin.thPrice">Narx (so'm)</th>
+              <th data-i18n="admin.thPaymentLink">To'lov havolasi</th>
+              <th data-i18n="admin.thStatus">Holat</th>
+            </tr>
+          </thead>
+          <tbody id="bookingsTbody">
+            <tr><td colspan="13" style="text-align:center; color:var(--muted); padding:30px;" data-i18n="member.loading">Yuklanmoqda...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ================= MIJOZLAR & BONUSLAR ================= -->
+    <section class="cab-panel" id="panel-customers">
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th data-i18n="admin.custName">Ism</th>
+              <th data-i18n="admin.custEmail">Email</th>
+              <th data-i18n="admin.custPhone">Telefon</th>
+              <th data-i18n="admin.custBonus">Bonus balans</th>
+              <th data-i18n="admin.custAmount">Miqdor</th>
+              <th data-i18n="admin.custReason">Sabab</th>
+              <th data-i18n="admin.thStatus">Amallar</th>
+            </tr>
+          </thead>
+          <tbody id="customersTbody">
+            <tr><td colspan="7" style="text-align:center; color:var(--muted); padding:30px;" data-i18n="member.loading">Yuklanmoqda...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ================= ADMINLAR (faqat bosh admin) ================= -->
+    <section class="cab-panel" id="panel-admins">
+      <div class="card" style="margin-bottom:20px;">
+        <h3 data-i18n="admin.adminsAddTitle">➕ Yangi admin qo'shish</h3>
+        <p class="sub" style="margin-bottom:16px;" data-i18n="admin.adminsIntro">Qo'shilgan admin sizga teng huquqqa ega bo'ladi (buyurtmalar, bonuslar), lekin yangi admin qo'sha olmaydi — buni faqat siz qila olasiz.</p>
+        <form id="addAdminForm" style="display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end;">
+          <div class="field" style="flex:1; min-width:240px; margin-bottom:0;">
+            <label data-i18n="admin.adminEmail">Email</label>
+            <input type="email" id="newAdminEmail" data-i18n-placeholder="admin.adminAddPlaceholder" placeholder="admin@misol.uz" required>
+          </div>
+          <button type="submit" class="btn btn-gold" id="addAdminBtn" data-i18n="admin.adminAddBtn">Qo'shish</button>
+        </form>
+        <p class="form-status" id="addAdminStatus"></p>
+      </div>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th data-i18n="admin.adminEmail">Email</th>
+              <th data-i18n="admin.adminAddedAt">Qo'shilgan sana</th>
+              <th data-i18n="admin.adminAddedBy">Kim qo'shdi</th>
+              <th data-i18n="admin.adminActions">Amallar</th>
+            </tr>
+          </thead>
+          <tbody id="adminsTbody">
+            <tr><td colspan="4" style="text-align:center; color:var(--muted); padding:30px;" data-i18n="member.loading">Yuklanmoqda...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
   </div>
 
 </main>
@@ -86,77 +166,147 @@
 <script src="firebase-config.js"></script>
 <script src="auth.js"></script>
 <script src="i18n.js"></script>
+<!-- Excelga yuklash uchun (SheetJS) -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script>
   const TRANSLATIONS = {
     uz: {
       "nav.member": "Kabinetim", "nav.logout": "Chiqish",
       "admin.title": "Admin panel", "admin.sub": "Barcha mijozlar buyurtmalari — narx va holatni shu yerdan boshqarasiz.",
       "admin.denied": "Ruxsat yo'q", "admin.deniedText": "Bu sahifa faqat administrator uchun.", "admin.deniedLink": "Kabinetimga qaytish",
+      "admin.tabBookings": "Buyurtmalar", "admin.tabCustomers": "Mijozlar & Bonuslar", "admin.tabAdmins": "Adminlar",
+      "admin.filterFrom": "Sanadan", "admin.filterTo": "Sanagacha", "admin.filterBtn": "Filtrlash", "admin.filterReset": "Barchasi", "admin.exportExcel": "⬇ Excelga yuklash",
       "admin.thSent": "Yuborilgan", "admin.thDateTime": "Sana / Vaqt", "admin.thFlight": "Reys", "admin.thDirection": "Yo'nalish",
-      "admin.thAddress": "Manzil", "admin.thCar": "Mashina", "admin.thClient": "Mijoz", "admin.thPhone": "Telefon",
+      "admin.thAddress": "Manzil", "admin.thCar": "Mashina", "admin.thClient": "Mijoz", "admin.thEmail": "Email", "admin.thPhone": "Telefon",
       "admin.thBaggage": "Bagaj", "admin.thPrice": "Narx (so'm)", "admin.thPaymentLink": "To'lov havolasi", "admin.thStatus": "Holat",
       "member.loading": "Yuklanmoqda...",
       "admin.summaryTotal": "Jami buyurtmalar", "admin.summaryPending": "Kutilmoqda", "admin.summaryDone": "Bajarilgan", "admin.summaryRevenue": "Belgilangan narxlar yig'indisi",
       "admin.noBookings": "Hali buyurtmalar yo'q.", "admin.paymentPlaceholder": "Payme/Click havolasi", "admin.saved": "Saqlandi",
       "admin.saveError": "Saqlashda xatolik: ", "admin.loadError": "Xatolik: ", "member.somSuffix": " so'm",
-      "member.statusYuborildi": "Yuborildi", "member.statusTasdiqlandi": "Tasdiqlandi", "member.statusBajarildi": "Bajarildi", "member.statusBekor": "Bekor qilindi"
+      "member.statusYuborildi": "Yuborildi", "member.statusTasdiqlandi": "Tasdiqlandi", "member.statusBajarildi": "Bajarildi", "member.statusBekor": "Bekor qilindi",
+      "admin.custName": "Ism", "admin.custEmail": "Email", "admin.custPhone": "Telefon", "admin.custBonus": "Bonus balans",
+      "admin.custAmount": "Miqdor", "admin.custReason": "Sabab", "admin.custAmountPlaceholder": "masalan 10000", "admin.custReasonPlaceholder": "sabab (ixtiyoriy)",
+      "admin.custAdd": "➕ Qo'shish", "admin.custSubtract": "➖ Ayirish", "admin.custHistory": "Tarix", "admin.custHistoryHide": "Yopish",
+      "admin.custHistoryEmpty": "Bu mijoz uchun bonus tarixi hali yo'q.", "admin.custNoUsers": "Hali ro'yxatdan o'tgan mijozlar yo'q.",
+      "admin.custLoadError": "Mijozlarni yuklashda xatolik: ", "admin.custAmountInvalid": "Miqdorni to'g'ri kiriting.",
+      "admin.custBy": "Admin: ", "admin.custNoReason": "sababsiz",
+      "admin.adminsAddTitle": "➕ Yangi admin qo'shish", "admin.adminsIntro": "Qo'shilgan admin sizga teng huquqqa ega bo'ladi (buyurtmalar, bonuslar), lekin yangi admin qo'sha olmaydi — buni faqat siz qila olasiz.",
+      "admin.adminEmail": "Email", "admin.adminAddedAt": "Qo'shilgan sana", "admin.adminAddedBy": "Kim qo'shdi", "admin.adminActions": "Amallar",
+      "admin.adminRemove": "Olib tashlash", "admin.adminAddPlaceholder": "admin@misol.uz", "admin.adminAddBtn": "Qo'shish",
+      "admin.adminSuperBadge": "Bosh admin", "admin.adminNoOthers": "Hozircha boshqa admin qo'shilmagan.",
+      "admin.adminConfirmRemove": "Ushbu adminni olib tashlashni tasdiqlaysizmi?", "admin.adminAddError": "Xatolik: ", "admin.adminAddSuccess": "Admin qo'shildi!"
     },
     en: {
       "nav.member": "My Account", "nav.logout": "Logout",
       "admin.title": "Admin panel", "admin.sub": "All customer bookings — manage price and status right here.",
       "admin.denied": "Access denied", "admin.deniedText": "This page is for administrators only.", "admin.deniedLink": "Back to My Account",
+      "admin.tabBookings": "Bookings", "admin.tabCustomers": "Customers & Bonuses", "admin.tabAdmins": "Admins",
+      "admin.filterFrom": "From date", "admin.filterTo": "To date", "admin.filterBtn": "Filter", "admin.filterReset": "All", "admin.exportExcel": "⬇ Export to Excel",
       "admin.thSent": "Sent", "admin.thDateTime": "Date / Time", "admin.thFlight": "Flight", "admin.thDirection": "Direction",
-      "admin.thAddress": "Address", "admin.thCar": "Car", "admin.thClient": "Client", "admin.thPhone": "Phone",
+      "admin.thAddress": "Address", "admin.thCar": "Car", "admin.thClient": "Client", "admin.thEmail": "Email", "admin.thPhone": "Phone",
       "admin.thBaggage": "Luggage", "admin.thPrice": "Price (UZS)", "admin.thPaymentLink": "Payment link", "admin.thStatus": "Status",
       "member.loading": "Loading...",
       "admin.summaryTotal": "Total bookings", "admin.summaryPending": "Pending", "admin.summaryDone": "Completed", "admin.summaryRevenue": "Total set prices",
       "admin.noBookings": "No bookings yet.", "admin.paymentPlaceholder": "Payme/Click link", "admin.saved": "Saved",
       "admin.saveError": "Save error: ", "admin.loadError": "Error: ", "member.somSuffix": " UZS",
-      "member.statusYuborildi": "Submitted", "member.statusTasdiqlandi": "Confirmed", "member.statusBajarildi": "Completed", "member.statusBekor": "Cancelled"
+      "member.statusYuborildi": "Submitted", "member.statusTasdiqlandi": "Confirmed", "member.statusBajarildi": "Completed", "member.statusBekor": "Cancelled",
+      "admin.custName": "Name", "admin.custEmail": "Email", "admin.custPhone": "Phone", "admin.custBonus": "Bonus balance",
+      "admin.custAmount": "Amount", "admin.custReason": "Reason", "admin.custAmountPlaceholder": "e.g. 10000", "admin.custReasonPlaceholder": "reason (optional)",
+      "admin.custAdd": "➕ Add", "admin.custSubtract": "➖ Subtract", "admin.custHistory": "History", "admin.custHistoryHide": "Hide",
+      "admin.custHistoryEmpty": "No bonus history for this customer yet.", "admin.custNoUsers": "No registered customers yet.",
+      "admin.custLoadError": "Error loading customers: ", "admin.custAmountInvalid": "Enter a valid amount.",
+      "admin.custBy": "Admin: ", "admin.custNoReason": "no reason given",
+      "admin.adminsAddTitle": "➕ Add a new admin", "admin.adminsIntro": "A new admin gets equal rights to you (bookings, bonuses), but cannot add another admin — only you can.",
+      "admin.adminEmail": "Email", "admin.adminAddedAt": "Added on", "admin.adminAddedBy": "Added by", "admin.adminActions": "Actions",
+      "admin.adminRemove": "Remove", "admin.adminAddPlaceholder": "admin@example.com", "admin.adminAddBtn": "Add",
+      "admin.adminSuperBadge": "Super admin", "admin.adminNoOthers": "No other admins added yet.",
+      "admin.adminConfirmRemove": "Remove this admin?", "admin.adminAddError": "Error: ", "admin.adminAddSuccess": "Admin added!"
     },
     tr: {
       "nav.member": "Hesabım", "nav.logout": "Çıkış",
       "admin.title": "Admin panel", "admin.sub": "Tüm müşteri rezervasyonları — fiyat ve durumu buradan yönetin.",
       "admin.denied": "Erişim yok", "admin.deniedText": "Bu sayfa yalnızca yöneticiler içindir.", "admin.deniedLink": "Hesabıma dön",
+      "admin.tabBookings": "Rezervasyonlar", "admin.tabCustomers": "Müşteriler & Bonuslar", "admin.tabAdmins": "Yöneticiler",
+      "admin.filterFrom": "Başlangıç tarihi", "admin.filterTo": "Bitiş tarihi", "admin.filterBtn": "Filtrele", "admin.filterReset": "Hepsi", "admin.exportExcel": "⬇ Excel'e aktar",
       "admin.thSent": "Gönderildi", "admin.thDateTime": "Tarih / Saat", "admin.thFlight": "Uçuş", "admin.thDirection": "Yön",
-      "admin.thAddress": "Adres", "admin.thCar": "Araç", "admin.thClient": "Müşteri", "admin.thPhone": "Telefon",
+      "admin.thAddress": "Adres", "admin.thCar": "Araç", "admin.thClient": "Müşteri", "admin.thEmail": "E-posta", "admin.thPhone": "Telefon",
       "admin.thBaggage": "Bagaj", "admin.thPrice": "Fiyat (so'm)", "admin.thPaymentLink": "Ödeme bağlantısı", "admin.thStatus": "Durum",
       "member.loading": "Yükleniyor...",
       "admin.summaryTotal": "Toplam rezervasyon", "admin.summaryPending": "Bekliyor", "admin.summaryDone": "Tamamlandı", "admin.summaryRevenue": "Belirlenen fiyatlar toplamı",
       "admin.noBookings": "Henüz rezervasyon yok.", "admin.paymentPlaceholder": "Payme/Click bağlantısı", "admin.saved": "Kaydedildi",
       "admin.saveError": "Kaydetme hatası: ", "admin.loadError": "Hata: ", "member.somSuffix": " so'm",
-      "member.statusYuborildi": "Gönderildi", "member.statusTasdiqlandi": "Onaylandı", "member.statusBajarildi": "Tamamlandı", "member.statusBekor": "İptal edildi"
+      "member.statusYuborildi": "Gönderildi", "member.statusTasdiqlandi": "Onaylandı", "member.statusBajarildi": "Tamamlandı", "member.statusBekor": "İptal edildi",
+      "admin.custName": "Ad Soyad", "admin.custEmail": "E-posta", "admin.custPhone": "Telefon", "admin.custBonus": "Bonus bakiyesi",
+      "admin.custAmount": "Miktar", "admin.custReason": "Sebep", "admin.custAmountPlaceholder": "örn. 10000", "admin.custReasonPlaceholder": "sebep (isteğe bağlı)",
+      "admin.custAdd": "➕ Ekle", "admin.custSubtract": "➖ Çıkar", "admin.custHistory": "Geçmiş", "admin.custHistoryHide": "Kapat",
+      "admin.custHistoryEmpty": "Bu müşteri için henüz bonus geçmişi yok.", "admin.custNoUsers": "Henüz kayıtlı müşteri yok.",
+      "admin.custLoadError": "Müşteriler yüklenirken hata: ", "admin.custAmountInvalid": "Geçerli bir miktar girin.",
+      "admin.custBy": "Yönetici: ", "admin.custNoReason": "sebep belirtilmedi",
+      "admin.adminsAddTitle": "➕ Yeni yönetici ekle", "admin.adminsIntro": "Eklenen yönetici sizinle eşit haklara sahip olur (rezervasyonlar, bonuslar), ancak başka yönetici ekleyemez — bunu yalnızca siz yapabilirsiniz.",
+      "admin.adminEmail": "E-posta", "admin.adminAddedAt": "Eklenme tarihi", "admin.adminAddedBy": "Kim ekledi", "admin.adminActions": "İşlemler",
+      "admin.adminRemove": "Kaldır", "admin.adminAddPlaceholder": "admin@ornek.uz", "admin.adminAddBtn": "Ekle",
+      "admin.adminSuperBadge": "Baş yönetici", "admin.adminNoOthers": "Henüz başka yönetici eklenmedi.",
+      "admin.adminConfirmRemove": "Bu yöneticiyi kaldırmak istiyor musunuz?", "admin.adminAddError": "Hata: ", "admin.adminAddSuccess": "Yönetici eklendi!"
     },
     ru: {
       "nav.member": "Личный кабинет", "nav.logout": "Выйти",
       "admin.title": "Админ-панель", "admin.sub": "Все заказы клиентов — управляйте ценой и статусом прямо здесь.",
       "admin.denied": "Доступ запрещён", "admin.deniedText": "Эта страница только для администратора.", "admin.deniedLink": "Вернуться в кабинет",
+      "admin.tabBookings": "Заказы", "admin.tabCustomers": "Клиенты и бонусы", "admin.tabAdmins": "Администраторы",
+      "admin.filterFrom": "С даты", "admin.filterTo": "По дату", "admin.filterBtn": "Фильтр", "admin.filterReset": "Все", "admin.exportExcel": "⬇ Экспорт в Excel",
       "admin.thSent": "Отправлено", "admin.thDateTime": "Дата / Время", "admin.thFlight": "Рейс", "admin.thDirection": "Направление",
-      "admin.thAddress": "Адрес", "admin.thCar": "Машина", "admin.thClient": "Клиент", "admin.thPhone": "Телефон",
+      "admin.thAddress": "Адрес", "admin.thCar": "Машина", "admin.thClient": "Клиент", "admin.thEmail": "Email", "admin.thPhone": "Телефон",
       "admin.thBaggage": "Багаж", "admin.thPrice": "Цена (сум)", "admin.thPaymentLink": "Ссылка на оплату", "admin.thStatus": "Статус",
       "member.loading": "Загрузка...",
       "admin.summaryTotal": "Всего заказов", "admin.summaryPending": "В ожидании", "admin.summaryDone": "Выполнено", "admin.summaryRevenue": "Сумма установленных цен",
       "admin.noBookings": "Заказов пока нет.", "admin.paymentPlaceholder": "Ссылка Payme/Click", "admin.saved": "Сохранено",
       "admin.saveError": "Ошибка сохранения: ", "admin.loadError": "Ошибка: ", "member.somSuffix": " сум",
-      "member.statusYuborildi": "Отправлено", "member.statusTasdiqlandi": "Подтверждено", "member.statusBajarildi": "Выполнено", "member.statusBekor": "Отменено"
+      "member.statusYuborildi": "Отправлено", "member.statusTasdiqlandi": "Подтверждено", "member.statusBajarildi": "Выполнено", "member.statusBekor": "Отменено",
+      "admin.custName": "Имя", "admin.custEmail": "Email", "admin.custPhone": "Телефон", "admin.custBonus": "Бонусный баланс",
+      "admin.custAmount": "Сумма", "admin.custReason": "Причина", "admin.custAmountPlaceholder": "напр. 10000", "admin.custReasonPlaceholder": "причина (необязательно)",
+      "admin.custAdd": "➕ Добавить", "admin.custSubtract": "➖ Списать", "admin.custHistory": "История", "admin.custHistoryHide": "Скрыть",
+      "admin.custHistoryEmpty": "У этого клиента пока нет истории бонусов.", "admin.custNoUsers": "Зарегистрированных клиентов пока нет.",
+      "admin.custLoadError": "Ошибка загрузки клиентов: ", "admin.custAmountInvalid": "Введите корректную сумму.",
+      "admin.custBy": "Админ: ", "admin.custNoReason": "без причины",
+      "admin.adminsAddTitle": "➕ Добавить нового администратора", "admin.adminsIntro": "Новый администратор получит равные с вами права (заказы, бонусы), но не сможет добавлять других администраторов — это можете только вы.",
+      "admin.adminEmail": "Email", "admin.adminAddedAt": "Дата добавления", "admin.adminAddedBy": "Кто добавил", "admin.adminActions": "Действия",
+      "admin.adminRemove": "Удалить", "admin.adminAddPlaceholder": "admin@example.uz", "admin.adminAddBtn": "Добавить",
+      "admin.adminSuperBadge": "Главный админ", "admin.adminNoOthers": "Других администраторов пока нет.",
+      "admin.adminConfirmRemove": "Удалить этого администратора?", "admin.adminAddError": "Ошибка: ", "admin.adminAddSuccess": "Администратор добавлен!"
     },
     ar: {
       "nav.member": "حسابي", "nav.logout": "تسجيل الخروج",
       "admin.title": "لوحة الإدارة", "admin.sub": "جميع حجوزات العملاء — أدر السعر والحالة من هنا.",
       "admin.denied": "الوصول مرفوض", "admin.deniedText": "هذه الصفحة مخصصة للمسؤول فقط.", "admin.deniedLink": "العودة إلى حسابي",
+      "admin.tabBookings": "الحجوزات", "admin.tabCustomers": "العملاء والمكافآت", "admin.tabAdmins": "المسؤولون",
+      "admin.filterFrom": "من تاريخ", "admin.filterTo": "إلى تاريخ", "admin.filterBtn": "تصفية", "admin.filterReset": "الكل", "admin.exportExcel": "⬇ تصدير إلى Excel",
       "admin.thSent": "تم الإرسال", "admin.thDateTime": "التاريخ / الوقت", "admin.thFlight": "الرحلة", "admin.thDirection": "الاتجاه",
-      "admin.thAddress": "العنوان", "admin.thCar": "السيارة", "admin.thClient": "العميل", "admin.thPhone": "الهاتف",
+      "admin.thAddress": "العنوان", "admin.thCar": "السيارة", "admin.thClient": "العميل", "admin.thEmail": "البريد الإلكتروني", "admin.thPhone": "الهاتف",
       "admin.thBaggage": "الحقائب", "admin.thPrice": "السعر (سوم)", "admin.thPaymentLink": "رابط الدفع", "admin.thStatus": "الحالة",
       "member.loading": "جارٍ التحميل...",
       "admin.summaryTotal": "إجمالي الحجوزات", "admin.summaryPending": "قيد الانتظار", "admin.summaryDone": "مكتمل", "admin.summaryRevenue": "إجمالي الأسعار المحددة",
       "admin.noBookings": "لا توجد حجوزات بعد.", "admin.paymentPlaceholder": "رابط Payme/Click", "admin.saved": "تم الحفظ",
       "admin.saveError": "خطأ في الحفظ: ", "admin.loadError": "خطأ: ", "member.somSuffix": " سوم",
-      "member.statusYuborildi": "تم الإرسال", "member.statusTasdiqlandi": "تم التأكيد", "member.statusBajarildi": "تم التنفيذ", "member.statusBekor": "ملغى"
+      "member.statusYuborildi": "تم الإرسال", "member.statusTasdiqlandi": "تم التأكيد", "member.statusBajarildi": "تم التنفيذ", "member.statusBekor": "ملغى",
+      "admin.custName": "الاسم", "admin.custEmail": "البريد الإلكتروني", "admin.custPhone": "الهاتف", "admin.custBonus": "رصيد المكافآت",
+      "admin.custAmount": "المبلغ", "admin.custReason": "السبب", "admin.custAmountPlaceholder": "مثال 10000", "admin.custReasonPlaceholder": "السبب (اختياري)",
+      "admin.custAdd": "➕ إضافة", "admin.custSubtract": "➖ خصم", "admin.custHistory": "السجل", "admin.custHistoryHide": "إخفاء",
+      "admin.custHistoryEmpty": "لا يوجد سجل مكافآت لهذا العميل بعد.", "admin.custNoUsers": "لا يوجد عملاء مسجلون بعد.",
+      "admin.custLoadError": "خطأ في تحميل العملاء: ", "admin.custAmountInvalid": "أدخل مبلغًا صحيحًا.",
+      "admin.custBy": "المسؤول: ", "admin.custNoReason": "بدون سبب",
+      "admin.adminsAddTitle": "➕ إضافة مسؤول جديد", "admin.adminsIntro": "سيحصل المسؤول الجديد على نفس صلاحياتك (الحجوزات، المكافآت)، لكنه لن يستطيع إضافة مسؤول آخر — أنت فقط من يستطيع ذلك.",
+      "admin.adminEmail": "البريد الإلكتروني", "admin.adminAddedAt": "تاريخ الإضافة", "admin.adminAddedBy": "أضافه", "admin.adminActions": "إجراءات",
+      "admin.adminRemove": "إزالة", "admin.adminAddPlaceholder": "admin@example.uz", "admin.adminAddBtn": "إضافة",
+      "admin.adminSuperBadge": "المسؤول الرئيسي", "admin.adminNoOthers": "لم تتم إضافة مسؤولين آخرين بعد.",
+      "admin.adminConfirmRemove": "هل تريد إزالة هذا المسؤول؟", "admin.adminAddError": "خطأ: ", "admin.adminAddSuccess": "تمت إضافة المسؤول!"
     }
   };
   const T = initLangSwitcher(TRANSLATIONS);
   document.addEventListener('taxiLangChanged', () => {
-    if (document.getElementById('adminBox').style.display !== 'none') loadAllBookings();
+    if (document.getElementById('adminBox').style.display === 'none') return;
+    renderBookingsTable(currentFilteredBookings);
+    if (allUsersCache.length || allBonusLogsCache.length) renderCustomersTable();
+    if (allAdminsCache.length || currentUserIsSuperAdmin) renderAdminsTable();
   });
 
   function statusOptions() {
@@ -168,12 +318,36 @@
     ];
   }
 
+  function statusLabelFor(status) {
+    const found = statusOptions().find(o => o.value === status);
+    return found ? found.label : status;
+  }
+
+  function escapeHtml(str) {
+    return String(str == null ? '' : str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  let currentUserEmail = '';
+  let currentUserIsSuperAdmin = false;
+  let allBookingsCache = [];
+  let currentFilteredBookings = [];
+  let allUsersCache = [];
+  let allBonusLogsCache = [];
+  let allAdminsCache = [];
+  const openHistoryFor = new Set();
+
   requireAuth(async (user) => {
-    if (!isAdminUser(user)) {
+    if (!(await isAdminUser(user))) {
       document.getElementById('deniedBox').style.display = '';
       return;
     }
+    currentUserEmail = user.email;
+    currentUserIsSuperAdmin = isSuperAdminUser(user);
     document.getElementById('adminBox').style.display = '';
+    if (currentUserIsSuperAdmin) {
+      document.getElementById('adminsTabBtn').style.display = '';
+    }
     await loadAllBookings();
   });
 
@@ -182,94 +356,306 @@
     window.location.href = 'index.html';
   });
 
-  function escapeHtml(str) {
-    return String(str == null ? '' : str)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
+  // ---------- Tabs ----------
+  document.querySelectorAll('.cab-tab-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.cab-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.cab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+      if (btn.dataset.tab === 'customers' && allUsersCache.length === 0) loadCustomers();
+      if (btn.dataset.tab === 'admins' && currentUserIsSuperAdmin && allAdminsCache.length === 0) loadAdmins();
+    });
+  });
 
+  // ================= BUYURTMALAR =================
   async function loadAllBookings() {
     const tbody = document.getElementById('bookingsTbody');
     try {
-      const bookings = await getAllBookingsAdmin();
-
-      // Summary
-      const total = bookings.length;
-      const pending = bookings.filter(b => b.status === 'yuborildi').length;
-      const done = bookings.filter(b => b.status === 'bajarildi').length;
-      const revenue = bookings.reduce((sum, b) => sum + (Number(b.price) || 0), 0);
-      document.getElementById('summaryRow').innerHTML = `
-        <div class="summary-pill"><b>${total}</b><span>${T.t('admin.summaryTotal')}</span></div>
-        <div class="summary-pill"><b>${pending}</b><span>${T.t('admin.summaryPending')}</span></div>
-        <div class="summary-pill"><b>${done}</b><span>${T.t('admin.summaryDone')}</span></div>
-        <div class="summary-pill"><b>${revenue.toLocaleString('ru-RU')}${T.t('member.somSuffix')}</b><span>${T.t('admin.summaryRevenue')}</span></div>
-      `;
-
-      if (bookings.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="12" style="text-align:center; color:var(--muted); padding:30px;">' + T.t('admin.noBookings') + '</td></tr>';
-        return;
-      }
-
-      tbody.innerHTML = bookings.map(b => {
-        const dt = b.createdAt && b.createdAt.toDate ? b.createdAt.toDate().toLocaleString('uz-UZ') : '';
-        const statusOptionsHtml = statusOptions().map(o =>
-          `<option value="${o.value}" ${b.status === o.value ? 'selected' : ''}>${o.label}</option>`
-        ).join('');
-        return `<tr data-id="${b.id}">
-          <td>${dt}</td>
-          <td>${escapeHtml(b.date)} ${escapeHtml(b.time)}</td>
-          <td>${escapeHtml(b.flight) || '—'}</td>
-          <td>${escapeHtml(b.direction)}</td>
-          <td>${escapeHtml(b.address)}</td>
-          <td>${escapeHtml(b.car)}</td>
-          <td>${escapeHtml(b.name)}</td>
-          <td>${escapeHtml(b.phone)}</td>
-          <td>${escapeHtml(b.baggage)}</td>
-          <td>
-            <input type="number" class="admin-price-input" value="${b.price != null ? b.price : ''}" placeholder="—" data-field="price">
-          </td>
-          <td>
-            <input type="text" class="admin-price-input" style="width:180px;" value="${escapeHtml(b.paymentLink || '')}" placeholder="${T.t('admin.paymentPlaceholder')}" data-field="paymentLink">
-            <span class="admin-save-note">${T.t('admin.saved')}</span>
-          </td>
-          <td>
-            <select class="admin-status-select" data-field="status">${statusOptionsHtml}</select>
-          </td>
-        </tr>`;
-      }).join('');
-
-      // Wire up inline editing
-      tbody.querySelectorAll('tr[data-id]').forEach(row => {
-        const bookingId = row.dataset.id;
-        const priceInput = row.querySelector('input[data-field="price"]');
-        const paymentLinkInput = row.querySelector('input[data-field="paymentLink"]');
-        const statusSelect = row.querySelector('select[data-field="status"]');
-        const note = row.querySelector('.admin-save-note');
-
-        const save = async (payload) => {
-          try {
-            await updateBookingAdmin(bookingId, payload);
-            note.classList.add('show');
-            setTimeout(() => note.classList.remove('show'), 1500);
-          } catch (err) {
-            alert(T.t('admin.saveError') + err.message);
-          }
-        };
-
-        priceInput.addEventListener('change', () => {
-          const val = priceInput.value === '' ? null : Number(priceInput.value);
-          save({ price: val });
-        });
-        paymentLinkInput.addEventListener('change', () => {
-          save({ paymentLink: paymentLinkInput.value.trim() || null });
-        });
-        statusSelect.addEventListener('change', () => {
-          save({ status: statusSelect.value });
-        });
-      });
+      allBookingsCache = await getAllBookingsAdmin();
+      renderBookingsTable(allBookingsCache);
     } catch (err) {
-      tbody.innerHTML = '<tr><td colspan="12" style="text-align:center; color:var(--danger); padding:30px;">' + T.t('admin.loadError') + err.message + '</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="13" style="text-align:center; color:var(--danger); padding:30px;">' + T.t('admin.loadError') + err.message + '</td></tr>';
     }
   }
+
+  function parseUzDate(str) {
+    if (!str) return null;
+    const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(str);
+    if (!m) return null;
+    const d = new Date(Number(m[3]), Number(m[2]) - 1, Number(m[1]));
+    return isNaN(d.getTime()) ? null : d;
+  }
+
+  function applyDateFilter(list) {
+    const fromVal = document.getElementById('filterFrom').value;
+    const toVal = document.getElementById('filterTo').value;
+    if (!fromVal && !toVal) return list;
+    const fromDate = fromVal ? new Date(fromVal + 'T00:00:00') : null;
+    const toDate = toVal ? new Date(toVal + 'T23:59:59') : null;
+    return list.filter(b => {
+      const d = parseUzDate(b.date);
+      if (!d) return false;
+      if (fromDate && d < fromDate) return false;
+      if (toDate && d > toDate) return false;
+      return true;
+    });
+  }
+
+  document.getElementById('filterBtn').addEventListener('click', () => {
+    renderBookingsTable(applyDateFilter(allBookingsCache));
+  });
+  document.getElementById('filterResetBtn').addEventListener('click', () => {
+    document.getElementById('filterFrom').value = '';
+    document.getElementById('filterTo').value = '';
+    renderBookingsTable(allBookingsCache);
+  });
+
+  function renderBookingsTable(bookings) {
+    currentFilteredBookings = bookings;
+    const tbody = document.getElementById('bookingsTbody');
+
+    const total = bookings.length;
+    const pending = bookings.filter(b => b.status === 'yuborildi').length;
+    const done = bookings.filter(b => b.status === 'bajarildi').length;
+    const revenue = bookings.reduce((sum, b) => sum + (Number(b.price) || 0), 0);
+    document.getElementById('summaryRow').innerHTML = `
+      <div class="summary-pill"><b>${total}</b><span>${T.t('admin.summaryTotal')}</span></div>
+      <div class="summary-pill"><b>${pending}</b><span>${T.t('admin.summaryPending')}</span></div>
+      <div class="summary-pill"><b>${done}</b><span>${T.t('admin.summaryDone')}</span></div>
+      <div class="summary-pill"><b>${revenue.toLocaleString('ru-RU')}${T.t('member.somSuffix')}</b><span>${T.t('admin.summaryRevenue')}</span></div>
+    `;
+
+    if (bookings.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="13" style="text-align:center; color:var(--muted); padding:30px;">' + T.t('admin.noBookings') + '</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = bookings.map(b => {
+      const dt = b.createdAt && b.createdAt.toDate ? b.createdAt.toDate().toLocaleString('uz-UZ') : '';
+      const statusOptionsHtml = statusOptions().map(o =>
+        `<option value="${o.value}" ${b.status === o.value ? 'selected' : ''}>${o.label}</option>`
+      ).join('');
+      return `<tr data-id="${b.id}">
+        <td>${dt}</td>
+        <td>${escapeHtml(b.date)} ${escapeHtml(b.time)}</td>
+        <td>${escapeHtml(b.flight) || '—'}</td>
+        <td>${escapeHtml(b.direction)}</td>
+        <td>${escapeHtml(b.address)}</td>
+        <td>${escapeHtml(b.car)}</td>
+        <td>${escapeHtml(b.name)}</td>
+        <td>${escapeHtml(b.userEmail) || '—'}</td>
+        <td>${escapeHtml(b.phone)}</td>
+        <td>${escapeHtml(b.baggage)}</td>
+        <td>
+          <input type="number" class="admin-price-input" value="${b.price != null ? b.price : ''}" placeholder="—" data-field="price">
+        </td>
+        <td>
+          <input type="text" class="admin-price-input" style="width:180px;" value="${escapeHtml(b.paymentLink || '')}" placeholder="${T.t('admin.paymentPlaceholder')}" data-field="paymentLink">
+          <span class="admin-save-note">${T.t('admin.saved')}</span>
+        </td>
+        <td>
+          <select class="admin-status-select" data-field="status">${statusOptionsHtml}</select>
+        </td>
+      </tr>`;
+    }).join('');
+
+    tbody.querySelectorAll('tr[data-id]').forEach(row => {
+      const bookingId = row.dataset.id;
+      const priceInput = row.querySelector('input[data-field="price"]');
+      const paymentLinkInput = row.querySelector('input[data-field="paymentLink"]');
+      const statusSelect = row.querySelector('select[data-field="status"]');
+      const note = row.querySelector('.admin-save-note');
+
+      const save = async (payload) => {
+        try {
+          await updateBookingAdmin(bookingId, payload);
+          note.classList.add('show');
+          setTimeout(() => note.classList.remove('show'), 1500);
+        } catch (err) {
+          alert(T.t('admin.saveError') + err.message);
+        }
+      };
+
+      priceInput.addEventListener('change', () => {
+        const val = priceInput.value === '' ? null : Number(priceInput.value);
+        save({ price: val });
+      });
+      paymentLinkInput.addEventListener('change', () => {
+        save({ paymentLink: paymentLinkInput.value.trim() || null });
+      });
+      statusSelect.addEventListener('change', () => {
+        save({ status: statusSelect.value });
+      });
+    });
+  }
+
+  document.getElementById('exportExcelBtn').addEventListener('click', () => {
+    if (typeof XLSX === 'undefined') { alert(T.t('admin.loadError') + 'XLSX kutubxonasi yuklanmadi.'); return; }
+    const header = [
+      T.t('admin.thSent'), T.t('admin.thDateTime'), T.t('admin.thFlight'), T.t('admin.thDirection'),
+      T.t('admin.thAddress'), T.t('admin.thCar'), T.t('admin.thClient'), T.t('admin.thEmail'),
+      T.t('admin.thPhone'), T.t('admin.thBaggage'), T.t('admin.thPrice'), T.t('admin.thPaymentLink'), T.t('admin.thStatus')
+    ];
+    const rows = currentFilteredBookings.map(b => {
+      const dt = b.createdAt && b.createdAt.toDate ? b.createdAt.toDate().toLocaleString('uz-UZ') : '';
+      return [
+        dt, (b.date || '') + ' ' + (b.time || ''), b.flight || '', b.direction || '', b.address || '',
+        b.car || '', b.name || '', b.userEmail || '', b.phone || '', b.baggage || '',
+        b.price != null ? Number(b.price) : '', b.paymentLink || '', statusLabelFor(b.status || 'yuborildi')
+      ];
+    });
+    const ws = XLSX.utils.aoa_to_sheet([header, ...rows]);
+    ws['!cols'] = header.map(() => ({ wch: 18 }));
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Buyurtmalar');
+    XLSX.writeFile(wb, 'taxiairport-buyurtmalar.xlsx');
+  });
+
+  // ================= MIJOZLAR & BONUSLAR =================
+  async function loadCustomers() {
+    const tbody = document.getElementById('customersTbody');
+    try {
+      [allUsersCache, allBonusLogsCache] = await Promise.all([getAllUsersAdmin(), getAllBonusLogs()]);
+      renderCustomersTable();
+    } catch (err) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:var(--danger); padding:30px;">' + T.t('admin.custLoadError') + err.message + '</td></tr>';
+    }
+  }
+
+  function renderCustomersTable() {
+    const tbody = document.getElementById('customersTbody');
+    if (allUsersCache.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:var(--muted); padding:30px;">' + T.t('admin.custNoUsers') + '</td></tr>';
+      return;
+    }
+    tbody.innerHTML = allUsersCache.map(u => {
+      const logs = allBonusLogsCache.filter(l => l.userId === u.id);
+      const isOpen = openHistoryFor.has(u.id);
+      const historyHtml = logs.length === 0
+        ? `<p class="empty-state" style="padding:14px 0;">${T.t('admin.custHistoryEmpty')}</p>`
+        : logs.map(l => {
+            const dt = l.createdAt && l.createdAt.toDate ? l.createdAt.toDate().toLocaleString('uz-UZ') : '';
+            const sign = l.amount > 0 ? '+' : '';
+            const color = l.amount > 0 ? 'var(--success)' : 'var(--danger)';
+            return `<div style="padding:8px 0; border-bottom:1px solid var(--border); font-size:13px;">
+              <b style="color:${color};">${sign}${Number(l.amount).toLocaleString('ru-RU')}${T.t('member.somSuffix')}</b>
+              — ${escapeHtml(l.reason) || T.t('admin.custNoReason')}
+              <div style="color:var(--muted); font-size:11.5px; margin-top:2px;">${dt} · ${T.t('admin.custBy')}${escapeHtml(l.adminEmail || '—')}</div>
+            </div>`;
+          }).join('');
+      return `<tr data-uid="${u.id}">
+          <td>${escapeHtml(u.name) || '—'}</td>
+          <td>${escapeHtml(u.email) || '—'}</td>
+          <td>${escapeHtml(u.phone) || '—'}</td>
+          <td><b style="color:var(--gold);">${Number(u.bonus || 0).toLocaleString('ru-RU')}${T.t('member.somSuffix')}</b></td>
+          <td><input type="number" class="admin-price-input" style="width:110px;" data-field="amount" placeholder="${T.t('admin.custAmountPlaceholder')}"></td>
+          <td><input type="text" class="admin-price-input" style="width:150px;" data-field="reason" placeholder="${T.t('admin.custReasonPlaceholder')}"></td>
+          <td style="white-space:nowrap;">
+            <button type="button" class="btn btn-outline" style="padding:7px 12px; font-size:12px;" data-action="add">${T.t('admin.custAdd')}</button>
+            <button type="button" class="btn btn-outline" style="padding:7px 12px; font-size:12px;" data-action="subtract">${T.t('admin.custSubtract')}</button>
+            <button type="button" class="btn btn-outline" style="padding:7px 12px; font-size:12px;" data-action="history">${isOpen ? T.t('admin.custHistoryHide') : T.t('admin.custHistory')}</button>
+          </td>
+        </tr>
+        <tr class="cust-history-row" data-uid-history="${u.id}" style="${isOpen ? '' : 'display:none;'}">
+          <td colspan="7" style="background:var(--bg2);">${historyHtml}</td>
+        </tr>`;
+    }).join('');
+
+    tbody.querySelectorAll('tr[data-uid]').forEach(row => {
+      const uid = row.dataset.uid;
+      const amountInput = row.querySelector('[data-field="amount"]');
+      const reasonInput = row.querySelector('[data-field="reason"]');
+      const user = allUsersCache.find(u => u.id === uid);
+
+      row.querySelector('[data-action="add"]').addEventListener('click', () => doAdjust(uid, user, amountInput, reasonInput, 1));
+      row.querySelector('[data-action="subtract"]').addEventListener('click', () => doAdjust(uid, user, amountInput, reasonInput, -1));
+      row.querySelector('[data-action="history"]').addEventListener('click', () => {
+        if (openHistoryFor.has(uid)) openHistoryFor.delete(uid); else openHistoryFor.add(uid);
+        renderCustomersTable();
+      });
+    });
+  }
+
+  async function doAdjust(uid, user, amountInput, reasonInput, sign) {
+    const raw = Number(amountInput.value);
+    if (!raw || raw <= 0) { alert(T.t('admin.custAmountInvalid')); return; }
+    try {
+      await adjustUserBonus(uid, user ? user.email : '', raw * sign, reasonInput.value.trim(), currentUserEmail);
+      [allUsersCache, allBonusLogsCache] = await Promise.all([getAllUsersAdmin(), getAllBonusLogs()]);
+      renderCustomersTable();
+    } catch (err) {
+      alert(T.t('admin.saveError') + err.message);
+    }
+  }
+
+  // ================= ADMINLAR =================
+  async function loadAdmins() {
+    const tbody = document.getElementById('adminsTbody');
+    try {
+      allAdminsCache = await listAdmins();
+      renderAdminsTable();
+    } catch (err) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--danger); padding:30px;">' + T.t('admin.loadError') + err.message + '</td></tr>';
+    }
+  }
+
+  function renderAdminsTable() {
+    const tbody = document.getElementById('adminsTbody');
+    const superRow = `<tr>
+      <td>${escapeHtml(SUPER_ADMIN_EMAIL)}</td>
+      <td>—</td>
+      <td>—</td>
+      <td><span class="status-pill tasdiqlandi">${T.t('admin.adminSuperBadge')}</span></td>
+    </tr>`;
+    const otherRows = allAdminsCache.length === 0
+      ? `<tr><td colspan="4" style="text-align:center; color:var(--muted); padding:20px;">${T.t('admin.adminNoOthers')}</td></tr>`
+      : allAdminsCache.map(a => {
+          const dt = a.addedAt && a.addedAt.toDate ? a.addedAt.toDate().toLocaleString('uz-UZ') : '';
+          return `<tr data-admin-id="${a.id}">
+            <td>${escapeHtml(a.email)}</td>
+            <td>${dt}</td>
+            <td>${escapeHtml(a.addedBy) || '—'}</td>
+            <td><button type="button" class="btn btn-danger-outline" style="padding:7px 12px; font-size:12px;" data-remove="${a.id}">${T.t('admin.adminRemove')}</button></td>
+          </tr>`;
+        }).join('');
+    tbody.innerHTML = superRow + otherRows;
+
+    tbody.querySelectorAll('[data-remove]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        if (!confirm(T.t('admin.adminConfirmRemove'))) return;
+        try {
+          await removeAdmin(btn.dataset.remove);
+          allAdminsCache = await listAdmins();
+          renderAdminsTable();
+        } catch (err) {
+          alert(T.t('admin.adminAddError') + err.message);
+        }
+      });
+    });
+  }
+
+  document.getElementById('addAdminForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const status = document.getElementById('addAdminStatus');
+    const input = document.getElementById('newAdminEmail');
+    const btn = document.getElementById('addAdminBtn');
+    btn.disabled = true;
+    status.textContent = '';
+    try {
+      await addAdmin(input.value, currentUserEmail);
+      status.textContent = T.t('admin.adminAddSuccess');
+      status.className = 'form-status success';
+      input.value = '';
+      allAdminsCache = await listAdmins();
+      renderAdminsTable();
+    } catch (err) {
+      status.textContent = T.t('admin.adminAddError') + err.message;
+      status.className = 'form-status error';
+    } finally {
+      btn.disabled = false;
+    }
+  });
 </script>
 </body>
 </html>
