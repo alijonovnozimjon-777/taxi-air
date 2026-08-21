@@ -282,7 +282,7 @@
     currentUser = user;
     document.getElementById('greeting').textContent = T.t('member.greetingPrefix') + (user.displayName || T.t('member.defaultName')) + T.t('member.greetingSuffix');
     document.getElementById('greetingEmail').textContent = user.email;
-    if (isAdminUser(user)) {
+    if (await isAdminUser(user)) {
       document.getElementById('adminNavLink').style.display = '';
     }
 
@@ -391,7 +391,7 @@
     bookingStatus.textContent = '';
 
     try {
-      await createBooking(currentUser.uid, payload);
+      await createBooking(currentUser.uid, currentUser.email, payload);
       sendToSheet(payload);
       bookingStatus.textContent = T.t('member.bookingSuccess');
       bookingStatus.className = 'form-status success';
