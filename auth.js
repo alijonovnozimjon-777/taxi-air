@@ -6,10 +6,24 @@
 // =====================================================================
 
 const BONUS_PER_BOOKING = 5000; // har bir yuborilgan buyurtma uchun beriladigan bonus (so'm). O'zingizga moslab o'zgartiring.
-const ADMIN_EMAIL = 'alijonovnozimjon@gmail.com'; // admin panelga (admin.html) faqat shu email bilan kirgan foydalanuvchi kira oladi
+const SUPER_ADMIN_EMAIL = 'alijonovnozimjon@gmail.com'; // bosh administrator — faqat shu email yangi admin qo'sha/o'chira oladi
 
-function isAdminUser(user) {
-  return !!user && user.email === ADMIN_EMAIL;
+// Foydalanuvchi admin panelga (admin.html) kira oladimi — bosh admin YOKI
+// Firestore'dagi "admins" to'plamiga qo'shilgan qo'shimcha adminlardan biri bo'lsa, true qaytaradi.
+async function isAdminUser(user) {
+  if (!user) return false;
+  if (user.email === SUPER_ADMIN_EMAIL) return true;
+  try {
+    const doc = await db.collection('admins').doc(user.email).get();
+    return doc.exists;
+  } catch (e) {
+    return false;
+  }
+}
+
+// Faqat bosh admin uchun true — yangi adminlarni qo'shish/o'chirish shu funksiya bilan cheklanadi.
+function isSuperAdminUser(user) {
+  return !!user && user.email === SUPER_ADMIN_EMAIL;
 }
 
 // ---------- RO'YXATDAN O'TISH ----------
@@ -51,9 +65,10 @@ async function updateUserProfile(uid, { name, phone }) {
 }
 
 // ---------- BUYURTMALAR ----------
-async function createBooking(uid, payload) {
+async function createBooking(uid, email, payload) {
   await db.collection('bookings').add({
     uid: uid,
+    userEmail: email || null, // admin panelida "qaysi email yubordi" ustuni uchun
     ...payload,
     price: null, // narx hali belgilanmagan — admin panelidan (admin.html) qo'lda kiritiladi
     paymentLink: null, // to'lov havolasi ham admin panelidan qo'lda kiritiladi
@@ -76,7 +91,7 @@ async function getUserBookings(uid) {
   return snap.docs.map(d => ({ id: d.id, ...d.data() }));
 }
 
-// ---------- ADMIN: barcha buyurtmalarni ko'rish/boshqarish (faqat ADMIN_EMAIL uchun) ----------
+// ---------- ADMIN: barcha buyurtmalarni ko'rish/boshqarish ----------
 async function getAllBookingsAdmin() {
   const snap = await db.collection('bookings')
     .orderBy('createdAt', 'desc')
@@ -90,6 +105,58 @@ async function updateBookingAdmin(bookingId, { status, price, paymentLink }) {
   if (price !== undefined) data.price = price;
   if (paymentLink !== undefined) data.paymentLink = paymentLink;
   await db.collection('bookings').doc(bookingId).update(data);
+}
+
+// ---------- ADMIN: qo'shimcha adminlarni boshqarish (faqat SUPER_ADMIN_EMAIL uchun) ----------
+async function listAdmins() {
+  const snap = await db.collection('admins').get();
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+async function addAdmin(email, addedByEmail) {
+  const cleanEmail = (email || '').trim().toLowerCase();
+  if (!cleanEmail || cleanEmail.indexOf('@') === -1) throw new Error('Email noto\'g\'ri kiritildi.');
+  await db.collection('admins').doc(cleanEmail).set({
+    email: cleanEmail,
+    addedBy: addedByEmail || null,
+    addedAt: firebase.firestore.FieldValue.serverTimestamp()
+  });
+}
+
+async function removeAdmin(email) {
+  await db.collection('admins').doc(email).delete();
+}
+
+// ---------- ADMIN: barcha mijozlar ro'yxati (bonus boshqaruvi uchun) ----------
+async function getAllUsersAdmin() {
+  const snap = await db.collection('users').get();
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+// ---------- ADMIN: bonusni qo'lda qo'shish/ayirish + tarix yozuvi ----------
+// amount musbat bo'lsa qo'shiladi, manfiy bo'lsa ayiriladi (masalan -10000 — rasxod)
+async function adjustUserBonus(userId, userEmail, amount, reason, adminEmail) {
+  const numAmount = Number(amount);
+  if (!numAmount) throw new Error('Miqdor noto\'g\'ri kiritildi.');
+  await db.collection('users').doc(userId).set({
+    bonus: firebase.firestore.FieldValue.increment(numAmount)
+  }, { merge: true });
+  await db.collection('bonusLogs').add({
+    userId: userId,
+    userEmail: userEmail || null,
+    amount: numAmount,
+    reason: reason || '',
+    adminEmail: adminEmail || null,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  });
+}
+
+// Barcha bonus tarixi yozuvlari (bitta so'rovda olib, admin.html tomonida foydalanuvchi bo'yicha filtrlanadi)
+async function getAllBonusLogs() {
+  const snap = await db.collection('bonusLogs')
+    .orderBy('createdAt', 'desc')
+    .get();
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
 }
 
 // ---------- SAHIFANI HIMOYALASH / YO'NALTIRISH ----------
