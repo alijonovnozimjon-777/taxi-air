@@ -26,11 +26,14 @@ function isSuperAdminUser(user) {
   return !!user && user.email === SUPER_ADMIN_EMAIL;
 }
 
-// ---------- RO'YXATDAN O'TISH ----------
+// ---------- RO'YXATDAN O'TISH (faqat jismoniy shaxs — sayt orqali ochiq) ----------
+// Yuridik shaxs hisoblari saytdan o'z-o'zidan ochilmaydi — ular FAQAT admin panel
+// orqali (pastdagi createLegalClientAdmin) bosh admin tomonidan yaratiladi.
 async function registerUser({ name, phone, email, password }) {
   const cred = await auth.createUserWithEmailAndPassword(email, password);
   await cred.user.updateProfile({ displayName: name });
   await db.collection('users').doc(cred.user.uid).set({
+    accountType: 'individual',
     name: name,
     phone: phone,
     email: email,
@@ -38,6 +41,36 @@ async function registerUser({ name, phone, email, password }) {
     createdAt: firebase.firestore.FieldValue.serverTimestamp()
   });
   return cred.user;
+}
+
+// ---------- ADMIN: yuridik (kompaniya) mijoz hisobini yaratish ----------
+// Faqat admin.html'dagi bosh admin (SUPER_ADMIN_EMAIL) uchun ochiq forma shu funksiyani chaqiradi;
+// Firestore qoidalarida ham accountType:'legal' hujjatini FAQAT bosh admin yoza oladi deb cheklangan.
+// Vaqtinchalik IKKINCHI Firebase App orqali hisob ochiladi — shunda admin o'z sessiyasidan
+// chiqarilib ketmaydi (createUserWithEmailAndPassword har doim yangi hisobga avtomatik kirib oladi).
+async function createLegalClientAdmin({ companyName, stir, contactName, contactPosition, phone, email, password }, creatorEmail) {
+  const appName = 'AdminUserCreator_' + Date.now();
+  const secondaryApp = firebase.initializeApp(firebaseConfig, appName);
+  try {
+    const secondaryAuth = secondaryApp.auth();
+    const cred = await secondaryAuth.createUserWithEmailAndPassword(email, password);
+    const newUid = cred.user.uid;
+    await db.collection('users').doc(newUid).set({
+      accountType: 'legal',
+      name: contactName, // mas'ul xodimning F.I.O
+      phone: phone,
+      email: email,
+      companyName: companyName || '',
+      stir: stir || '',
+      contactPosition: contactPosition || '',
+      bonus: 0,
+      createdBy: creatorEmail || null,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    return newUid;
+  } finally {
+    try { await secondaryApp.delete(); } catch (e) {}
+  }
 }
 
 // ---------- KIRISH ----------
@@ -57,24 +90,31 @@ async function getUserProfile(uid) {
   return snap.exists ? snap.data() : null;
 }
 
-async function updateUserProfile(uid, { name, phone }) {
-  await db.collection('users').doc(uid).set({ name, phone }, { merge: true });
+async function updateUserProfile(uid, { name, phone, companyName, stir, contactPosition }) {
+  const data = { name, phone };
+  if (companyName !== undefined) data.companyName = companyName;
+  if (stir !== undefined) data.stir = stir;
+  if (contactPosition !== undefined) data.contactPosition = contactPosition;
+  await db.collection('users').doc(uid).set(data, { merge: true });
   if (auth.currentUser) {
     await auth.currentUser.updateProfile({ displayName: name });
   }
 }
 
 // ---------- BUYURTMALAR ----------
-async function createBooking(uid, email, payload) {
+// accountType 'legal' bo'lsa — bonus HECH QACHON qo'shilmaydi (yuridik mijozlar uchun bonus tizimi yo'q).
+async function createBooking(uid, email, accountType, payload) {
   await db.collection('bookings').add({
     uid: uid,
     userEmail: email || null, // admin panelida "qaysi email yubordi" ustuni uchun
+    accountType: accountType === 'legal' ? 'legal' : 'individual',
     ...payload,
     price: null, // narx hali belgilanmagan — admin panelidan (admin.html) qo'lda kiritiladi
     paymentLink: null, // to'lov havolasi ham admin panelidan qo'lda kiritiladi
     status: 'yuborildi', // yuborildi -> tasdiqlandi -> bajarildi -> bekor (admin.html orqali o'zgartiriladi)
     createdAt: firebase.firestore.FieldValue.serverTimestamp()
   });
+  if (accountType === 'legal') return; // yuridik mijozlarga bonus berilmaydi
   // Har bir buyurtma uchun sodiqlik bonusi qo'shamiz.
   // set(..., {merge:true}) ishlatilyapti — agar profil hujjati (users/{uid})
   // biror sababdan mavjud bo'lmasa ham xatolik bermay, avtomatik yaratadi.
