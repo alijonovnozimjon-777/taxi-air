@@ -40,8 +40,9 @@
     <div>
       <h1 id="greeting">Salom!</h1>
       <div class="sub" id="greetingEmail"></div>
+      <div class="sub" id="greetingCompany" style="display:none;"></div>
     </div>
-    <div class="bonus-pill">
+    <div class="bonus-pill" id="bonusPill">
       <span>🎁</span>
       <div>
         <b id="bonusAmount">0 so'm</b>
@@ -149,6 +150,18 @@
           <label data-i18n="reg.labelPhone">Telefon</label>
           <input type="tel" id="pfPhone" required>
         </div>
+        <div class="field" id="pfCompanyField" style="display:none;">
+          <label data-i18n="reg.labelCompany">Kompaniya nomi</label>
+          <input type="text" id="pfCompany">
+        </div>
+        <div class="field" id="pfStirField" style="display:none;">
+          <label data-i18n="reg.labelStir">STIR</label>
+          <input type="text" id="pfStir" inputmode="numeric">
+        </div>
+        <div class="field" id="pfContactPositionField" style="display:none;">
+          <label data-i18n="reg.labelContactPosition">Mas'ul shaxs lavozimi</label>
+          <input type="text" id="pfContactPosition">
+        </div>
         <div class="field">
           <label data-i18n="member.emailLocked">Email (o'zgartirib bo'lmaydi)</label>
           <input type="email" id="pfEmail" disabled>
@@ -181,6 +194,7 @@
       "qb.labelPhone": "Telefon", "qb.labelSign": "Ismli taxtacha bilan kutib olish", "qb.signNo": "Kerak emas", "qb.signYes": "Ha", "qb.submit": "Zayavkani yuborish",
       "member.historyTitle": "Buyurtmalar tarixi", "member.loading": "Yuklanmoqda...",
       "member.profileTitle": "Profil ma'lumotlari", "reg.labelName": "Ism Familiya", "reg.labelPhone": "Telefon", "member.emailLocked": "Email (o'zgartirib bo'lmaydi)", "member.save": "Saqlash",
+      "reg.labelCompany": "Kompaniya nomi", "reg.labelStir": "STIR", "reg.labelContactPosition": "Mas'ul shaxs lavozimi", "member.legalBadge": "Yuridik shaxs",
       "member.greetingPrefix": "Salom, ", "member.greetingSuffix": "!", "member.defaultName": "mijoz",
       "member.somSuffix": " so'm", "member.bagajUnit": "bagaj", "member.pricePrefix": "Narx: ", "member.priceUnset": "belgilanmagan",
       "member.sentAt": "Yuborilgan: ", "member.payBtn": "To'lash",
@@ -201,6 +215,7 @@
       "qb.labelPhone": "Phone", "qb.labelSign": "Greeting with name sign", "qb.signNo": "Not needed", "qb.signYes": "Yes", "qb.submit": "Send request",
       "member.historyTitle": "Booking history", "member.loading": "Loading...",
       "member.profileTitle": "Profile information", "reg.labelName": "Full name", "reg.labelPhone": "Phone", "member.emailLocked": "Email (cannot be changed)", "member.save": "Save",
+      "reg.labelCompany": "Company name", "reg.labelStir": "Tax ID (STIR)", "reg.labelContactPosition": "Contact person position", "member.legalBadge": "Legal entity",
       "member.greetingPrefix": "Hello, ", "member.greetingSuffix": "!", "member.defaultName": "customer",
       "member.somSuffix": " UZS", "member.bagajUnit": "luggage", "member.pricePrefix": "Price: ", "member.priceUnset": "not set",
       "member.sentAt": "Sent: ", "member.payBtn": "Pay",
@@ -221,6 +236,7 @@
       "qb.labelPhone": "Telefon", "qb.labelSign": "İsim tabelasıyla karşılama", "qb.signNo": "Gerek yok", "qb.signYes": "Evet", "qb.submit": "Talebi gönder",
       "member.historyTitle": "Rezervasyon geçmişi", "member.loading": "Yükleniyor...",
       "member.profileTitle": "Profil bilgileri", "reg.labelName": "Ad Soyad", "reg.labelPhone": "Telefon", "member.emailLocked": "E-posta (değiştirilemez)", "member.save": "Kaydet",
+      "reg.labelCompany": "Şirket adı", "reg.labelStir": "Vergi kimlik no (STIR)", "reg.labelContactPosition": "Yetkili kişi unvanı", "member.legalBadge": "Tüzel kişi",
       "member.greetingPrefix": "Merhaba, ", "member.greetingSuffix": "!", "member.defaultName": "müşteri",
       "member.somSuffix": " so'm", "member.bagajUnit": "bagaj", "member.pricePrefix": "Fiyat: ", "member.priceUnset": "belirlenmedi",
       "member.sentAt": "Gönderildi: ", "member.payBtn": "Öde",
@@ -241,6 +257,7 @@
       "qb.labelPhone": "Телефон", "qb.labelSign": "Встреча с табличкой с именем", "qb.signNo": "Не нужно", "qb.signYes": "Да", "qb.submit": "Отправить заявку",
       "member.historyTitle": "История заказов", "member.loading": "Загрузка...",
       "member.profileTitle": "Информация профиля", "reg.labelName": "Имя Фамилия", "reg.labelPhone": "Телефон", "member.emailLocked": "Email (нельзя изменить)", "member.save": "Сохранить",
+      "reg.labelCompany": "Название компании", "reg.labelStir": "ИНН (СТИР)", "reg.labelContactPosition": "Должность ответственного лица", "member.legalBadge": "Юридическое лицо",
       "member.greetingPrefix": "Здравствуйте, ", "member.greetingSuffix": "!", "member.defaultName": "клиент",
       "member.somSuffix": " сум", "member.bagajUnit": "багаж", "member.pricePrefix": "Цена: ", "member.priceUnset": "не указана",
       "member.sentAt": "Отправлено: ", "member.payBtn": "Оплатить",
@@ -261,6 +278,7 @@
       "qb.labelPhone": "الهاتف", "qb.labelSign": "الاستقبال بلافتة الاسم", "qb.signNo": "غير مطلوب", "qb.signYes": "نعم", "qb.submit": "إرسال الطلب",
       "member.historyTitle": "سجل الحجوزات", "member.loading": "جارٍ التحميل...",
       "member.profileTitle": "معلومات الملف الشخصي", "reg.labelName": "الاسم الكامل", "reg.labelPhone": "الهاتف", "member.emailLocked": "البريد الإلكتروني (لا يمكن تغييره)", "member.save": "حفظ",
+      "reg.labelCompany": "اسم الشركة", "reg.labelStir": "الرقم الضريبي (STIR)", "reg.labelContactPosition": "منصب الشخص المسؤول", "member.legalBadge": "شخص اعتباري",
       "member.greetingPrefix": "مرحبًا، ", "member.greetingSuffix": "!", "member.defaultName": "عميل",
       "member.somSuffix": " سوم", "member.bagajUnit": "حقيبة", "member.pricePrefix": "السعر: ", "member.priceUnset": "غير محدد",
       "member.sentAt": "تم الإرسال: ", "member.payBtn": "الدفع",
@@ -277,6 +295,7 @@
   });
 
   let currentUser = null;
+  let currentAccountType = 'individual';
 
   requireAuth(async (user) => {
     currentUser = user;
@@ -288,12 +307,27 @@
 
     const profile = await getUserProfile(user.uid);
     if (profile) {
-      document.getElementById('bonusAmount').textContent = (profile.bonus || 0).toLocaleString('ru-RU') + T.t('member.somSuffix');
+      currentAccountType = profile.accountType === 'legal' ? 'legal' : 'individual';
       document.getElementById('pfName').value = profile.name || '';
       document.getElementById('pfPhone').value = profile.phone || '';
       document.getElementById('pfEmail').value = profile.email || user.email;
       document.getElementById('bkName').value = profile.name || '';
       document.getElementById('bkPhone').value = profile.phone || '';
+
+      if (currentAccountType === 'legal') {
+        document.getElementById('bonusPill').style.display = 'none';
+        document.getElementById('pfCompanyField').style.display = '';
+        document.getElementById('pfStirField').style.display = '';
+        document.getElementById('pfContactPositionField').style.display = '';
+        document.getElementById('pfCompany').value = profile.companyName || '';
+        document.getElementById('pfStir').value = profile.stir || '';
+        document.getElementById('pfContactPosition').value = profile.contactPosition || '';
+        const companyEl = document.getElementById('greetingCompany');
+        companyEl.style.display = '';
+        companyEl.textContent = '🏢 ' + (profile.companyName || T.t('member.legalBadge'));
+      } else {
+        document.getElementById('bonusAmount').textContent = (profile.bonus || 0).toLocaleString('ru-RU') + T.t('member.somSuffix');
+      }
     }
 
     loadBookings();
@@ -391,14 +425,16 @@
     bookingStatus.textContent = '';
 
     try {
-      await createBooking(currentUser.uid, currentUser.email, payload);
+      await createBooking(currentUser.uid, currentUser.email, currentAccountType, payload);
       sendToSheet(payload);
       bookingStatus.textContent = T.t('member.bookingSuccess');
       bookingStatus.className = 'form-status success';
       bookingForm.reset();
       toggleFlightField();
-      const profile = await getUserProfile(currentUser.uid);
-      document.getElementById('bonusAmount').textContent = (profile.bonus || 0).toLocaleString('ru-RU') + T.t('member.somSuffix');
+      if (currentAccountType !== 'legal') {
+        const profile = await getUserProfile(currentUser.uid);
+        document.getElementById('bonusAmount').textContent = (profile.bonus || 0).toLocaleString('ru-RU') + T.t('member.somSuffix');
+      }
       loadBookings();
     } catch (err) {
       bookingStatus.textContent = T.t('member.errorPrefix') + err.message;
@@ -465,7 +501,16 @@
     try {
       const name = document.getElementById('pfName').value.trim();
       const phone = document.getElementById('pfPhone').value.trim();
-      await updateUserProfile(currentUser.uid, { name, phone });
+      const updates = { name, phone };
+      if (currentAccountType === 'legal') {
+        updates.companyName = document.getElementById('pfCompany').value.trim();
+        updates.stir = document.getElementById('pfStir').value.trim();
+        updates.contactPosition = document.getElementById('pfContactPosition').value.trim();
+      }
+      await updateUserProfile(currentUser.uid, updates);
+      if (currentAccountType === 'legal') {
+        document.getElementById('greetingCompany').textContent = '🏢 ' + (updates.companyName || T.t('member.legalBadge'));
+      }
       document.getElementById('greeting').textContent = T.t('member.greetingPrefix') + name + T.t('member.greetingSuffix');
       profileStatus.textContent = T.t('member.saved');
       profileStatus.className = 'form-status success';

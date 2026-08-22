@@ -103,10 +103,58 @@
 
     <!-- ================= MIJOZLAR & BONUSLAR ================= -->
     <section class="cab-panel" id="panel-customers">
+      <div class="card" id="addLegalCard" style="margin-bottom:20px; display:none;">
+        <h3 data-i18n="admin.legalAddTitle">🏢 Yuridik mijoz qo'shish</h3>
+        <p class="sub" style="margin-bottom:16px;" data-i18n="admin.legalAddIntro">Yuridik shaxslar saytda o'zlari ro'yxatdan o'ta olmaydi — hisobni shu yerdan siz yaratasiz, so'ng email va parolni mijozga bering.</p>
+        <form id="addLegalForm" class="qb-grid">
+          <div class="field">
+            <label data-i18n="reg.labelCompany">Kompaniya nomi</label>
+            <input type="text" id="legalCompany" required>
+          </div>
+          <div class="field">
+            <label data-i18n="reg.labelStir">STIR</label>
+            <input type="text" id="legalStir" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label data-i18n="reg.labelContactName">Mas'ul shaxs F.I.O</label>
+            <input type="text" id="legalContactName" required>
+          </div>
+          <div class="field">
+            <label data-i18n="reg.labelContactPosition">Mas'ul shaxs lavozimi</label>
+            <input type="text" id="legalContactPosition">
+          </div>
+          <div class="field">
+            <label data-i18n="reg.labelPhone">Telefon</label>
+            <input type="tel" id="legalPhone" required>
+          </div>
+          <div class="field">
+            <label data-i18n="reg.labelEmail">Email</label>
+            <input type="email" id="legalEmail" required>
+          </div>
+          <div class="field">
+            <label data-i18n="reg.labelPassword">Parol</label>
+            <input type="text" id="legalPassword" minlength="6" required>
+          </div>
+          <div class="field" style="justify-content:flex-end;">
+            <button type="button" class="btn btn-outline" id="genPasswordBtn" data-i18n="admin.legalGenPassword">🎲 Tasodifiy parol</button>
+          </div>
+          <p class="form-status" id="addLegalStatus" style="grid-column:1/-1;"></p>
+          <div class="qb-actions">
+            <button type="submit" class="btn btn-gold" id="addLegalBtn" data-i18n="admin.legalAddBtn">Yuridik mijoz yaratish</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="filter-bar">
+        <button type="button" class="btn btn-outline cust-filter-btn active" data-type="all" data-i18n="admin.filterReset">Barchasi</button>
+        <button type="button" class="btn btn-outline cust-filter-btn" data-type="individual" data-i18n="reg.typeIndividual">Jismoniy shaxs</button>
+        <button type="button" class="btn btn-outline cust-filter-btn" data-type="legal" data-i18n="reg.typeLegal">Yuridik shaxs</button>
+      </div>
       <div class="admin-table-wrap">
         <table class="admin-table">
           <thead>
             <tr>
+              <th data-i18n="admin.custType">Turi</th>
               <th data-i18n="admin.custName">Ism</th>
               <th data-i18n="admin.custEmail">Email</th>
               <th data-i18n="admin.custPhone">Telefon</th>
@@ -117,7 +165,7 @@
             </tr>
           </thead>
           <tbody id="customersTbody">
-            <tr><td colspan="7" style="text-align:center; color:var(--muted); padding:30px;" data-i18n="member.loading">Yuklanmoqda...</td></tr>
+            <tr><td colspan="8" style="text-align:center; color:var(--muted); padding:30px;" data-i18n="member.loading">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </div>
@@ -190,6 +238,11 @@
       "admin.custHistoryEmpty": "Bu mijoz uchun bonus tarixi hali yo'q.", "admin.custNoUsers": "Hali ro'yxatdan o'tgan mijozlar yo'q.",
       "admin.custLoadError": "Mijozlarni yuklashda xatolik: ", "admin.custAmountInvalid": "Miqdorni to'g'ri kiriting.",
       "admin.custBy": "Admin: ", "admin.custNoReason": "sababsiz",
+      "admin.custType": "Turi", "reg.typeIndividual": "Jismoniy shaxs", "reg.typeLegal": "Yuridik shaxs",
+      "admin.custLegalNoBonus": "Bonus tizimi yo'q", "admin.custStirPrefix": "STIR: ",
+      "admin.legalAddTitle": "🏢 Yuridik mijoz qo'shish", "admin.legalAddIntro": "Yuridik shaxslar saytda o'zlari ro'yxatdan o'ta olmaydi — hisobni shu yerdan siz yaratasiz, so'ng email va parolni mijozga bering.",
+      "admin.legalGenPassword": "🎲 Tasodifiy parol", "admin.legalAddBtn": "Yuridik mijoz yaratish", "admin.legalAddSuccess": "Yuridik mijoz yaratildi! Email va parolni mijozga yetkazing.",
+      "reg.labelContactName": "Mas'ul shaxs F.I.O", "reg.labelPhone": "Telefon", "reg.labelEmail": "Email", "reg.labelPassword": "Parol",
       "admin.adminsAddTitle": "➕ Yangi admin qo'shish", "admin.adminsIntro": "Qo'shilgan admin sizga teng huquqqa ega bo'ladi (buyurtmalar, bonuslar), lekin yangi admin qo'sha olmaydi — buni faqat siz qila olasiz.",
       "admin.adminEmail": "Email", "admin.adminAddedAt": "Qo'shilgan sana", "admin.adminAddedBy": "Kim qo'shdi", "admin.adminActions": "Amallar",
       "admin.adminRemove": "Olib tashlash", "admin.adminAddPlaceholder": "admin@misol.uz", "admin.adminAddBtn": "Qo'shish",
@@ -216,6 +269,11 @@
       "admin.custHistoryEmpty": "No bonus history for this customer yet.", "admin.custNoUsers": "No registered customers yet.",
       "admin.custLoadError": "Error loading customers: ", "admin.custAmountInvalid": "Enter a valid amount.",
       "admin.custBy": "Admin: ", "admin.custNoReason": "no reason given",
+      "admin.custType": "Type", "reg.typeIndividual": "Individual", "reg.typeLegal": "Legal entity",
+      "admin.custLegalNoBonus": "No bonus system", "admin.custStirPrefix": "Tax ID: ",
+      "admin.legalAddTitle": "🏢 Add a legal client", "admin.legalAddIntro": "Legal entities can't self-register on the site — you create the account here, then give the email and password to the client.",
+      "admin.legalGenPassword": "🎲 Random password", "admin.legalAddBtn": "Create legal client", "admin.legalAddSuccess": "Legal client created! Share the email and password with them.",
+      "reg.labelContactName": "Contact person full name", "reg.labelPhone": "Phone", "reg.labelEmail": "Email", "reg.labelPassword": "Password",
       "admin.adminsAddTitle": "➕ Add a new admin", "admin.adminsIntro": "A new admin gets equal rights to you (bookings, bonuses), but cannot add another admin — only you can.",
       "admin.adminEmail": "Email", "admin.adminAddedAt": "Added on", "admin.adminAddedBy": "Added by", "admin.adminActions": "Actions",
       "admin.adminRemove": "Remove", "admin.adminAddPlaceholder": "admin@example.com", "admin.adminAddBtn": "Add",
@@ -242,6 +300,11 @@
       "admin.custHistoryEmpty": "Bu müşteri için henüz bonus geçmişi yok.", "admin.custNoUsers": "Henüz kayıtlı müşteri yok.",
       "admin.custLoadError": "Müşteriler yüklenirken hata: ", "admin.custAmountInvalid": "Geçerli bir miktar girin.",
       "admin.custBy": "Yönetici: ", "admin.custNoReason": "sebep belirtilmedi",
+      "admin.custType": "Tür", "reg.typeIndividual": "Bireysel", "reg.typeLegal": "Tüzel kişi",
+      "admin.custLegalNoBonus": "Bonus sistemi yok", "admin.custStirPrefix": "Vergi no: ",
+      "admin.legalAddTitle": "🏢 Tüzel kişi müşteri ekle", "admin.legalAddIntro": "Tüzel kişiler sitede kendi kendine kayıt olamaz — hesabı buradan siz oluşturursunuz, ardından e-posta ve şifreyi müşteriye verirsiniz.",
+      "admin.legalGenPassword": "🎲 Rastgele şifre", "admin.legalAddBtn": "Tüzel kişi oluştur", "admin.legalAddSuccess": "Tüzel kişi oluşturuldu! E-posta ve şifreyi müşteriyle paylaşın.",
+      "reg.labelContactName": "Yetkili kişi Ad Soyad", "reg.labelPhone": "Telefon", "reg.labelEmail": "E-posta", "reg.labelPassword": "Şifre",
       "admin.adminsAddTitle": "➕ Yeni yönetici ekle", "admin.adminsIntro": "Eklenen yönetici sizinle eşit haklara sahip olur (rezervasyonlar, bonuslar), ancak başka yönetici ekleyemez — bunu yalnızca siz yapabilirsiniz.",
       "admin.adminEmail": "E-posta", "admin.adminAddedAt": "Eklenme tarihi", "admin.adminAddedBy": "Kim ekledi", "admin.adminActions": "İşlemler",
       "admin.adminRemove": "Kaldır", "admin.adminAddPlaceholder": "admin@ornek.uz", "admin.adminAddBtn": "Ekle",
@@ -268,6 +331,11 @@
       "admin.custHistoryEmpty": "У этого клиента пока нет истории бонусов.", "admin.custNoUsers": "Зарегистрированных клиентов пока нет.",
       "admin.custLoadError": "Ошибка загрузки клиентов: ", "admin.custAmountInvalid": "Введите корректную сумму.",
       "admin.custBy": "Админ: ", "admin.custNoReason": "без причины",
+      "admin.custType": "Тип", "reg.typeIndividual": "Физическое лицо", "reg.typeLegal": "Юридическое лицо",
+      "admin.custLegalNoBonus": "Без бонусной системы", "admin.custStirPrefix": "ИНН: ",
+      "admin.legalAddTitle": "🏢 Добавить юр. лицо", "admin.legalAddIntro": "Юридические лица не могут зарегистрироваться сами — вы создаёте аккаунт здесь, затем передаёте email и пароль клиенту.",
+      "admin.legalGenPassword": "🎲 Случайный пароль", "admin.legalAddBtn": "Создать юр. лицо", "admin.legalAddSuccess": "Юридическое лицо создано! Передайте email и пароль клиенту.",
+      "reg.labelContactName": "Ответственное лицо Ф.И.О", "reg.labelPhone": "Телефон", "reg.labelEmail": "Email", "reg.labelPassword": "Пароль",
       "admin.adminsAddTitle": "➕ Добавить нового администратора", "admin.adminsIntro": "Новый администратор получит равные с вами права (заказы, бонусы), но не сможет добавлять других администраторов — это можете только вы.",
       "admin.adminEmail": "Email", "admin.adminAddedAt": "Дата добавления", "admin.adminAddedBy": "Кто добавил", "admin.adminActions": "Действия",
       "admin.adminRemove": "Удалить", "admin.adminAddPlaceholder": "admin@example.uz", "admin.adminAddBtn": "Добавить",
@@ -294,6 +362,11 @@
       "admin.custHistoryEmpty": "لا يوجد سجل مكافآت لهذا العميل بعد.", "admin.custNoUsers": "لا يوجد عملاء مسجلون بعد.",
       "admin.custLoadError": "خطأ في تحميل العملاء: ", "admin.custAmountInvalid": "أدخل مبلغًا صحيحًا.",
       "admin.custBy": "المسؤول: ", "admin.custNoReason": "بدون سبب",
+      "admin.custType": "النوع", "reg.typeIndividual": "شخص طبيعي", "reg.typeLegal": "شخص اعتباري",
+      "admin.custLegalNoBonus": "لا يوجد نظام مكافآت", "admin.custStirPrefix": "الرقم الضريبي: ",
+      "admin.legalAddTitle": "🏢 إضافة عميل اعتباري", "admin.legalAddIntro": "لا يمكن للشخصيات الاعتبارية التسجيل بأنفسها في الموقع — أنشئ الحساب من هنا، ثم سلّم البريد الإلكتروني وكلمة المرور للعميل.",
+      "admin.legalGenPassword": "🎲 كلمة مرور عشوائية", "admin.legalAddBtn": "إنشاء عميل اعتباري", "admin.legalAddSuccess": "تم إنشاء العميل الاعتباري! شارك البريد الإلكتروني وكلمة المرور مع العميل.",
+      "reg.labelContactName": "اسم الشخص المسؤول", "reg.labelPhone": "الهاتف", "reg.labelEmail": "البريد الإلكتروني", "reg.labelPassword": "كلمة المرور",
       "admin.adminsAddTitle": "➕ إضافة مسؤول جديد", "admin.adminsIntro": "سيحصل المسؤول الجديد على نفس صلاحياتك (الحجوزات، المكافآت)، لكنه لن يستطيع إضافة مسؤول آخر — أنت فقط من يستطيع ذلك.",
       "admin.adminEmail": "البريد الإلكتروني", "admin.adminAddedAt": "تاريخ الإضافة", "admin.adminAddedBy": "أضافه", "admin.adminActions": "إجراءات",
       "admin.adminRemove": "إزالة", "admin.adminAddPlaceholder": "admin@example.uz", "admin.adminAddBtn": "إضافة",
@@ -336,6 +409,7 @@
   let allBonusLogsCache = [];
   let allAdminsCache = [];
   const openHistoryFor = new Set();
+  let customerTypeFilter = 'all';
 
   requireAuth(async (user) => {
     if (!(await isAdminUser(user))) {
@@ -347,6 +421,7 @@
     document.getElementById('adminBox').style.display = '';
     if (currentUserIsSuperAdmin) {
       document.getElementById('adminsTabBtn').style.display = '';
+      document.getElementById('addLegalCard').style.display = '';
     }
     await loadAllBookings();
   });
@@ -523,13 +598,65 @@
     }
   }
 
+  // ---------- Yuridik mijoz qo'shish (faqat bosh admin) ----------
+  document.getElementById('genPasswordBtn').addEventListener('click', () => {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
+    let pass = '';
+    for (let i = 0; i < 10; i++) pass += chars[Math.floor(Math.random() * chars.length)];
+    document.getElementById('legalPassword').value = pass;
+  });
+
+  document.getElementById('addLegalForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    if (!form.reportValidity()) return;
+    const status = document.getElementById('addLegalStatus');
+    const btn = document.getElementById('addLegalBtn');
+    btn.disabled = true;
+    status.textContent = '';
+    try {
+      await createLegalClientAdmin({
+        companyName: document.getElementById('legalCompany').value.trim(),
+        stir: document.getElementById('legalStir').value.trim(),
+        contactName: document.getElementById('legalContactName').value.trim(),
+        contactPosition: document.getElementById('legalContactPosition').value.trim(),
+        phone: document.getElementById('legalPhone').value.trim(),
+        email: document.getElementById('legalEmail').value.trim(),
+        password: document.getElementById('legalPassword').value
+      }, currentUserEmail);
+      status.textContent = T.t('admin.legalAddSuccess');
+      status.className = 'form-status success';
+      form.reset();
+      allUsersCache = await getAllUsersAdmin();
+      renderCustomersTable();
+    } catch (err) {
+      status.textContent = T.t('admin.adminAddError') + friendlyAuthError(err);
+      status.className = 'form-status error';
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  document.querySelectorAll('.cust-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      customerTypeFilter = btn.dataset.type;
+      document.querySelectorAll('.cust-filter-btn').forEach(b => b.classList.toggle('active', b === btn));
+      renderCustomersTable();
+    });
+  });
+
   function renderCustomersTable() {
     const tbody = document.getElementById('customersTbody');
-    if (allUsersCache.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:var(--muted); padding:30px;">' + T.t('admin.custNoUsers') + '</td></tr>';
+    const filtered = customerTypeFilter === 'all'
+      ? allUsersCache
+      : allUsersCache.filter(u => (u.accountType === 'legal' ? 'legal' : 'individual') === customerTypeFilter);
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:var(--muted); padding:30px;">' + T.t('admin.custNoUsers') + '</td></tr>';
       return;
     }
-    tbody.innerHTML = allUsersCache.map(u => {
+    tbody.innerHTML = filtered.map(u => {
+      const isLegal = u.accountType === 'legal';
       const logs = allBonusLogsCache.filter(l => l.userId === u.id);
       const isOpen = openHistoryFor.has(u.id);
       const historyHtml = logs.length === 0
@@ -544,21 +671,33 @@
               <div style="color:var(--muted); font-size:11.5px; margin-top:2px;">${dt} · ${T.t('admin.custBy')}${escapeHtml(l.adminEmail || '—')}</div>
             </div>`;
           }).join('');
+      const nameCell = isLegal
+        ? `${escapeHtml(u.companyName) || '—'}<div style="color:var(--muted); font-size:11.5px; margin-top:2px;">${escapeHtml(u.name) || ''}${u.stir ? ' · ' + T.t('admin.custStirPrefix') + escapeHtml(u.stir) : ''}</div>`
+        : (escapeHtml(u.name) || '—');
+      const bonusOrActionsCell = isLegal
+        ? `<span style="color:var(--muted);">—</span>`
+        : `<b style="color:var(--gold);">${Number(u.bonus || 0).toLocaleString('ru-RU')}${T.t('member.somSuffix')}</b>`;
+      const amountReasonActionsCell = isLegal
+        ? `<td colspan="3" style="color:var(--muted); font-style:italic;">${T.t('admin.custLegalNoBonus')}
+             <button type="button" class="btn btn-outline" style="padding:7px 12px; font-size:12px; margin-left:10px;" data-action="history">${isOpen ? T.t('admin.custHistoryHide') : T.t('admin.custHistory')}</button>
+           </td>`
+        : `<td><input type="number" class="admin-price-input" style="width:110px;" data-field="amount" placeholder="${T.t('admin.custAmountPlaceholder')}"></td>
+           <td><input type="text" class="admin-price-input" style="width:150px;" data-field="reason" placeholder="${T.t('admin.custReasonPlaceholder')}"></td>
+           <td style="white-space:nowrap;">
+             <button type="button" class="btn btn-outline" style="padding:7px 12px; font-size:12px;" data-action="add">${T.t('admin.custAdd')}</button>
+             <button type="button" class="btn btn-outline" style="padding:7px 12px; font-size:12px;" data-action="subtract">${T.t('admin.custSubtract')}</button>
+             <button type="button" class="btn btn-outline" style="padding:7px 12px; font-size:12px;" data-action="history">${isOpen ? T.t('admin.custHistoryHide') : T.t('admin.custHistory')}</button>
+           </td>`;
       return `<tr data-uid="${u.id}">
-          <td>${escapeHtml(u.name) || '—'}</td>
+          <td>${isLegal ? `<span class="status-pill tasdiqlandi">${T.t('reg.typeLegal')}</span>` : `<span class="status-pill bajarildi">${T.t('reg.typeIndividual')}</span>`}</td>
+          <td>${nameCell}</td>
           <td>${escapeHtml(u.email) || '—'}</td>
           <td>${escapeHtml(u.phone) || '—'}</td>
-          <td><b style="color:var(--gold);">${Number(u.bonus || 0).toLocaleString('ru-RU')}${T.t('member.somSuffix')}</b></td>
-          <td><input type="number" class="admin-price-input" style="width:110px;" data-field="amount" placeholder="${T.t('admin.custAmountPlaceholder')}"></td>
-          <td><input type="text" class="admin-price-input" style="width:150px;" data-field="reason" placeholder="${T.t('admin.custReasonPlaceholder')}"></td>
-          <td style="white-space:nowrap;">
-            <button type="button" class="btn btn-outline" style="padding:7px 12px; font-size:12px;" data-action="add">${T.t('admin.custAdd')}</button>
-            <button type="button" class="btn btn-outline" style="padding:7px 12px; font-size:12px;" data-action="subtract">${T.t('admin.custSubtract')}</button>
-            <button type="button" class="btn btn-outline" style="padding:7px 12px; font-size:12px;" data-action="history">${isOpen ? T.t('admin.custHistoryHide') : T.t('admin.custHistory')}</button>
-          </td>
+          <td>${bonusOrActionsCell}</td>
+          ${amountReasonActionsCell}
         </tr>
         <tr class="cust-history-row" data-uid-history="${u.id}" style="${isOpen ? '' : 'display:none;'}">
-          <td colspan="7" style="background:var(--bg2);">${historyHtml}</td>
+          <td colspan="8" style="background:var(--bg2);">${historyHtml}</td>
         </tr>`;
     }).join('');
 
@@ -568,8 +707,10 @@
       const reasonInput = row.querySelector('[data-field="reason"]');
       const user = allUsersCache.find(u => u.id === uid);
 
-      row.querySelector('[data-action="add"]').addEventListener('click', () => doAdjust(uid, user, amountInput, reasonInput, 1));
-      row.querySelector('[data-action="subtract"]').addEventListener('click', () => doAdjust(uid, user, amountInput, reasonInput, -1));
+      const addBtn = row.querySelector('[data-action="add"]');
+      const subtractBtn = row.querySelector('[data-action="subtract"]');
+      if (addBtn) addBtn.addEventListener('click', () => doAdjust(uid, user, amountInput, reasonInput, 1));
+      if (subtractBtn) subtractBtn.addEventListener('click', () => doAdjust(uid, user, amountInput, reasonInput, -1));
       row.querySelector('[data-action="history"]').addEventListener('click', () => {
         if (openHistoryFor.has(uid)) openHistoryFor.delete(uid); else openHistoryFor.add(uid);
         renderCustomersTable();
