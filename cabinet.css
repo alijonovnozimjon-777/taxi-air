@@ -172,6 +172,12 @@ header.cab-header{
   color-scheme:dark;
 }
 .filter-field input[type="date"]:focus{border-color:var(--gold);}
+.filter-field input[type="text"]{
+  background:var(--bg2); border:1px solid var(--border); border-radius:10px;
+  padding:10px 12px; color:var(--text); font-family:inherit; font-size:13.5px; outline:none;
+  width:100%;
+}
+.filter-field input[type="text"]:focus{border-color:var(--gold);}
 
 /* ---------- Admin panel table ---------- */
 .admin-table-wrap{overflow-x:auto; border-radius:var(--radius); border:1px solid var(--border);}

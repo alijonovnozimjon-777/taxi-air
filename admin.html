@@ -70,6 +70,10 @@
           <label data-i18n="admin.filterTo">Sanagacha</label>
           <input type="date" id="filterTo">
         </div>
+        <div class="filter-field" style="flex:1; min-width:240px;">
+          <label data-i18n="admin.filterSearch">Qidirish (hammasi bo'yicha)</label>
+          <input type="text" id="searchInput" data-i18n-placeholder="admin.filterSearchPlaceholder" placeholder="Reys, yo'nalish, manzil, mashina, mijoz, email, telefon...">
+        </div>
         <button type="button" class="btn btn-outline" id="filterBtn" data-i18n="admin.filterBtn">Filtrlash</button>
         <button type="button" class="btn btn-outline" id="filterResetBtn" data-i18n="admin.filterReset">Barchasi</button>
         <button type="button" class="btn btn-gold" id="exportExcelBtn" style="margin-left:auto;" data-i18n="admin.exportExcel">⬇ Excelga yuklash</button>
@@ -223,7 +227,7 @@
       "admin.title": "Admin panel", "admin.sub": "Barcha mijozlar buyurtmalari — narx va holatni shu yerdan boshqarasiz.",
       "admin.denied": "Ruxsat yo'q", "admin.deniedText": "Bu sahifa faqat administrator uchun.", "admin.deniedLink": "Kabinetimga qaytish",
       "admin.tabBookings": "Buyurtmalar", "admin.tabCustomers": "Mijozlar & Bonuslar", "admin.tabAdmins": "Adminlar",
-      "admin.filterFrom": "Sanadan", "admin.filterTo": "Sanagacha", "admin.filterBtn": "Filtrlash", "admin.filterReset": "Barchasi", "admin.exportExcel": "⬇ Excelga yuklash",
+      "admin.filterFrom": "Sanadan", "admin.filterTo": "Sanagacha", "admin.filterSearch": "Qidirish (hammasi bo'yicha)", "admin.filterSearchPlaceholder": "Reys, yo'nalish, manzil, mashina, mijoz, email, telefon...", "admin.filterBtn": "Filtrlash", "admin.filterReset": "Barchasi", "admin.exportExcel": "⬇ Excelga yuklash",
       "admin.thSent": "Yuborilgan", "admin.thDateTime": "Sana / Vaqt", "admin.thFlight": "Reys", "admin.thDirection": "Yo'nalish",
       "admin.thAddress": "Manzil", "admin.thCar": "Mashina", "admin.thClient": "Mijoz", "admin.thEmail": "Email", "admin.thPhone": "Telefon",
       "admin.thBaggage": "Bagaj", "admin.thPrice": "Narx (so'm)", "admin.thPaymentLink": "To'lov havolasi", "admin.thStatus": "Holat",
@@ -254,7 +258,7 @@
       "admin.title": "Admin panel", "admin.sub": "All customer bookings — manage price and status right here.",
       "admin.denied": "Access denied", "admin.deniedText": "This page is for administrators only.", "admin.deniedLink": "Back to My Account",
       "admin.tabBookings": "Bookings", "admin.tabCustomers": "Customers & Bonuses", "admin.tabAdmins": "Admins",
-      "admin.filterFrom": "From date", "admin.filterTo": "To date", "admin.filterBtn": "Filter", "admin.filterReset": "All", "admin.exportExcel": "⬇ Export to Excel",
+      "admin.filterFrom": "From date", "admin.filterTo": "To date", "admin.filterSearch": "Search (all fields)", "admin.filterSearchPlaceholder": "Flight, direction, address, car, client, email, phone...", "admin.filterBtn": "Filter", "admin.filterReset": "All", "admin.exportExcel": "⬇ Export to Excel",
       "admin.thSent": "Sent", "admin.thDateTime": "Date / Time", "admin.thFlight": "Flight", "admin.thDirection": "Direction",
       "admin.thAddress": "Address", "admin.thCar": "Car", "admin.thClient": "Client", "admin.thEmail": "Email", "admin.thPhone": "Phone",
       "admin.thBaggage": "Luggage", "admin.thPrice": "Price (UZS)", "admin.thPaymentLink": "Payment link", "admin.thStatus": "Status",
@@ -285,7 +289,7 @@
       "admin.title": "Admin panel", "admin.sub": "Tüm müşteri rezervasyonları — fiyat ve durumu buradan yönetin.",
       "admin.denied": "Erişim yok", "admin.deniedText": "Bu sayfa yalnızca yöneticiler içindir.", "admin.deniedLink": "Hesabıma dön",
       "admin.tabBookings": "Rezervasyonlar", "admin.tabCustomers": "Müşteriler & Bonuslar", "admin.tabAdmins": "Yöneticiler",
-      "admin.filterFrom": "Başlangıç tarihi", "admin.filterTo": "Bitiş tarihi", "admin.filterBtn": "Filtrele", "admin.filterReset": "Hepsi", "admin.exportExcel": "⬇ Excel'e aktar",
+      "admin.filterFrom": "Başlangıç tarihi", "admin.filterTo": "Bitiş tarihi", "admin.filterSearch": "Ara (tüm alanlarda)", "admin.filterSearchPlaceholder": "Uçuş, yön, adres, araç, müşteri, e-posta, telefon...", "admin.filterBtn": "Filtrele", "admin.filterReset": "Hepsi", "admin.exportExcel": "⬇ Excel'e aktar",
       "admin.thSent": "Gönderildi", "admin.thDateTime": "Tarih / Saat", "admin.thFlight": "Uçuş", "admin.thDirection": "Yön",
       "admin.thAddress": "Adres", "admin.thCar": "Araç", "admin.thClient": "Müşteri", "admin.thEmail": "E-posta", "admin.thPhone": "Telefon",
       "admin.thBaggage": "Bagaj", "admin.thPrice": "Fiyat (so'm)", "admin.thPaymentLink": "Ödeme bağlantısı", "admin.thStatus": "Durum",
@@ -316,7 +320,7 @@
       "admin.title": "Админ-панель", "admin.sub": "Все заказы клиентов — управляйте ценой и статусом прямо здесь.",
       "admin.denied": "Доступ запрещён", "admin.deniedText": "Эта страница только для администратора.", "admin.deniedLink": "Вернуться в кабинет",
       "admin.tabBookings": "Заказы", "admin.tabCustomers": "Клиенты и бонусы", "admin.tabAdmins": "Администраторы",
-      "admin.filterFrom": "С даты", "admin.filterTo": "По дату", "admin.filterBtn": "Фильтр", "admin.filterReset": "Все", "admin.exportExcel": "⬇ Экспорт в Excel",
+      "admin.filterFrom": "С даты", "admin.filterTo": "По дату", "admin.filterSearch": "Поиск (по всем полям)", "admin.filterSearchPlaceholder": "Рейс, направление, адрес, машина, клиент, email, телефон...", "admin.filterBtn": "Фильтр", "admin.filterReset": "Все", "admin.exportExcel": "⬇ Экспорт в Excel",
       "admin.thSent": "Отправлено", "admin.thDateTime": "Дата / Время", "admin.thFlight": "Рейс", "admin.thDirection": "Направление",
       "admin.thAddress": "Адрес", "admin.thCar": "Машина", "admin.thClient": "Клиент", "admin.thEmail": "Email", "admin.thPhone": "Телефон",
       "admin.thBaggage": "Багаж", "admin.thPrice": "Цена (сум)", "admin.thPaymentLink": "Ссылка на оплату", "admin.thStatus": "Статус",
@@ -347,7 +351,7 @@
       "admin.title": "لوحة الإدارة", "admin.sub": "جميع حجوزات العملاء — أدر السعر والحالة من هنا.",
       "admin.denied": "الوصول مرفوض", "admin.deniedText": "هذه الصفحة مخصصة للمسؤول فقط.", "admin.deniedLink": "العودة إلى حسابي",
       "admin.tabBookings": "الحجوزات", "admin.tabCustomers": "العملاء والمكافآت", "admin.tabAdmins": "المسؤولون",
-      "admin.filterFrom": "من تاريخ", "admin.filterTo": "إلى تاريخ", "admin.filterBtn": "تصفية", "admin.filterReset": "الكل", "admin.exportExcel": "⬇ تصدير إلى Excel",
+      "admin.filterFrom": "من تاريخ", "admin.filterTo": "إلى تاريخ", "admin.filterSearch": "بحث (في كل الحقول)", "admin.filterSearchPlaceholder": "الرحلة، الاتجاه، العنوان، السيارة، العميل، البريد الإلكتروني، الهاتف...", "admin.filterBtn": "تصفية", "admin.filterReset": "الكل", "admin.exportExcel": "⬇ تصدير إلى Excel",
       "admin.thSent": "تم الإرسال", "admin.thDateTime": "التاريخ / الوقت", "admin.thFlight": "الرحلة", "admin.thDirection": "الاتجاه",
       "admin.thAddress": "العنوان", "admin.thCar": "السيارة", "admin.thClient": "العميل", "admin.thEmail": "البريد الإلكتروني", "admin.thPhone": "الهاتف",
       "admin.thBaggage": "الحقائب", "admin.thPrice": "السعر (سوم)", "admin.thPaymentLink": "رابط الدفع", "admin.thStatus": "الحالة",
@@ -477,13 +481,32 @@
     });
   }
 
+  function applySearchFilter(list) {
+    const q = document.getElementById('searchInput').value.trim().toLowerCase();
+    if (!q) return list;
+    return list.filter(b => {
+      const haystack = [
+        b.date, b.time, b.flight, b.direction, b.address, b.car, b.name, b.userEmail, b.phone
+      ].map(v => (v == null ? '' : String(v)).toLowerCase()).join(' | ');
+      return haystack.includes(q);
+    });
+  }
+
+  function applyFilters(list) {
+    return applySearchFilter(applyDateFilter(list));
+  }
+
   document.getElementById('filterBtn').addEventListener('click', () => {
-    renderBookingsTable(applyDateFilter(allBookingsCache));
+    renderBookingsTable(applyFilters(allBookingsCache));
   });
   document.getElementById('filterResetBtn').addEventListener('click', () => {
     document.getElementById('filterFrom').value = '';
     document.getElementById('filterTo').value = '';
+    document.getElementById('searchInput').value = '';
     renderBookingsTable(allBookingsCache);
+  });
+  document.getElementById('searchInput').addEventListener('input', () => {
+    renderBookingsTable(applyFilters(allBookingsCache));
   });
 
   function renderBookingsTable(bookings) {
