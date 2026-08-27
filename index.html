@@ -293,11 +293,19 @@
   .filter-btn{padding:10px 20px; border-radius:999px; border:1px solid var(--border); background:var(--panel); color:var(--muted); font-weight:700; font-size:13.5px; cursor:pointer; transition:all .2s; font-family:inherit;}
   .filter-btn:hover{color:var(--text); border-color:rgba(240,182,74,.4);}
   .filter-btn.active{background:linear-gradient(135deg,var(--gold-2),var(--gold)); color:#1a1204; border-color:transparent;}
-  .fleet-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
+  .fleet-marquee-outer{overflow:hidden; padding:6px 2px 16px;}
+  .fleet-track.fleet-marquee-anim{display:flex; width:max-content; cursor:grab; touch-action:pan-y;}
+  .fleet-track.fleet-marquee-anim.fleet-dragging{cursor:grabbing; user-select:none;}
+  .fleet-group{display:flex; flex-wrap:wrap; gap:20px;}
+  .fleet-group.fleet-group-clone{display:none;}
+  .fleet-track.fleet-marquee-anim .fleet-group{flex-wrap:nowrap; padding-right:20px;}
+  .fleet-track.fleet-marquee-anim .fleet-group.fleet-group-clone{display:flex;}
+  .fleet-track.fleet-marquee-anim img{-webkit-user-drag:none; user-select:none;}
   .fleet-card{
     background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
     padding:26px 22px; text-align:center; transition:transform .15s ease, border-color .3s;
     transform-style:preserve-3d; will-change:transform;
+    width:255px; flex:0 0 255px;
   }
   .fleet-card.hidden{display:none;}
   .fleet-card:hover{border-color:rgba(240,182,74,.45);}
@@ -437,7 +445,6 @@
     .quick-book-form{grid-template-columns:repeat(2,minmax(0,1fr));}
     .services-grid{grid-template-columns:repeat(2,1fr);}
     .why-grid{grid-template-columns:1fr; gap:40px;}
-    .fleet-grid{grid-template-columns:repeat(2,1fr);}
     .safety-grid{grid-template-columns:repeat(2,1fr);}
     .steps{grid-template-columns:1fr;}
     .test-grid{grid-template-columns:1fr;}
@@ -456,7 +463,7 @@
     .quick-book-form{grid-template-columns:1fr;}
     .quick-book{margin-top:0;}
     .services-grid{grid-template-columns:1fr;}
-    .fleet-grid{grid-template-columns:1fr;}
+    .fleet-track:not(.fleet-marquee-anim) .fleet-card{width:100%; flex:0 0 100%;}
     .safety-grid{grid-template-columns:1fr;}
     .fab-call{width:50px; height:50px; font-size:20px;}
     .fleet-catalog-banner{flex-direction:column; text-align:center;}
@@ -801,8 +808,10 @@
       <button class="filter-btn" data-filter="premium" data-i18n="fleet.filterPremium">Premium</button>
     </div>
 
-    <div class="fleet-grid">
-      <div class="fleet-card reveal" data-category="comfort">
+    <div class="fleet-marquee-outer reveal">
+    <div class="fleet-track" id="fleetTrack">
+      <div class="fleet-group" id="fleetGroupMain">
+      <div class="fleet-card" data-category="comfort">
         <span class="fleet-tag" data-i18n="fleet.filterComfort">Comfort</span>
         <img src="fleetbyde2.png" alt="BYD E2" loading="lazy" class="fleet-card-img">
         <h3>BYD E2</h3>
@@ -810,7 +819,7 @@
         <div class="fleet-price" data-i18n="fleet.c2price">110 000 so'mdan boshlab<small>*taxminiy, yo'nalishga qarab farq qiladi</small></div>
         <div class="fleet-specs"><span>👤 1–4</span><span>🧳 2</span></div>
       </div>
-      <div class="fleet-card reveal" data-category="business">
+      <div class="fleet-card" data-category="business">
         <span class="fleet-tag" data-i18n="fleet.filterBusiness">Business</span>
         <img src="fleetbydqin.png" alt="BYD QIN" loading="lazy" class="fleet-card-img">
         <h3>BYD QIN</h3>
@@ -818,7 +827,7 @@
         <div class="fleet-price" data-i18n="fleet.c5price">150 000 so'mdan boshlab<small>*taxminiy, yo'nalishga qarab farq qiladi</small></div>
         <div class="fleet-specs"><span>👤 1–4</span><span>🧳 3</span></div>
       </div>
-      <div class="fleet-card reveal" data-category="business">
+      <div class="fleet-card" data-category="business">
         <span class="fleet-tag" data-i18n="fleet.filterBusiness">Business</span>
         <img src="fleethongqieqm5.png" alt="Hongqi EQM5" loading="lazy" class="fleet-card-img">
         <h3>Hongqi EQM5</h3>
@@ -826,7 +835,7 @@
         <div class="fleet-price" data-i18n="fleet.c3aPrice">150 000 so'mdan boshlab<small>*taxminiy, yo'nalishga qarab farq qiladi</small></div>
         <div class="fleet-specs"><span>👤 1–4</span><span>🧳 3</span></div>
       </div>
-      <div class="fleet-card reveal" data-category="business">
+      <div class="fleet-card" data-category="business">
         <span class="fleet-tag" data-i18n="fleet.filterBusiness">Business</span>
         <img src="fleetbydyuanup.png" alt="BYD Yuan UP" loading="lazy" class="fleet-card-img">
         <h3>BYD Yuan UP</h3>
@@ -834,7 +843,7 @@
         <div class="fleet-price" data-i18n="fleet.c3bPrice">150 000 so'mdan boshlab<small>*taxminiy, yo'nalishga qarab farq qiladi</small></div>
         <div class="fleet-specs"><span>👤 1–4</span><span>🧳 3</span></div>
       </div>
-      <div class="fleet-card reveal" data-category="business">
+      <div class="fleet-card" data-category="business">
         <span class="fleet-tag" data-i18n="fleet.filterBusiness">Business</span>
         <img src="fleetxpengg3.png" alt="XPENG G3" loading="lazy" class="fleet-card-img">
         <h3>XPENG G3</h3>
@@ -842,7 +851,7 @@
         <div class="fleet-price" data-i18n="fleet.c6price">150 000 so'mdan boshlab<small>*taxminiy, yo'nalishga qarab farq qiladi</small></div>
         <div class="fleet-specs"><span>👤 1–4</span><span>🧳 3</span></div>
       </div>
-      <div class="fleet-card reveal" data-category="premium">
+      <div class="fleet-card" data-category="premium">
         <span class="fleet-tag" data-i18n="fleet.filterPremium">Premium</span>
         <img src="fleetteslamodely.png" alt="Tesla Model Y" loading="lazy" class="fleet-card-img">
         <h3>Tesla Model Y</h3>
@@ -850,7 +859,7 @@
         <div class="fleet-price" data-i18n="fleet.c7price">250 000 so'mdan boshlab<small>*taxminiy, yo'nalishga qarab farq qiladi</small></div>
         <div class="fleet-specs"><span>👤 1–4</span><span>🧳 3</span></div>
       </div>
-      <div class="fleet-card reveal" data-category="vip">
+      <div class="fleet-card" data-category="vip">
         <span class="fleet-tag" data-i18n="fleet.tagVip">Minivan</span>
         <img src="fleetjacm4.png" alt="Jac M4" loading="lazy" class="fleet-card-img">
         <h3>Jac M4</h3>
@@ -858,6 +867,66 @@
         <div class="fleet-price" data-i18n="fleet.c4price">200 000 so'mdan boshlab<small>*taxminiy, yo'nalishga qarab farq qiladi</small></div>
         <div class="fleet-specs"><span>👤 1–7</span><span>🧳 7</span></div>
       </div>
+      </div>
+      <div class="fleet-group fleet-group-clone" id="fleetGroupClone" aria-hidden="true">
+      <div class="fleet-card" data-category="comfort">
+        <span class="fleet-tag" data-i18n="fleet.filterComfort">Comfort</span>
+        <img src="fleetbyde2.png" alt="" loading="lazy" class="fleet-card-img">
+        <h3>BYD E2</h3>
+        <div class="models" data-i18n="fleet.c2desc">Elektromobil, keng salon, tinch va yumshoq yurish</div>
+        <div class="fleet-price" data-i18n="fleet.c2price">110 000 so'mdan boshlab<small>*taxminiy, yo'nalishga qarab farq qiladi</small></div>
+        <div class="fleet-specs"><span>👤 1–4</span><span>🧳 2</span></div>
+      </div>
+      <div class="fleet-card" data-category="business">
+        <span class="fleet-tag" data-i18n="fleet.filterBusiness">Business</span>
+        <img src="fleetbydqin.png" alt="" loading="lazy" class="fleet-card-img">
+        <h3>BYD QIN</h3>
+        <div class="models" data-i18n="fleet.c5desc">Elektromobil, sport dizayn va tinch salon, biznes safarlar uchun</div>
+        <div class="fleet-price" data-i18n="fleet.c5price">150 000 so'mdan boshlab<small>*taxminiy, yo'nalishga qarab farq qiladi</small></div>
+        <div class="fleet-specs"><span>👤 1–4</span><span>🧳 3</span></div>
+      </div>
+      <div class="fleet-card" data-category="business">
+        <span class="fleet-tag" data-i18n="fleet.filterBusiness">Business</span>
+        <img src="fleethongqieqm5.png" alt="" loading="lazy" class="fleet-card-img">
+        <h3>Hongqi EQM5</h3>
+        <div class="models" data-i18n="fleet.c3aDesc">Elektromobil, premium interyer, biznes safarlar uchun</div>
+        <div class="fleet-price" data-i18n="fleet.c3aPrice">150 000 so'mdan boshlab<small>*taxminiy, yo'nalishga qarab farq qiladi</small></div>
+        <div class="fleet-specs"><span>👤 1–4</span><span>🧳 3</span></div>
+      </div>
+      <div class="fleet-card" data-category="business">
+        <span class="fleet-tag" data-i18n="fleet.filterBusiness">Business</span>
+        <img src="fleetbydyuanup.png" alt="" loading="lazy" class="fleet-card-img">
+        <h3>BYD Yuan UP</h3>
+        <div class="models" data-i18n="fleet.c3bDesc">Elektromobil, premium interyer, biznes safarlar uchun</div>
+        <div class="fleet-price" data-i18n="fleet.c3bPrice">150 000 so'mdan boshlab<small>*taxminiy, yo'nalishga qarab farq qiladi</small></div>
+        <div class="fleet-specs"><span>👤 1–4</span><span>🧳 3</span></div>
+      </div>
+      <div class="fleet-card" data-category="business">
+        <span class="fleet-tag" data-i18n="fleet.filterBusiness">Business</span>
+        <img src="fleetxpengg3.png" alt="" loading="lazy" class="fleet-card-img">
+        <h3>XPENG G3</h3>
+        <div class="models" data-i18n="fleet.c6desc">Elektr krossover, zamonaviy texnologiyalar, biznes safarlar uchun</div>
+        <div class="fleet-price" data-i18n="fleet.c6price">150 000 so'mdan boshlab<small>*taxminiy, yo'nalishga qarab farq qiladi</small></div>
+        <div class="fleet-specs"><span>👤 1–4</span><span>🧳 3</span></div>
+      </div>
+      <div class="fleet-card" data-category="premium">
+        <span class="fleet-tag" data-i18n="fleet.filterPremium">Premium</span>
+        <img src="fleetteslamodely.png" alt="" loading="lazy" class="fleet-card-img">
+        <h3>Tesla Model Y</h3>
+        <div class="models" data-i18n="fleet.c7desc">Premium elektromobil, yuqori tezlik va qulaylik</div>
+        <div class="fleet-price" data-i18n="fleet.c7price">250 000 so'mdan boshlab<small>*taxminiy, yo'nalishga qarab farq qiladi</small></div>
+        <div class="fleet-specs"><span>👤 1–4</span><span>🧳 3</span></div>
+      </div>
+      <div class="fleet-card" data-category="vip">
+        <span class="fleet-tag" data-i18n="fleet.tagVip">Minivan</span>
+        <img src="fleetjacm4.png" alt="" loading="lazy" class="fleet-card-img">
+        <h3>Jac M4</h3>
+        <div class="models" data-i18n="fleet.c4desc">Oila yoki guruh uchun keng salon</div>
+        <div class="fleet-price" data-i18n="fleet.c4price">200 000 so'mdan boshlab<small>*taxminiy, yo'nalishga qarab farq qiladi</small></div>
+        <div class="fleet-specs"><span>👤 1–7</span><span>🧳 7</span></div>
+      </div>
+      </div>
+    </div>
     </div>
 
     <div class="fleet-catalog-banner reveal">
@@ -1655,9 +1724,57 @@
     card.addEventListener('mouseleave', () => { card.style.transform = ''; });
   });
 
-  // Fleet filters
+  // Fleet filters + draggable moving belt
   const filterBtns = document.querySelectorAll('.filter-btn');
-  const fleetCards = document.querySelectorAll('.fleet-card');
+  const fleetCards = document.querySelectorAll('#fleetGroupMain .fleet-card');
+  const fleetTrack = document.getElementById('fleetTrack');
+  const fleetGroupMain = document.getElementById('fleetGroupMain');
+  const fleetGroupClone = document.getElementById('fleetGroupClone');
+
+  let fleetOffset = 0;
+  let fleetGroupWidth = 0;
+  let fleetRafId = null;
+  let fleetLastTs = null;
+  let fleetHovering = false;
+  let fleetDragging = false;
+  let fleetDragStartX = 0;
+  let fleetDragStartOffset = 0;
+  const FLEET_SPEED = 75; // px/sec auto-scroll speed
+
+  function fleetApplyTransform() {
+    if (fleetTrack) fleetTrack.style.transform = 'translateX(' + (-fleetOffset) + 'px)';
+  }
+  function fleetMeasure() {
+    if (fleetGroupMain) fleetGroupWidth = fleetGroupMain.getBoundingClientRect().width;
+  }
+  function fleetStep(ts) {
+    if (fleetLastTs === null) fleetLastTs = ts;
+    const dt = (ts - fleetLastTs) / 1000;
+    fleetLastTs = ts;
+    if (!fleetDragging && !fleetHovering && fleetGroupWidth > 0) {
+      fleetOffset += FLEET_SPEED * dt;
+      if (fleetOffset >= fleetGroupWidth) fleetOffset -= fleetGroupWidth;
+      fleetApplyTransform();
+    }
+    fleetRafId = requestAnimationFrame(fleetStep);
+  }
+
+  function setFleetMarquee(isAll) {
+    if (!fleetTrack || !fleetGroupClone) return;
+    if (isAll) {
+      fleetTrack.classList.add('fleet-marquee-anim');
+      fleetOffset = 0;
+      fleetLastTs = null;
+      requestAnimationFrame(() => { fleetMeasure(); fleetApplyTransform(); });
+      if (!fleetRafId) fleetRafId = requestAnimationFrame(fleetStep);
+    } else {
+      fleetTrack.classList.remove('fleet-marquee-anim');
+      if (fleetRafId) { cancelAnimationFrame(fleetRafId); fleetRafId = null; }
+      fleetTrack.style.transform = '';
+      fleetOffset = 0;
+    }
+  }
+
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       filterBtns.forEach(b => b.classList.remove('active'));
@@ -1670,8 +1787,42 @@
           card.classList.add('hidden');
         }
       });
+      setFleetMarquee(filter === 'all');
     });
   });
+
+  if (fleetTrack) {
+    setFleetMarquee(true);
+
+    fleetTrack.addEventListener('mouseenter', () => { fleetHovering = true; });
+    fleetTrack.addEventListener('mouseleave', () => { fleetHovering = false; });
+
+    fleetTrack.addEventListener('pointerdown', (e) => {
+      if (!fleetTrack.classList.contains('fleet-marquee-anim')) return;
+      fleetDragging = true;
+      fleetTrack.classList.add('fleet-dragging');
+      fleetDragStartX = e.clientX;
+      fleetDragStartOffset = fleetOffset;
+      try { fleetTrack.setPointerCapture(e.pointerId); } catch (err) {}
+    });
+    fleetTrack.addEventListener('pointermove', (e) => {
+      if (!fleetDragging || fleetGroupWidth <= 0) return;
+      const dx = e.clientX - fleetDragStartX;
+      let next = fleetDragStartOffset - dx;
+      next = ((next % fleetGroupWidth) + fleetGroupWidth) % fleetGroupWidth;
+      fleetOffset = next;
+      fleetApplyTransform();
+    });
+    function fleetEndDrag(e) {
+      if (!fleetDragging) return;
+      fleetDragging = false;
+      fleetTrack.classList.remove('fleet-dragging');
+      try { fleetTrack.releasePointerCapture(e.pointerId); } catch (err) {}
+    }
+    fleetTrack.addEventListener('pointerup', fleetEndDrag);
+    fleetTrack.addEventListener('pointercancel', fleetEndDrag);
+    fleetTrack.addEventListener('dragstart', (e) => e.preventDefault());
+  }
 
   // FAQ accordion
   document.querySelectorAll('.faq-q').forEach(q => {
