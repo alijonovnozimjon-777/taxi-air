@@ -124,12 +124,27 @@
   .lang-switch-mobile button{background:var(--panel); border:1px solid var(--border); color:var(--muted); font-family:inherit; font-weight:700; font-size:12.5px; padding:8px 14px; border-radius:999px; cursor:pointer;}
   .lang-switch-mobile button.active{background:linear-gradient(135deg,var(--gold-2),var(--gold)); color:#1a1204; border-color:transparent;}
   .theme-toggle{
-    display:flex; align-items:center; justify-content:center; flex:none;
-    width:40px; height:40px; border-radius:50%;
-    background:var(--panel); border:1px solid var(--border); color:var(--text);
-    font-size:17px; cursor:pointer; transition:transform .2s ease, border-color .2s ease;
+    position:relative; flex:none; width:56px; height:30px; padding:0;
+    border-radius:999px; border:1px solid var(--border); background:var(--panel-2);
+    cursor:pointer; transition:background .25s ease, border-color .2s ease;
   }
-  .theme-toggle:hover{border-color:var(--gold); transform:translateY(-2px);}
+  .theme-toggle:hover{border-color:var(--gold);}
+  .theme-toggle .tt-icon{
+    position:absolute; top:50%; transform:translateY(-50%);
+    font-size:12px; line-height:1; pointer-events:none;
+  }
+  .theme-toggle .tt-sun{left:7px;}
+  .theme-toggle .tt-moon{right:7px;}
+  .theme-toggle .tt-thumb{
+    position:absolute; top:3px; left:3px; width:22px; height:22px; border-radius:50%;
+    background:linear-gradient(135deg,var(--gold-2),var(--gold));
+    box-shadow:0 2px 8px rgba(0,0,0,.3);
+    transition:transform .3s cubic-bezier(.4,0,.2,1), background .3s ease;
+  }
+  .theme-toggle[data-active="dark"] .tt-thumb{
+    transform:translateX(26px);
+    background:linear-gradient(135deg,#4a5573,#20263a);
+  }
   .theme-toggle-mobile{align-self:flex-start; margin-top:4px;}
   .nav-phone{display:flex; flex-direction:column; align-items:flex-end; font-size:13px; color:var(--muted);}
   .nav-phone b{color:var(--text); font-size:15px; font-family:'Poppins',sans-serif;}
@@ -499,7 +514,11 @@
       <li><a href="#reviews" data-i18n="nav.reviews">Sharhlar</a></li>
     </ul>
     <div class="nav-right">
-      <button type="button" class="theme-toggle" data-theme-toggle aria-label="Kun/tun rejimi" title="Tun rejimiga o'tish">🌙</button>
+      <button type="button" class="theme-toggle" data-theme-toggle role="switch" aria-checked="false" aria-label="Kun/tun rejimi" title="Tun rejimiga o'tish">
+        <span class="tt-icon tt-sun">☀️</span>
+        <span class="tt-icon tt-moon">🌙</span>
+        <span class="tt-thumb"></span>
+      </button>
       <div class="lang-switch" id="langSwitch">
         <button type="button" class="lang-current" id="langCurrent">UZ <span>▾</span></button>
         <div class="lang-menu" id="langMenu">
@@ -537,7 +556,11 @@
       <button type="button" data-lang="ru">RU</button>
       <button type="button" data-lang="ar">AR</button>
     </div>
-    <button type="button" class="theme-toggle theme-toggle-mobile" data-theme-toggle aria-label="Kun/tun rejimi" title="Tun rejimiga o'tish">🌙</button>
+    <button type="button" class="theme-toggle theme-toggle-mobile" data-theme-toggle role="switch" aria-checked="false" aria-label="Kun/tun rejimi" title="Tun rejimiga o'tish">
+      <span class="tt-icon tt-sun">☀️</span>
+      <span class="tt-icon tt-moon">🌙</span>
+      <span class="tt-thumb"></span>
+    </button>
   </div>
 </header>
 
@@ -652,7 +675,7 @@
     <div class="stat"><b>24/7</b><span data-i18n="stats.s1">Uzluksiz xizmat</span></div>
     <div class="stat"><b>4</b><span data-i18n="stats.s2">Mashina toifasi</span></div>
     <div class="stat"><b>100%</b><span data-i18n="stats.s3">Nazoratdan o'tgan haydovchilar</span></div>
-    <div class="stat"><b data-i18n="stats.fixLabel">Fix</b><span data-i18n="stats.s4">Belgilangan narx, sherpriz yo'q</span></div>
+    <div class="stat"><b data-i18n="stats.fixLabel">Fix</b><span data-i18n="stats.s4">Belgilangan narx</span></div>
   </div>
 </div>
 
@@ -1056,7 +1079,7 @@
       "qb.statusError": "❌ Xatolik yuz berdi. Iltimos, Telegram yoki WhatsApp orqali yozing.",
       "qb.statusInvalidFormat": "⚠️ Sana yoki vaqt formati noto'g'ri kiritildi.",
       "stats.s1": "Uzluksiz xizmat", "stats.s2": "Mashina toifasi", "stats.s3": "Nazoratdan o'tgan haydovchilar",
-      "stats.s4": "Belgilangan narx, sherpriz yo'q", "stats.fixLabel": "Fix",
+      "stats.s4": "Belgilangan narx", "stats.fixLabel": "Fix",
       "services.eyebrow": "Xizmatlarimiz", "services.title": "Sizga kerakli barcha xizmatlar",
       "services.desc": "Aeroportdan yoki aeroportga — sayohatingizning har bir bosqichini qulay qildik.",
       "services.c1title": "Aeroportdan olib ketish", "services.c1desc": "Parvoz raqamingiz kuzatiladi — kechiksangiz ham sizni kutamiz, qo'shimcha to'lovsiz.",
@@ -1144,7 +1167,7 @@
       "qb.statusError": "❌ Something went wrong. Please message us on Telegram or WhatsApp.",
       "qb.statusInvalidFormat": "⚠️ The date or time format is invalid.",
       "stats.s1": "Round-the-clock service", "stats.s2": "Car categories", "stats.s3": "Vetted drivers",
-      "stats.s4": "Fixed price, no surprises", "stats.fixLabel": "Fix",
+      "stats.s4": "Fixed price", "stats.fixLabel": "Fix",
       "services.eyebrow": "Our Services", "services.title": "Everything you need, covered",
       "services.desc": "From the airport or to the airport — we've made every step of your trip easy.",
       "services.c1title": "Airport pickup", "services.c1desc": "We track your flight number — even if you're delayed, we wait for you at no extra charge.",
@@ -1232,7 +1255,7 @@
       "qb.statusError": "❌ Bir hata oluştu. Lütfen Telegram veya WhatsApp üzerinden yazın.",
       "qb.statusInvalidFormat": "⚠️ Tarih veya saat formatı geçersiz.",
       "stats.s1": "Kesintisiz hizmet", "stats.s2": "Araç kategorisi", "stats.s3": "Kontrolden geçmiş şoförler",
-      "stats.s4": "Sabit fiyat, sürpriz yok", "stats.fixLabel": "Sabit",
+      "stats.s4": "Sabit fiyat", "stats.fixLabel": "Sabit",
       "services.eyebrow": "Hizmetlerimiz", "services.title": "İhtiyacınız olan her şey",
       "services.desc": "Havalimanından veya havalimanına — yolculuğunuzun her aşamasını kolaylaştırdık.",
       "services.c1title": "Havalimanından alış", "services.c1desc": "Uçuş numaranızı takip ediyoruz — gecikseniz bile ek ücret almadan sizi bekliyoruz.",
@@ -1320,7 +1343,7 @@
       "qb.statusError": "❌ Произошла ошибка. Пожалуйста, напишите в Telegram или WhatsApp.",
       "qb.statusInvalidFormat": "⚠️ Неверный формат даты или времени.",
       "stats.s1": "Круглосуточная работа", "stats.s2": "Класса автомобилей", "stats.s3": "Проверенных водителей",
-      "stats.s4": "Фиксированная цена, без сюрпризов", "stats.fixLabel": "Fix",
+      "stats.s4": "Фиксированная цена", "stats.fixLabel": "Fix",
       "services.eyebrow": "Наши услуги", "services.title": "Всё, что вам нужно",
       "services.desc": "Из аэропорта или в аэропорт — мы упростили каждый этап вашей поездки.",
       "services.c1title": "Встреча в аэропорту", "services.c1desc": "Отслеживаем номер вашего рейса — даже при задержке ждём вас бесплатно.",
@@ -1408,7 +1431,7 @@
       "qb.statusError": "❌ حدث خطأ ما. يرجى مراسلتنا عبر تيليجرام أو واتساب.",
       "qb.statusInvalidFormat": "⚠️ تنسيق التاريخ أو الوقت غير صحيح.",
       "stats.s1": "خدمة على مدار الساعة", "stats.s2": "فئات السيارات", "stats.s3": "سائقون تم فحصهم",
-      "stats.s4": "سعر ثابت بدون مفاجآت", "stats.fixLabel": "ثابت",
+      "stats.s4": "سعر ثابت", "stats.fixLabel": "ثابت",
       "services.eyebrow": "خدماتنا", "services.title": "كل ما تحتاجه في مكان واحد",
       "services.desc": "من المطار أو إلى المطار — جعلنا كل خطوة من رحلتك سهلة.",
       "services.c1title": "الاستقبال من المطار", "services.c1desc": "نتابع رقم رحلتك — وحتى في حال التأخير ننتظرك دون أي رسوم إضافية.",

@@ -5,7 +5,8 @@
 // admin.html) bir xilda ishlatiladi. Sahifa HAR SAFAR ochilganda KUN
 // (light) rejimidan boshlanadi — tanlov localStorage'da saqlanmaydi,
 // foydalanuvchi shu sahifada ko'rish uchun vaqtincha Tun rejimiga
-// o'tkazishi mumkin.
+// o'tkazishi mumkin. Tugma quyosh/oy belgili sirg'anadigan (sliding)
+// svitch ko'rinishida.
 // =====================================================================
 
 function initThemeSwitcher() {
@@ -20,8 +21,8 @@ function initThemeSwitcher() {
       root.removeAttribute('data-theme');
     }
     toggleBtns.forEach(btn => {
-      btn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
-      btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+      btn.dataset.active = theme;
+      btn.setAttribute('aria-checked', theme === 'dark' ? 'true' : 'false');
       btn.title = theme === 'dark' ? "Kun rejimiga o'tish" : "Tun rejimiga o'tish";
     });
   }

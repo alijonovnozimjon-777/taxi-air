@@ -98,12 +98,27 @@ header.cab-header{
 
 /* ---------- Theme (kun/tun) toggle ---------- */
 .theme-toggle{
-  display:flex; align-items:center; justify-content:center; flex:none;
-  width:38px; height:38px; border-radius:50%;
-  background:var(--panel); border:1px solid var(--border); color:var(--text);
-  font-size:16px; cursor:pointer; transition:transform .2s ease, border-color .2s ease;
+  position:relative; flex:none; width:56px; height:30px; padding:0;
+  border-radius:999px; border:1px solid var(--border); background:var(--panel-2);
+  cursor:pointer; transition:background .25s ease, border-color .2s ease;
 }
-.theme-toggle:hover{border-color:var(--gold); transform:translateY(-2px);}
+.theme-toggle:hover{border-color:var(--gold);}
+.theme-toggle .tt-icon{
+  position:absolute; top:50%; transform:translateY(-50%);
+  font-size:12px; line-height:1; pointer-events:none;
+}
+.theme-toggle .tt-sun{left:7px;}
+.theme-toggle .tt-moon{right:7px;}
+.theme-toggle .tt-thumb{
+  position:absolute; top:3px; left:3px; width:22px; height:22px; border-radius:50%;
+  background:linear-gradient(135deg,var(--gold-2),var(--gold));
+  box-shadow:0 2px 8px rgba(0,0,0,.3);
+  transition:transform .3s cubic-bezier(.4,0,.2,1), background .3s ease;
+}
+.theme-toggle[data-active="dark"] .tt-thumb{
+  transform:translateX(26px);
+  background:linear-gradient(135deg,#4a5573,#20263a);
+}
 
 /* ---------- Auth pages (login/register) ---------- */
 .auth-wrap{
