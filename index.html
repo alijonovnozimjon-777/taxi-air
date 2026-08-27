@@ -9,6 +9,7 @@
 <meta name="description" content="Toshkent Xalqaro aeroporti uchun ishonchli taksi xizmati. 24/7 buyurtma, tekshirilgan mashinalar, professional haydovchilar.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <script src="theme.js" defer></script>
 <style>
   :root{
@@ -192,6 +193,35 @@
   .qb-field label{font-size:11.5px; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.05em;}
   .qb-field select, .qb-field input{background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:11px 12px; color:var(--text); font-family:inherit; font-size:13.5px; outline:none;}
   .qb-field select:focus, .qb-field input:focus{border-color:var(--gold);}
+  .qb-field-address{position:relative;}
+  .qb-field-address input{padding-right:42px;}
+  .qb-map-btn{
+    position:absolute; right:6px; bottom:6px; width:29px; height:29px; border-radius:8px; border:none;
+    background:linear-gradient(135deg,var(--gold-2),var(--gold)); color:#1a1204; font-size:14px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; transition:transform .2s; padding:0;
+  }
+  .qb-map-btn:hover{transform:scale(1.08);}
+
+  /* ---------- Address map picker modal ---------- */
+  .map-modal-overlay{position:fixed; inset:0; background:rgba(8,10,16,.6); z-index:400; display:none; align-items:center; justify-content:center; padding:18px;}
+  .map-modal-overlay.open{display:flex;}
+  .map-modal{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); width:100%; max-width:640px; max-height:92vh; display:flex; flex-direction:column; overflow:hidden; box-shadow:var(--shadow);}
+  .map-modal-head{display:flex; align-items:center; justify-content:space-between; padding:18px 20px; border-bottom:1px solid var(--border);}
+  .map-modal-head h3{font-size:16px;}
+  .map-modal-close{background:none; border:none; font-size:24px; line-height:1; color:var(--muted); cursor:pointer; padding:0;}
+  .map-modal-close:hover{color:var(--text);}
+  .map-modal-body{padding:16px 20px 4px;}
+  .map-search-row{display:flex; gap:8px; margin-bottom:12px;}
+  .map-search-row input{flex:1; min-width:0; background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:10px 12px; color:var(--text); font-family:inherit; font-size:13.5px; outline:none;}
+  .map-search-row input:focus{border-color:var(--gold);}
+  .map-search-row .btn{padding:10px 18px; font-size:13.5px;}
+  #qbMapCanvas{width:100%; height:320px; border-radius:14px; overflow:hidden; border:1px solid var(--border); background:var(--bg2);}
+  .map-locate-btn{display:inline-flex; align-items:center; gap:6px; font-size:12.5px; color:var(--gold-text); background:none; border:none; cursor:pointer; font-weight:700; padding:10px 0 2px;}
+  .map-locate-btn:disabled{opacity:.5; cursor:wait;}
+  .map-modal-footer{padding:6px 20px 20px; display:flex; flex-direction:column; gap:12px;}
+  .map-picked-address{font-size:13px; color:var(--muted); min-height:18px;}
+  .map-modal-actions{display:flex; gap:10px;}
+  .map-modal-actions .btn{flex:1;}
   .qb-hidden{display:none !important;}
   .qb-actions{grid-column:1/-1; display:flex; gap:14px; margin-top:2px; flex-wrap:wrap;}
   .qb-actions .btn{flex:1; min-width:220px;}
@@ -619,9 +649,10 @@
           <label data-i18n="qb.labelFlight">Reys raqami</label>
           <input type="text" id="qbFlight" data-i18n-placeholder="qb.placeholderFlight" placeholder="HY 123">
         </div>
-        <div class="qb-field">
+        <div class="qb-field qb-field-address">
           <label data-i18n="qb.labelAddress">Manzil</label>
           <input type="text" id="qbAddress" data-i18n-placeholder="qb.placeholderAddress" placeholder="Ko'cha, uy, mahalla" required>
+          <button type="button" class="qb-map-btn" id="qbMapBtn" title="Xaritadan tanlash" aria-label="Xaritadan tanlash">📍</button>
         </div>
         <div class="qb-field">
           <label data-i18n="qb.labelDate">Sana</label>
@@ -1185,6 +1216,32 @@
 
 <a href="tel:+998331402801" class="fab-call" aria-label="Qo'ng'iroq qilish">📞</a>
 
+<!-- Manzilni xaritadan tanlash modali -->
+<div class="map-modal-overlay" id="mapModalOverlay">
+  <div class="map-modal">
+    <div class="map-modal-head">
+      <h3 data-i18n="map.title">Manzilni xaritadan tanlang</h3>
+      <button type="button" class="map-modal-close" id="mapModalClose" aria-label="Yopish">&times;</button>
+    </div>
+    <div class="map-modal-body">
+      <div class="map-search-row">
+        <input type="text" id="mapSearchInput" data-i18n-placeholder="map.searchPlaceholder" placeholder="Ko'cha yoki joy nomini qidiring...">
+        <button type="button" class="btn btn-outline" id="mapSearchBtn" data-i18n="map.searchBtn">Qidirish</button>
+      </div>
+      <div id="qbMapCanvas"></div>
+      <button type="button" class="map-locate-btn" id="mapLocateBtn" data-i18n="map.locateBtn">📍 Joriy joylashuvimni aniqlash</button>
+    </div>
+    <div class="map-modal-footer">
+      <p class="map-picked-address" id="mapPickedAddress" data-i18n="map.hint">Xaritada nuqtani bosing yoki belgini suring</p>
+      <div class="map-modal-actions">
+        <button type="button" class="btn btn-outline" id="mapCancelBtn" data-i18n="map.cancel">Bekor qilish</button>
+        <button type="button" class="btn btn-gold" id="mapConfirmBtn" data-i18n="map.confirm">Manzilni tanlash</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
   // ---------- i18n translations (uz / en / tr / ru / ar) ----------
   const TRANSLATIONS = {
@@ -1207,6 +1264,8 @@
       "qb.optFromAirport": "Aeroportdan olib ketish", "qb.optToAirport": "Aeroportga eltish",
       "qb.labelFlight": "Reys raqami", "qb.placeholderFlight": "HY 123",
       "qb.labelAddress": "Manzil", "qb.placeholderAddress": "Ko'cha, uy, mahalla",
+      "map.title": "Manzilni xaritadan tanlang", "map.searchPlaceholder": "Ko'cha yoki joy nomini qidiring...", "map.searchBtn": "Qidirish",
+      "map.locateBtn": "📍 Joriy joylashuvimni aniqlash", "map.hint": "Xaritada nuqtani bosing yoki belgini suring", "map.cancel": "Bekor qilish", "map.confirm": "Manzilni tanlash",
       "qb.labelDate": "Sana", "qb.placeholderDate": "kun/oy/yil", "qb.labelTime": "Vaqt", "qb.placeholderTime": "soat:daqiqa",
       "qb.labelBaggage": "Bagaj soni", "qb.labelCar": "Mashina turi",
       "qb.carComfort": "Comfort", "qb.carBusiness": "Business", "qb.carVip": "VIP Minivan",
@@ -1298,6 +1357,8 @@
       "qb.optFromAirport": "Pickup from the airport", "qb.optToAirport": "Drop-off at the airport",
       "qb.labelFlight": "Flight number", "qb.placeholderFlight": "HY 123",
       "qb.labelAddress": "Address", "qb.placeholderAddress": "Street, house, neighborhood",
+      "map.title": "Choose address on the map", "map.searchPlaceholder": "Search for a street or place...", "map.searchBtn": "Search",
+      "map.locateBtn": "📍 Detect my location", "map.hint": "Click on the map or drag the marker", "map.cancel": "Cancel", "map.confirm": "Choose this address",
       "qb.labelDate": "Date", "qb.placeholderDate": "dd/mm/yyyy", "qb.labelTime": "Time", "qb.placeholderTime": "hh:mm",
       "qb.labelBaggage": "Luggage count", "qb.labelCar": "Car type",
       "qb.carComfort": "Comfort", "qb.carBusiness": "Business", "qb.carVip": "VIP Minivan",
@@ -1389,6 +1450,8 @@
       "qb.optFromAirport": "Havalimanından alış", "qb.optToAirport": "Havalimanına bırakış",
       "qb.labelFlight": "Uçuş numarası", "qb.placeholderFlight": "HY 123",
       "qb.labelAddress": "Adres", "qb.placeholderAddress": "Sokak, bina, mahalle",
+      "map.title": "Adresi haritadan seçin", "map.searchPlaceholder": "Sokak veya yer adı arayın...", "map.searchBtn": "Ara",
+      "map.locateBtn": "📍 Konumumu bul", "map.hint": "Haritada bir noktaya tıklayın veya işareti sürükleyin", "map.cancel": "İptal", "map.confirm": "Bu adresi seç",
       "qb.labelDate": "Tarih", "qb.placeholderDate": "gün/ay/yıl", "qb.labelTime": "Saat", "qb.placeholderTime": "saat:dakika",
       "qb.labelBaggage": "Bagaj sayısı", "qb.labelCar": "Araç tipi",
       "qb.carComfort": "Comfort", "qb.carBusiness": "Business", "qb.carVip": "VIP Minivan",
@@ -1480,6 +1543,8 @@
       "qb.optFromAirport": "Из аэропорта", "qb.optToAirport": "В аэропорт",
       "qb.labelFlight": "Номер рейса", "qb.placeholderFlight": "HY 123",
       "qb.labelAddress": "Адрес", "qb.placeholderAddress": "Улица, дом, квартал",
+      "map.title": "Выберите адрес на карте", "map.searchPlaceholder": "Найдите улицу или место...", "map.searchBtn": "Найти",
+      "map.locateBtn": "📍 Определить моё местоположение", "map.hint": "Нажмите на карту или переместите метку", "map.cancel": "Отмена", "map.confirm": "Выбрать этот адрес",
       "qb.labelDate": "Дата", "qb.placeholderDate": "день/месяц/год", "qb.labelTime": "Время", "qb.placeholderTime": "часы:минуты",
       "qb.labelBaggage": "Количество багажа", "qb.labelCar": "Класс автомобиля",
       "qb.carComfort": "Комфорт", "qb.carBusiness": "Бизнес", "qb.carVip": "VIP Минивэн",
@@ -1571,6 +1636,8 @@
       "qb.optFromAirport": "من المطار", "qb.optToAirport": "إلى المطار",
       "qb.labelFlight": "رقم الرحلة", "qb.placeholderFlight": "HY 123",
       "qb.labelAddress": "العنوان", "qb.placeholderAddress": "الشارع، المبنى، الحي",
+      "map.title": "اختر العنوان من الخريطة", "map.searchPlaceholder": "ابحث عن شارع أو مكان...", "map.searchBtn": "بحث",
+      "map.locateBtn": "📍 تحديد موقعي الحالي", "map.hint": "انقر على الخريطة أو اسحب العلامة", "map.cancel": "إلغاء", "map.confirm": "اختيار هذا العنوان",
       "qb.labelDate": "التاريخ", "qb.placeholderDate": "يوم/شهر/سنة", "qb.labelTime": "الوقت", "qb.placeholderTime": "ساعة:دقيقة",
       "qb.labelBaggage": "عدد الحقائب", "qb.labelCar": "نوع السيارة",
       "qb.carComfort": "كومفورت", "qb.carBusiness": "بزنس", "qb.carVip": "VIP فان",
@@ -1960,6 +2027,115 @@
       qbSubmit.textContent = TRANSLATIONS[currentLang]['qb.submit'];
     });
   });
+
+  // === Manzilni xaritadan tanlash (Leaflet + OpenStreetMap) ===
+  (function(){
+    const mapBtn = document.getElementById('qbMapBtn');
+    const overlay = document.getElementById('mapModalOverlay');
+    if (!mapBtn || !overlay || typeof L === 'undefined') return;
+
+    const closeBtn = document.getElementById('mapModalClose');
+    const cancelBtn = document.getElementById('mapCancelBtn');
+    const confirmBtn = document.getElementById('mapConfirmBtn');
+    const locateBtn = document.getElementById('mapLocateBtn');
+    const searchInput = document.getElementById('mapSearchInput');
+    const searchBtn = document.getElementById('mapSearchBtn');
+    const pickedAddressEl = document.getElementById('mapPickedAddress');
+    const qbAddressInput = document.getElementById('qbAddress');
+
+    const TASHKENT = [41.2995, 69.2401];
+    let map = null;
+    let marker = null;
+    let pickedText = '';
+    let geocodeSeq = 0;
+
+    function initMapIfNeeded() {
+      if (map) return;
+      map = L.map('qbMapCanvas').setView(TASHKENT, 12);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap'
+      }).addTo(map);
+      marker = L.marker(TASHKENT, {draggable: true}).addTo(map);
+      marker.on('dragend', () => {
+        const pos = marker.getLatLng();
+        reverseGeocode(pos.lat, pos.lng);
+      });
+      map.on('click', (e) => {
+        marker.setLatLng(e.latlng);
+        reverseGeocode(e.latlng.lat, e.latlng.lng);
+      });
+    }
+
+    function reverseGeocode(lat, lng) {
+      const seq = ++geocodeSeq;
+      pickedAddressEl.textContent = '...';
+      fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=uz`)
+        .then(r => r.json())
+        .then(data => {
+          if (seq !== geocodeSeq) return;
+          pickedText = (data && data.display_name) ? data.display_name : (lat.toFixed(5) + ', ' + lng.toFixed(5));
+          pickedAddressEl.textContent = pickedText;
+        })
+        .catch(() => {
+          if (seq !== geocodeSeq) return;
+          pickedText = lat.toFixed(5) + ', ' + lng.toFixed(5);
+          pickedAddressEl.textContent = pickedText;
+        });
+    }
+
+    function openModal() {
+      overlay.classList.add('open');
+      initMapIfNeeded();
+      setTimeout(() => { if (map) map.invalidateSize(); }, 60);
+    }
+    function closeModal() {
+      overlay.classList.remove('open');
+    }
+
+    mapBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    cancelBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+
+    confirmBtn.addEventListener('click', () => {
+      if (pickedText) qbAddressInput.value = pickedText;
+      closeModal();
+    });
+
+    locateBtn.addEventListener('click', () => {
+      if (!navigator.geolocation) return;
+      locateBtn.disabled = true;
+      navigator.geolocation.getCurrentPosition((pos) => {
+        const lat = pos.coords.latitude, lng = pos.coords.longitude;
+        if (map && marker) {
+          map.setView([lat, lng], 15);
+          marker.setLatLng([lat, lng]);
+        }
+        reverseGeocode(lat, lng);
+        locateBtn.disabled = false;
+      }, () => { locateBtn.disabled = false; });
+    });
+
+    function doSearch() {
+      const q = searchInput.value.trim();
+      if (!q) return;
+      fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q + ', Tashkent, Uzbekistan')}&limit=1`)
+        .then(r => r.json())
+        .then(results => {
+          if (results && results[0]) {
+            const lat = parseFloat(results[0].lat), lng = parseFloat(results[0].lon);
+            if (map && marker) {
+              map.setView([lat, lng], 15);
+              marker.setLatLng([lat, lng]);
+            }
+            reverseGeocode(lat, lng);
+          }
+        });
+    }
+    searchBtn.addEventListener('click', doSearch);
+    searchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); doSearch(); } });
+  })();
 
   // === GA4: qo'ng'iroq / Telegram / WhatsApp havolalari bosilganda "lead" hodisasini yuborish ===
   document.addEventListener('click', function (e) {
