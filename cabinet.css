@@ -3,6 +3,27 @@
    Taxi Airport Tashkent asosiy saytining (index.html) dizayn tizimiga mos
    ===================================================================== */
 :root{
+  /* Standart (kun/light) rejim — sahifa har safar shu rejimdan boshlanadi */
+  --bg:#f5f6fa;
+  --bg2:#ffffff;
+  --panel:#ffffff;
+  --panel-2:#f0f2f7;
+  --border:rgba(15,23,42,.10);
+  --text:#12151f;
+  --muted:#5b6478;
+  --gold:#f0b64a;
+  --gold-2:#ffd479;
+  --blue:#4ac1f0;
+  --danger:#ff5c5c;
+  --success:#6fdc8c;
+  --radius:18px;
+  --shadow:0 20px 50px rgba(15,23,42,.12);
+  --bg-rgb:245,246,250;
+  --bg2-rgb:255,255,255;
+  --hover:rgba(15,23,42,.035);
+}
+html[data-theme="dark"]{
+  /* Tun (dark) rejim — kun/tun tugmasi bosilganda shu qiymatlar ishlatiladi */
   --bg:#0a0c12;
   --bg2:#0f1219;
   --panel:#141826;
@@ -10,14 +31,12 @@
   --border:rgba(255,255,255,.08);
   --text:#eef1f7;
   --muted:#9aa3b8;
-  --gold:#f0b64a;
-  --gold-2:#ffd479;
-  --blue:#4ac1f0;
-  --danger:#ff5c5c;
-  --success:#6fdc8c;
-  --radius:18px;
   --shadow:0 20px 50px rgba(0,0,0,.45);
+  --bg-rgb:10,12,18;
+  --bg2-rgb:15,18,25;
+  --hover:rgba(255,255,255,.02);
 }
+html, body{transition:background-color .35s ease, color .35s ease;}
 *{box-sizing:border-box; margin:0; padding:0;}
 html{scroll-behavior:smooth;}
 body{
@@ -52,7 +71,7 @@ img{max-width:100%; display:block;}
 /* ---------- Minimal header ---------- */
 header.cab-header{
   position:fixed; top:0; left:0; right:0; z-index:100;
-  background:rgba(10,12,18,.7); backdrop-filter:blur(14px);
+  background:rgba(var(--bg-rgb),.7); backdrop-filter:blur(14px);
   border-bottom:1px solid var(--border);
 }
 .cab-nav{display:flex; align-items:center; justify-content:space-between; padding:16px 24px; max-width:1180px; margin:0 auto;}
@@ -71,6 +90,15 @@ header.cab-header{
 .lang-menu button{background:none; border:none; color:var(--text); font-family:inherit; font-size:13.5px; font-weight:600; text-align:left; padding:9px 12px; border-radius:8px; cursor:pointer;}
 .lang-menu button:hover{background:var(--panel-2); color:var(--gold);}
 .lang-menu button.active{color:var(--gold); background:var(--panel-2);}
+
+/* ---------- Theme (kun/tun) toggle ---------- */
+.theme-toggle{
+  display:flex; align-items:center; justify-content:center; flex:none;
+  width:38px; height:38px; border-radius:50%;
+  background:var(--panel); border:1px solid var(--border); color:var(--text);
+  font-size:16px; cursor:pointer; transition:transform .2s ease, border-color .2s ease;
+}
+.theme-toggle:hover{border-color:var(--gold); transform:translateY(-2px);}
 
 /* ---------- Auth pages (login/register) ---------- */
 .auth-wrap{
@@ -189,7 +217,7 @@ header.cab-header{
 }
 .admin-table td{padding:12px 14px; border-bottom:1px solid var(--border); vertical-align:middle;}
 .admin-table tr:last-child td{border-bottom:none;}
-.admin-table tr:hover td{background:rgba(255,255,255,.02);}
+.admin-table tr:hover td{background:var(--hover);}
 .admin-price-input{
   width:110px; background:var(--bg2); border:1px solid var(--border); border-radius:8px;
   padding:8px 10px; color:var(--text); font-family:inherit; font-size:13px; outline:none;

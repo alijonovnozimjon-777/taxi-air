@@ -17,6 +17,7 @@
       <div>Taxi Airport<small>TASHKENT · 24/7</small></div>
     </a>
     <div class="cab-nav-right">
+      <button type="button" class="theme-toggle" data-theme-toggle aria-label="Kun/tun rejimi" title="Tun rejimiga o'tish">🌙</button>
       <div class="lang-switch" id="langSwitch">
         <button type="button" class="lang-current" id="langCurrent">UZ <span>▾</span></button>
         <div class="lang-menu" id="langMenu">
@@ -64,6 +65,7 @@
 <script src="firebase-config.js"></script>
 <script src="auth.js"></script>
 <script src="i18n.js"></script>
+<script src="theme.js"></script>
 <script>
   const TRANSLATIONS = {
     uz: { "nav.home": "Bosh sahifa", "login.eyebrow": "Shaxsiy kabinet", "login.title": "Kirish", "login.sub": "Buyurtmalar tarixi, bonuslaringiz va profilingizni ko'rish uchun tizimga kiring.", "login.labelEmail": "Email", "login.labelPassword": "Parol", "login.submit": "Kirish", "login.noAccount": "Hisobingiz yo'qmi?", "login.registerLink": "Ro'yxatdan o'tish", "login.loggingIn": "Kirilmoqda...", "login.success": "Muvaffaqiyatli! Kabinetga yo'naltirilmoqda..." },
