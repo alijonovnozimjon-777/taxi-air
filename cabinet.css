@@ -15,12 +15,14 @@
   --gold-2:#ffd479;
   --blue:#4ac1f0;
   --danger:#ff5c5c;
-  --success:#6fdc8c;
+  --success:#1f9d55;
   --radius:18px;
   --shadow:0 20px 50px rgba(15,23,42,.12);
   --bg-rgb:245,246,250;
   --bg2-rgb:255,255,255;
   --hover:rgba(15,23,42,.035);
+  --gold-text:#9c6210;
+  --status-blue:#0e6fa3;
 }
 html[data-theme="dark"]{
   /* Tun (dark) rejim — kun/tun tugmasi bosilganda shu qiymatlar ishlatiladi */
@@ -35,6 +37,9 @@ html[data-theme="dark"]{
   --bg-rgb:10,12,18;
   --bg2-rgb:15,18,25;
   --hover:rgba(255,255,255,.02);
+  --success:#6fdc8c;
+  --gold-text:#f0b64a;
+  --status-blue:#4ac1f0;
 }
 html, body{transition:background-color .35s ease, color .35s ease;}
 *{box-sizing:border-box; margin:0; padding:0;}
@@ -63,7 +68,7 @@ img{max-width:100%; display:block;}
 .btn-gold:hover{transform:translateY(-3px); box-shadow:0 16px 36px -6px rgba(240,182,74,.75);}
 .btn-gold:disabled{opacity:.6; cursor:not-allowed; transform:none;}
 .btn-outline{background:transparent; color:var(--text); border:1.5px solid var(--border);}
-.btn-outline:hover{border-color:var(--gold); color:var(--gold); transform:translateY(-3px);}
+.btn-outline:hover{border-color:var(--gold); color:var(--gold-text); transform:translateY(-3px);}
 .btn-block{width:100%;}
 .btn-danger-outline{background:transparent; color:var(--danger); border:1.5px solid rgba(255,92,92,.4);}
 .btn-danger-outline:hover{background:rgba(255,92,92,.08);}
@@ -88,8 +93,8 @@ header.cab-header{
 .lang-menu{position:absolute; top:calc(100% + 10px); right:0; min-width:170px; background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:8px; box-shadow:var(--shadow); display:none; flex-direction:column; gap:2px; z-index:50;}
 .lang-switch.open .lang-menu{display:flex;}
 .lang-menu button{background:none; border:none; color:var(--text); font-family:inherit; font-size:13.5px; font-weight:600; text-align:left; padding:9px 12px; border-radius:8px; cursor:pointer;}
-.lang-menu button:hover{background:var(--panel-2); color:var(--gold);}
-.lang-menu button.active{color:var(--gold); background:var(--panel-2);}
+.lang-menu button:hover{background:var(--panel-2); color:var(--gold-text);}
+.lang-menu button.active{color:var(--gold-text); background:var(--panel-2);}
 
 /* ---------- Theme (kun/tun) toggle ---------- */
 .theme-toggle{
@@ -113,7 +118,7 @@ header.cab-header{
 }
 .auth-card .eyebrow{
   display:inline-flex; align-items:center; gap:8px;
-  color:var(--gold); font-weight:700; font-size:13px; letter-spacing:.14em;
+  color:var(--gold-text); font-weight:700; font-size:13px; letter-spacing:.14em;
   text-transform:uppercase; margin-bottom:10px;
 }
 .auth-card h1{font-size:26px; font-weight:800; margin-bottom:8px;}
@@ -138,7 +143,7 @@ header.cab-header{
 .form-status.success{color:var(--success);}
 .form-status.error{color:var(--danger);}
 .auth-switch{margin-top:22px; text-align:center; font-size:14px; color:var(--muted);}
-.auth-switch a{color:var(--gold); font-weight:700;}
+.auth-switch a{color:var(--gold-text); font-weight:700;}
 
 /* ---------- Member dashboard ---------- */
 .cab-wrap{padding:140px 0 80px;}
@@ -149,7 +154,7 @@ header.cab-header{
   display:flex; align-items:center; gap:10px; background:linear-gradient(135deg, rgba(240,182,74,.16), rgba(240,182,74,.04));
   border:1px solid rgba(240,182,74,.35); border-radius:999px; padding:12px 22px;
 }
-.bonus-pill b{font-family:'Poppins',sans-serif; color:var(--gold); font-size:18px;}
+.bonus-pill b{font-family:'Poppins',sans-serif; color:var(--gold-text); font-size:18px;}
 .bonus-pill span{font-size:12.5px; color:var(--muted); font-weight:600;}
 
 .cab-tabs{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:30px; border-bottom:1px solid var(--border); padding-bottom:16px;}
@@ -184,8 +189,8 @@ header.cab-header{
   font-size:11.5px; font-weight:800; padding:5px 12px; border-radius:999px; text-transform:uppercase;
   letter-spacing:.04em; white-space:nowrap; height:fit-content;
 }
-.status-pill.yuborildi{background:rgba(74,193,240,.15); color:var(--blue);}
-.status-pill.tasdiqlandi{background:rgba(240,182,74,.15); color:var(--gold);}
+.status-pill.yuborildi{background:rgba(74,193,240,.15); color:var(--status-blue);}
+.status-pill.tasdiqlandi{background:rgba(240,182,74,.15); color:var(--gold-text);}
 .status-pill.bajarildi{background:rgba(111,220,140,.15); color:var(--success);}
 .status-pill.bekor{background:rgba(255,92,92,.15); color:var(--danger);}
 .empty-state{color:var(--muted); font-size:14.5px; text-align:center; padding:30px 0;}
@@ -233,7 +238,7 @@ header.cab-header{
 .summary-pill{
   background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:16px 22px;
 }
-.summary-pill b{display:block; font-family:'Poppins',sans-serif; font-size:20px; color:var(--gold);}
+.summary-pill b{display:block; font-family:'Poppins',sans-serif; font-size:20px; color:var(--gold-text);}
 .summary-pill span{font-size:12.5px; color:var(--muted); font-weight:600;}
 
 @media (max-width:640px){

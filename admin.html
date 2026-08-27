@@ -46,7 +46,7 @@
   <div id="deniedBox" style="display:none;">
     <div class="card">
       <h3 data-i18n="admin.denied">Ruxsat yo'q</h3>
-      <p style="color:var(--muted); font-size:14.5px;"><span data-i18n="admin.deniedText">Bu sahifa faqat administrator uchun.</span> <a href="member.html" style="color:var(--gold); font-weight:700;" data-i18n="admin.deniedLink">Kabinetimga qaytish</a></p>
+      <p style="color:var(--muted); font-size:14.5px;"><span data-i18n="admin.deniedText">Bu sahifa faqat administrator uchun.</span> <a href="member.html" style="color:var(--gold-text); font-weight:700;" data-i18n="admin.deniedLink">Kabinetimga qaytish</a></p>
     </div>
   </div>
 
@@ -701,7 +701,7 @@
         : (escapeHtml(u.name) || '—');
       const bonusOrActionsCell = isLegal
         ? `<span style="color:var(--muted);">—</span>`
-        : `<b style="color:var(--gold);">${Number(u.bonus || 0).toLocaleString('ru-RU')}${T.t('member.somSuffix')}</b>`;
+        : `<b style="color:var(--gold-text);">${Number(u.bonus || 0).toLocaleString('ru-RU')}${T.t('member.somSuffix')}</b>`;
       const amountReasonActionsCell = isLegal
         ? `<td colspan="3" style="color:var(--muted); font-style:italic;">${T.t('admin.custLegalNoBonus')}
              <button type="button" class="btn btn-outline" style="padding:7px 12px; font-size:12px; margin-left:10px;" data-action="history">${isOpen ? T.t('admin.custHistoryHide') : T.t('admin.custHistory')}</button>
