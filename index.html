@@ -261,6 +261,12 @@
   }
 
   /* ---------- Services ---------- */
+  #services{overflow:hidden;}
+  .services-bg{position:absolute; inset:0; z-index:0; pointer-events:none;}
+  .services-bg img{width:100%; height:100%; object-fit:cover; object-position:center 30%; opacity:.16;}
+  .services-bg::after{content:''; position:absolute; inset:0; background:linear-gradient(180deg, var(--bg) 0%, rgba(var(--bg-rgb),.6) 42%, var(--bg) 100%);}
+  html[data-theme="dark"] .services-bg img{opacity:.32;}
+  #services .container{position:relative; z-index:1;}
   .services-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
   .card{
     background:linear-gradient(180deg,var(--panel-2),var(--panel));
@@ -740,6 +746,7 @@
 
 <!-- SERVICES -->
 <section id="services">
+  <div class="services-bg" aria-hidden="true"><img src="services-bg.jpg" alt="" loading="lazy"></div>
   <div class="container">
     <div class="eyebrow reveal" data-i18n="services.eyebrow">Xizmatlarimiz</div>
     <h2 class="section-title reveal" data-i18n="services.title">Sizga kerakli barcha xizmatlar</h2>
