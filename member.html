@@ -66,6 +66,13 @@
   <section class="cab-panel active" id="panel-new">
     <div class="card">
       <h3 data-i18n="member.quickBookTitle">⚡ Tezkor buyurtma</h3>
+      <div class="profile-lock-notice" id="profileLockNotice" style="display:none;">
+        <div>
+          <b data-i18n="member.lockTitle">Profilingiz to'liq emas</b>
+          <span data-i18n="member.lockDesc">Buyurtma yuborishdan oldin "Profil" bo'limida Ism-Familiya va telefon raqamingizni (yuridik shaxs uchun kompaniya ma'lumotlarini ham) to'ldiring.</span>
+        </div>
+        <button type="button" class="btn btn-gold" id="goToProfileBtn" data-i18n="member.lockBtn">Profilni to'ldirish</button>
+      </div>
       <form id="bookingForm" class="qb-grid">
         <div class="field">
           <label data-i18n="qb.labelName">Ism-Familiya</label>
@@ -208,7 +215,11 @@
       "member.loadErrorPrefix": "Buyurtmalarni yuklashda xatolik: ",
       "member.dateTimeInvalid": "Sana yoki vaqt formati noto'g'ri.", "member.sending": "Yuborilmoqda...", "member.bookingSuccess": "Buyurtma yuborildi! Bonusingiz yangilandi.",
       "member.errorPrefix": "Xatolik: ", "member.saved": "Saqlandi!",
-      "member.statusYuborildi": "Yuborildi", "member.statusTasdiqlandi": "Tasdiqlandi", "member.statusBajarildi": "Bajarildi", "member.statusBekor": "Bekor qilindi"
+      "member.statusYuborildi": "Yuborildi", "member.statusTasdiqlandi": "Tasdiqlandi", "member.statusBajarildi": "Bajarildi", "member.statusBekor": "Bekor qilindi",
+      "member.lockTitle": "Profilingiz to'liq emas",
+      "member.lockDesc": "Buyurtma yuborishdan oldin \"Profil\" bo'limida Ism-Familiya va telefon raqamingizni (yuridik shaxs uchun kompaniya ma'lumotlarini ham) to'ldiring.",
+      "member.lockBtn": "Profilni to'ldirish",
+      "member.lockBlockedSubmit": "Buyurtma yuborishdan oldin profilingizni to'liq to'ldiring."
     },
     en: {
       "nav.home": "Home", "nav.admin": "Admin panel", "nav.logout": "Logout",
@@ -229,7 +240,11 @@
       "member.loadErrorPrefix": "Error loading bookings: ",
       "member.dateTimeInvalid": "Invalid date or time format.", "member.sending": "Sending...", "member.bookingSuccess": "Booking sent! Your bonus has been updated.",
       "member.errorPrefix": "Error: ", "member.saved": "Saved!",
-      "member.statusYuborildi": "Submitted", "member.statusTasdiqlandi": "Confirmed", "member.statusBajarildi": "Completed", "member.statusBekor": "Cancelled"
+      "member.statusYuborildi": "Submitted", "member.statusTasdiqlandi": "Confirmed", "member.statusBajarildi": "Completed", "member.statusBekor": "Cancelled",
+      "member.lockTitle": "Your profile is incomplete",
+      "member.lockDesc": "Before sending a booking, fill in your full name and phone number (and company details for legal accounts) in the \"Profile\" tab.",
+      "member.lockBtn": "Complete profile",
+      "member.lockBlockedSubmit": "Please complete your profile before sending a booking."
     },
     tr: {
       "nav.home": "Ana Sayfa", "nav.admin": "Admin panel", "nav.logout": "Çıkış",
@@ -250,7 +265,11 @@
       "member.loadErrorPrefix": "Rezervasyonlar yüklenirken hata: ",
       "member.dateTimeInvalid": "Tarih veya saat formatı hatalı.", "member.sending": "Gönderiliyor...", "member.bookingSuccess": "Rezervasyon gönderildi! Bonusunuz güncellendi.",
       "member.errorPrefix": "Hata: ", "member.saved": "Kaydedildi!",
-      "member.statusYuborildi": "Gönderildi", "member.statusTasdiqlandi": "Onaylandı", "member.statusBajarildi": "Tamamlandı", "member.statusBekor": "İptal edildi"
+      "member.statusYuborildi": "Gönderildi", "member.statusTasdiqlandi": "Onaylandı", "member.statusBajarildi": "Tamamlandı", "member.statusBekor": "İptal edildi",
+      "member.lockTitle": "Profiliniz eksik",
+      "member.lockDesc": "Rezervasyon göndermeden önce \"Profil\" sekmesinde ad soyad ve telefon numaranızı (tüzel kişiler için şirket bilgilerini de) doldurun.",
+      "member.lockBtn": "Profili tamamla",
+      "member.lockBlockedSubmit": "Rezervasyon göndermeden önce lütfen profilinizi tamamlayın."
     },
     ru: {
       "nav.home": "Главная", "nav.admin": "Админ-панель", "nav.logout": "Выйти",
@@ -271,7 +290,11 @@
       "member.loadErrorPrefix": "Ошибка загрузки заказов: ",
       "member.dateTimeInvalid": "Неверный формат даты или времени.", "member.sending": "Отправка...", "member.bookingSuccess": "Заказ отправлен! Ваш бонус обновлён.",
       "member.errorPrefix": "Ошибка: ", "member.saved": "Сохранено!",
-      "member.statusYuborildi": "Отправлено", "member.statusTasdiqlandi": "Подтверждено", "member.statusBajarildi": "Выполнено", "member.statusBekor": "Отменено"
+      "member.statusYuborildi": "Отправлено", "member.statusTasdiqlandi": "Подтверждено", "member.statusBajarildi": "Выполнено", "member.statusBekor": "Отменено",
+      "member.lockTitle": "Ваш профиль не заполнен полностью",
+      "member.lockDesc": "Прежде чем отправить заказ, заполните имя и телефон (а для юрлиц — данные компании) во вкладке «Профиль».",
+      "member.lockBtn": "Заполнить профиль",
+      "member.lockBlockedSubmit": "Пожалуйста, заполните профиль полностью перед отправкой заказа."
     },
     ar: {
       "nav.home": "الرئيسية", "nav.admin": "لوحة الإدارة", "nav.logout": "تسجيل الخروج",
@@ -292,7 +315,11 @@
       "member.loadErrorPrefix": "خطأ في تحميل الحجوزات: ",
       "member.dateTimeInvalid": "صيغة التاريخ أو الوقت غير صحيحة.", "member.sending": "جارٍ الإرسال...", "member.bookingSuccess": "تم إرسال الحجز! تم تحديث رصيد مكافآتك.",
       "member.errorPrefix": "خطأ: ", "member.saved": "تم الحفظ!",
-      "member.statusYuborildi": "تم الإرسال", "member.statusTasdiqlandi": "تم التأكيد", "member.statusBajarildi": "تم التنفيذ", "member.statusBekor": "ملغى"
+      "member.statusYuborildi": "تم الإرسال", "member.statusTasdiqlandi": "تم التأكيد", "member.statusBajarildi": "تم التنفيذ", "member.statusBekor": "ملغى",
+      "member.lockTitle": "ملفك الشخصي غير مكتمل",
+      "member.lockDesc": "قبل إرسال الطلب، يرجى تعبئة الاسم الكامل ورقم الهاتف (وبيانات الشركة للحسابات الاعتبارية) في تبويب \"الملف الشخصي\".",
+      "member.lockBtn": "إكمال الملف الشخصي",
+      "member.lockBlockedSubmit": "يرجى إكمال ملفك الشخصي قبل إرسال الطلب."
     }
   };
   const T = initLangSwitcher(TRANSLATIONS);
@@ -302,6 +329,37 @@
 
   let currentUser = null;
   let currentAccountType = 'individual';
+  let latestProfile = null;
+
+  // ---------- Profil to'liq to'ldirilganmi? (yuborilgan zayavkalar shunga bog'liq) ----------
+  const profileLockNotice = document.getElementById('profileLockNotice');
+  const goToProfileBtn = document.getElementById('goToProfileBtn');
+
+  function computeIsProfileComplete(profile) {
+    if (!profile) return false;
+    const name = (profile.name || '').trim();
+    const phone = (profile.phone || '').trim();
+    if (!name || !phone) return false;
+    if (currentAccountType === 'legal') {
+      const company = (profile.companyName || '').trim();
+      const stir = (profile.stir || '').trim();
+      const contactPosition = (profile.contactPosition || '').trim();
+      if (!company || !stir || !contactPosition) return false;
+    }
+    return true;
+  }
+
+  function updateBookingLock() {
+    const complete = computeIsProfileComplete(latestProfile);
+    profileLockNotice.style.display = complete ? 'none' : 'flex';
+    bookingForm.classList.toggle('locked', !complete);
+    bookingSubmit.disabled = !complete;
+    return complete;
+  }
+
+  goToProfileBtn.addEventListener('click', () => {
+    document.querySelector('.cab-tab-btn[data-tab="profile"]').click();
+  });
 
   requireAuth(async (user) => {
     currentUser = user;
@@ -335,6 +393,8 @@
         document.getElementById('bonusAmount').textContent = (profile.bonus || 0).toLocaleString('ru-RU') + T.t('member.somSuffix');
       }
     }
+    latestProfile = profile;
+    updateBookingLock();
 
     loadBookings();
   });
@@ -405,6 +465,14 @@
 
   bookingForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    if (!updateBookingLock()) {
+      bookingStatus.textContent = T.t('member.lockBlockedSubmit');
+      bookingStatus.className = 'form-status error';
+      document.querySelector('.cab-tab-btn[data-tab="profile"]').click();
+      return;
+    }
+
     if (!bookingForm.reportValidity()) return;
 
     if (!DATE_RE.test(bkDateEl.value) || !TIME_RE.test(bkTimeEl.value)) {
@@ -518,6 +586,10 @@
         document.getElementById('greetingCompany').textContent = '🏢 ' + (updates.companyName || T.t('member.legalBadge'));
       }
       document.getElementById('greeting').textContent = T.t('member.greetingPrefix') + name + T.t('member.greetingSuffix');
+      latestProfile = Object.assign({}, latestProfile, updates);
+      updateBookingLock();
+      document.getElementById('bkName').value = name;
+      document.getElementById('bkPhone').value = phone;
       profileStatus.textContent = T.t('member.saved');
       profileStatus.className = 'form-status success';
     } catch (err) {

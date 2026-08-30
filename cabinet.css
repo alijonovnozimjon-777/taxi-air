@@ -157,6 +157,17 @@ header.cab-header{
 .form-status{font-size:13.5px; font-weight:700; min-height:18px; margin:4px 0 14px;}
 .form-status.success{color:var(--success);}
 .form-status.error{color:var(--danger);}
+
+.profile-lock-notice{
+  display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  background:rgba(240,182,74,.12); border:1px solid rgba(240,182,74,.4); border-radius:14px;
+  padding:16px 20px; margin-bottom:20px;
+}
+.profile-lock-notice div{max-width:520px;}
+.profile-lock-notice b{display:block; color:var(--text); font-weight:800; font-size:14.5px; margin-bottom:3px;}
+.profile-lock-notice span{display:block; color:var(--muted); font-size:13px; font-weight:600; line-height:1.5;}
+.profile-lock-notice .btn{flex:none; padding:10px 20px; font-size:13px;}
+.qb-grid.locked{opacity:.45; filter:grayscale(.4); pointer-events:none; user-select:none;}
 .auth-switch{margin-top:22px; text-align:center; font-size:14px; color:var(--muted);}
 .auth-switch a{color:var(--gold-text); font-weight:700;}
 
