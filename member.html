@@ -491,7 +491,9 @@
       baggage: document.getElementById('bkBaggage').value,
       car: document.getElementById('bkCar').value,
       phone: document.getElementById('bkPhone').value,
-      sign: document.getElementById('bkSign').value
+      sign: document.getElementById('bkSign').value,
+      accountType: currentAccountType,
+      company: currentAccountType === 'legal' ? ((latestProfile && latestProfile.companyName) || '') : ''
     };
 
     bookingSubmit.disabled = true;
