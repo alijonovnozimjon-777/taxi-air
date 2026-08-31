@@ -90,6 +90,9 @@ async function getUserProfile(uid) {
   return snap.exists ? snap.data() : null;
 }
 
+// Faqat JISMONIY SHAXS o'z profilini o'zi yangilashi uchun (member.html "Profil" bo'limi).
+// Yuridik hisoblar bu funksiyani chaqirmaydi — Firestore qoidalarida ham
+// yuridik hisoblarning o'z-o'zini yangilashi taqiqlangan (firestore.rules'ga qarang).
 async function updateUserProfile(uid, { name, phone, companyName, stir, contactPosition }) {
   const data = { name, phone };
   if (companyName !== undefined) data.companyName = companyName;
@@ -99,6 +102,21 @@ async function updateUserProfile(uid, { name, phone, companyName, stir, contactP
   if (auth.currentUser) {
     await auth.currentUser.updateProfile({ displayName: name });
   }
+}
+
+// ---------- ADMIN: yuridik mijoz profilini TO'LIQ tahrirlash (admin.html) ----------
+// Yuridik klentlar o'z ma'lumotlarini (F.I.O, telefon, kompaniya, STIR, lavozim)
+// o'zlari o'zgartira olmaydi — buni FAQAT admin panel orqali shu funksiya bilan
+// bajarish mumkin. Cheklov Firestore qoidalarida ham (isAdmin() + accountType=='legal')
+// mustahkamlangan, shuning uchun bu himoya faqat interfeysga emas, backendga ham tayanadi.
+async function updateLegalClientProfile(uid, { name, phone, companyName, stir, contactPosition }) {
+  const data = {};
+  if (name !== undefined) data.name = name;
+  if (phone !== undefined) data.phone = phone;
+  if (companyName !== undefined) data.companyName = companyName;
+  if (stir !== undefined) data.stir = stir;
+  if (contactPosition !== undefined) data.contactPosition = contactPosition;
+  await db.collection('users').doc(uid).update(data);
 }
 
 // ---------- BUYURTMALAR ----------

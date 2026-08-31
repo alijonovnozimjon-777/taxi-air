@@ -216,6 +216,43 @@
 
 </main>
 
+<!-- Yuridik mijoz ma'lumotlarini tahrirlash oynasi (faqat bosh admin uchun) -->
+<div class="modal-overlay" id="legalEditOverlay" style="display:none;">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 data-i18n="admin.legalEditTitle">🏢 Yuridik mijoz ma'lumotlarini tahrirlash</h3>
+      <button type="button" class="modal-close" id="legalEditClose" aria-label="Yopish">✕</button>
+    </div>
+    <form id="legalEditForm" class="qb-grid">
+      <div class="field">
+        <label data-i18n="reg.labelCompany">Kompaniya nomi</label>
+        <input type="text" id="editLegalCompany" required>
+      </div>
+      <div class="field">
+        <label data-i18n="reg.labelStir">STIR</label>
+        <input type="text" id="editLegalStir" inputmode="numeric">
+      </div>
+      <div class="field">
+        <label data-i18n="reg.labelContactName">Mas'ul shaxs F.I.O</label>
+        <input type="text" id="editLegalName" required>
+      </div>
+      <div class="field">
+        <label data-i18n="reg.labelContactPosition">Mas'ul shaxs lavozimi</label>
+        <input type="text" id="editLegalContactPosition">
+      </div>
+      <div class="field">
+        <label data-i18n="reg.labelPhone">Telefon</label>
+        <input type="tel" id="editLegalPhone" required>
+      </div>
+      <p class="form-status" id="legalEditStatus" style="grid-column:1/-1;"></p>
+      <div class="qb-actions">
+        <button type="submit" class="btn btn-gold" id="legalEditSaveBtn" data-i18n="member.save">Saqlash</button>
+        <button type="button" class="btn btn-outline" id="legalEditCancelBtn" data-i18n="admin.legalEditCancel">Bekor qilish</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
@@ -252,6 +289,7 @@
       "admin.custLegalNoBonus": "Bonus tizimi yo'q", "admin.custStirPrefix": "STIR: ",
       "admin.legalAddTitle": "🏢 Yuridik mijoz qo'shish", "admin.legalAddIntro": "Yuridik shaxslar saytda o'zlari ro'yxatdan o'ta olmaydi — hisobni shu yerdan siz yaratasiz, so'ng email va parolni mijozga bering.",
       "admin.legalGenPassword": "🎲 Tasodifiy parol", "admin.legalAddBtn": "Yuridik mijoz yaratish", "admin.legalAddSuccess": "Yuridik mijoz yaratildi! Email va parolni mijozga yetkazing.",
+      "admin.custEditBtn": "✏️ Tahrirlash", "admin.legalEditTitle": "🏢 Yuridik mijoz ma'lumotlarini tahrirlash", "admin.legalEditCancel": "Bekor qilish", "admin.legalEditSuccess": "Saqlandi!",
       "reg.labelContactName": "Mas'ul shaxs F.I.O", "reg.labelPhone": "Telefon", "reg.labelEmail": "Email", "reg.labelPassword": "Parol",
       "admin.adminsAddTitle": "➕ Yangi admin qo'shish", "admin.adminsIntro": "Qo'shilgan admin sizga teng huquqqa ega bo'ladi (buyurtmalar, bonuslar), lekin yangi admin qo'sha olmaydi — buni faqat siz qila olasiz.",
       "admin.adminEmail": "Email", "admin.adminAddedAt": "Qo'shilgan sana", "admin.adminAddedBy": "Kim qo'shdi", "admin.adminActions": "Amallar",
@@ -283,6 +321,7 @@
       "admin.custLegalNoBonus": "No bonus system", "admin.custStirPrefix": "Tax ID: ",
       "admin.legalAddTitle": "🏢 Add a legal client", "admin.legalAddIntro": "Legal entities can't self-register on the site — you create the account here, then give the email and password to the client.",
       "admin.legalGenPassword": "🎲 Random password", "admin.legalAddBtn": "Create legal client", "admin.legalAddSuccess": "Legal client created! Share the email and password with them.",
+      "admin.custEditBtn": "✏️ Edit", "admin.legalEditTitle": "🏢 Edit legal client details", "admin.legalEditCancel": "Cancel", "admin.legalEditSuccess": "Saved!",
       "reg.labelContactName": "Contact person full name", "reg.labelPhone": "Phone", "reg.labelEmail": "Email", "reg.labelPassword": "Password",
       "admin.adminsAddTitle": "➕ Add a new admin", "admin.adminsIntro": "A new admin gets equal rights to you (bookings, bonuses), but cannot add another admin — only you can.",
       "admin.adminEmail": "Email", "admin.adminAddedAt": "Added on", "admin.adminAddedBy": "Added by", "admin.adminActions": "Actions",
@@ -314,6 +353,7 @@
       "admin.custLegalNoBonus": "Bonus sistemi yok", "admin.custStirPrefix": "Vergi no: ",
       "admin.legalAddTitle": "🏢 Tüzel kişi müşteri ekle", "admin.legalAddIntro": "Tüzel kişiler sitede kendi kendine kayıt olamaz — hesabı buradan siz oluşturursunuz, ardından e-posta ve şifreyi müşteriye verirsiniz.",
       "admin.legalGenPassword": "🎲 Rastgele şifre", "admin.legalAddBtn": "Tüzel kişi oluştur", "admin.legalAddSuccess": "Tüzel kişi oluşturuldu! E-posta ve şifreyi müşteriyle paylaşın.",
+      "admin.custEditBtn": "✏️ Düzenle", "admin.legalEditTitle": "🏢 Tüzel kişi bilgilerini düzenle", "admin.legalEditCancel": "İptal", "admin.legalEditSuccess": "Kaydedildi!",
       "reg.labelContactName": "Yetkili kişi Ad Soyad", "reg.labelPhone": "Telefon", "reg.labelEmail": "E-posta", "reg.labelPassword": "Şifre",
       "admin.adminsAddTitle": "➕ Yeni yönetici ekle", "admin.adminsIntro": "Eklenen yönetici sizinle eşit haklara sahip olur (rezervasyonlar, bonuslar), ancak başka yönetici ekleyemez — bunu yalnızca siz yapabilirsiniz.",
       "admin.adminEmail": "E-posta", "admin.adminAddedAt": "Eklenme tarihi", "admin.adminAddedBy": "Kim ekledi", "admin.adminActions": "İşlemler",
@@ -345,6 +385,7 @@
       "admin.custLegalNoBonus": "Без бонусной системы", "admin.custStirPrefix": "ИНН: ",
       "admin.legalAddTitle": "🏢 Добавить юр. лицо", "admin.legalAddIntro": "Юридические лица не могут зарегистрироваться сами — вы создаёте аккаунт здесь, затем передаёте email и пароль клиенту.",
       "admin.legalGenPassword": "🎲 Случайный пароль", "admin.legalAddBtn": "Создать юр. лицо", "admin.legalAddSuccess": "Юридическое лицо создано! Передайте email и пароль клиенту.",
+      "admin.custEditBtn": "✏️ Изменить", "admin.legalEditTitle": "🏢 Редактировать данные юр. лица", "admin.legalEditCancel": "Отмена", "admin.legalEditSuccess": "Сохранено!",
       "reg.labelContactName": "Ответственное лицо Ф.И.О", "reg.labelPhone": "Телефон", "reg.labelEmail": "Email", "reg.labelPassword": "Пароль",
       "admin.adminsAddTitle": "➕ Добавить нового администратора", "admin.adminsIntro": "Новый администратор получит равные с вами права (заказы, бонусы), но не сможет добавлять других администраторов — это можете только вы.",
       "admin.adminEmail": "Email", "admin.adminAddedAt": "Дата добавления", "admin.adminAddedBy": "Кто добавил", "admin.adminActions": "Действия",
@@ -376,6 +417,7 @@
       "admin.custLegalNoBonus": "لا يوجد نظام مكافآت", "admin.custStirPrefix": "الرقم الضريبي: ",
       "admin.legalAddTitle": "🏢 إضافة عميل اعتباري", "admin.legalAddIntro": "لا يمكن للشخصيات الاعتبارية التسجيل بأنفسها في الموقع — أنشئ الحساب من هنا، ثم سلّم البريد الإلكتروني وكلمة المرور للعميل.",
       "admin.legalGenPassword": "🎲 كلمة مرور عشوائية", "admin.legalAddBtn": "إنشاء عميل اعتباري", "admin.legalAddSuccess": "تم إنشاء العميل الاعتباري! شارك البريد الإلكتروني وكلمة المرور مع العميل.",
+      "admin.custEditBtn": "✏️ تعديل", "admin.legalEditTitle": "🏢 تعديل بيانات العميل الاعتباري", "admin.legalEditCancel": "إلغاء", "admin.legalEditSuccess": "تم الحفظ!",
       "reg.labelContactName": "اسم الشخص المسؤول", "reg.labelPhone": "الهاتف", "reg.labelEmail": "البريد الإلكتروني", "reg.labelPassword": "كلمة المرور",
       "admin.adminsAddTitle": "➕ إضافة مسؤول جديد", "admin.adminsIntro": "سيحصل المسؤول الجديد على نفس صلاحياتك (الحجوزات، المكافآت)، لكنه لن يستطيع إضافة مسؤول آخر — أنت فقط من يستطيع ذلك.",
       "admin.adminEmail": "البريد الإلكتروني", "admin.adminAddedAt": "تاريخ الإضافة", "admin.adminAddedBy": "أضافه", "admin.adminActions": "إجراءات",
@@ -706,9 +748,13 @@
       const bonusOrActionsCell = isLegal
         ? `<span style="color:var(--muted);">—</span>`
         : `<b style="color:var(--gold-text);">${Number(u.bonus || 0).toLocaleString('ru-RU')}${T.t('member.somSuffix')}</b>`;
+      const legalEditBtnHtml = currentUserIsSuperAdmin
+        ? `<button type="button" class="btn btn-gold" style="padding:7px 12px; font-size:12px; margin-left:10px;" data-action="edit">${T.t('admin.custEditBtn')}</button>`
+        : '';
       const amountReasonActionsCell = isLegal
         ? `<td colspan="3" style="color:var(--muted); font-style:italic;">${T.t('admin.custLegalNoBonus')}
              <button type="button" class="btn btn-outline" style="padding:7px 12px; font-size:12px; margin-left:10px;" data-action="history">${isOpen ? T.t('admin.custHistoryHide') : T.t('admin.custHistory')}</button>
+             ${legalEditBtnHtml}
            </td>`
         : `<td><input type="number" class="admin-price-input" style="width:110px;" data-field="amount" placeholder="${T.t('admin.custAmountPlaceholder')}"></td>
            <td><input type="text" class="admin-price-input" style="width:150px;" data-field="reason" placeholder="${T.t('admin.custReasonPlaceholder')}"></td>
@@ -744,8 +790,73 @@
         if (openHistoryFor.has(uid)) openHistoryFor.delete(uid); else openHistoryFor.add(uid);
         renderCustomersTable();
       });
+      const editBtn = row.querySelector('[data-action="edit"]');
+      if (editBtn) editBtn.addEventListener('click', () => openLegalEditModal(user));
     });
   }
+
+  // ================= YURIDIK MIJOZ MA'LUMOTLARINI TAHRIRLASH (faqat bosh admin) =================
+  // Bu forma FAQAT currentUserIsSuperAdmin bo'lganda ko'rinadigan tugma orqali ochiladi.
+  // Saqlash updateLegalClientProfile() orqali bajariladi — Firestore qoidalarida ham
+  // bu yozuv FAQAT bosh admin uchun ruxsat etilgan (firestore.rules'ga qarang), shuning
+  // uchun bu himoya interfeysga emas, backendga tayanadi.
+  const legalEditOverlay = document.getElementById('legalEditOverlay');
+  const legalEditForm = document.getElementById('legalEditForm');
+  const legalEditStatus = document.getElementById('legalEditStatus');
+  const legalEditSaveBtn = document.getElementById('legalEditSaveBtn');
+  let editingLegalUid = null;
+
+  function openLegalEditModal(user) {
+    if (!user) return;
+    editingLegalUid = user.id;
+    document.getElementById('editLegalCompany').value = user.companyName || '';
+    document.getElementById('editLegalStir').value = user.stir || '';
+    document.getElementById('editLegalName').value = user.name || '';
+    document.getElementById('editLegalContactPosition').value = user.contactPosition || '';
+    document.getElementById('editLegalPhone').value = user.phone || '';
+    legalEditStatus.textContent = '';
+    legalEditStatus.className = 'form-status';
+    legalEditOverlay.style.display = 'flex';
+  }
+
+  function closeLegalEditModal() {
+    legalEditOverlay.style.display = 'none';
+    editingLegalUid = null;
+  }
+
+  document.getElementById('legalEditClose').addEventListener('click', closeLegalEditModal);
+  document.getElementById('legalEditCancelBtn').addEventListener('click', closeLegalEditModal);
+  legalEditOverlay.addEventListener('click', (e) => {
+    if (e.target === legalEditOverlay) closeLegalEditModal();
+  });
+
+  legalEditForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!editingLegalUid) return;
+    legalEditSaveBtn.disabled = true;
+    legalEditStatus.textContent = '';
+    try {
+      const updates = {
+        companyName: document.getElementById('editLegalCompany').value.trim(),
+        stir: document.getElementById('editLegalStir').value.trim(),
+        name: document.getElementById('editLegalName').value.trim(),
+        contactPosition: document.getElementById('editLegalContactPosition').value.trim(),
+        phone: document.getElementById('editLegalPhone').value.trim()
+      };
+      await updateLegalClientProfile(editingLegalUid, updates);
+      const idx = allUsersCache.findIndex(u => u.id === editingLegalUid);
+      if (idx !== -1) allUsersCache[idx] = Object.assign({}, allUsersCache[idx], updates);
+      legalEditStatus.textContent = T.t('admin.legalEditSuccess');
+      legalEditStatus.className = 'form-status success';
+      renderCustomersTable();
+      setTimeout(closeLegalEditModal, 700);
+    } catch (err) {
+      legalEditStatus.textContent = T.t('admin.saveError') + err.message;
+      legalEditStatus.className = 'form-status error';
+    } finally {
+      legalEditSaveBtn.disabled = false;
+    }
+  });
 
   async function doAdjust(uid, user, amountInput, reasonInput, sign) {
     const raw = Number(amountInput.value);

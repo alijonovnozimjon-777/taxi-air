@@ -153,6 +153,12 @@
   <section class="cab-panel" id="panel-profile">
     <div class="card">
       <h3 data-i18n="member.profileTitle">Profil ma'lumotlari</h3>
+      <div class="profile-lock-notice" id="legalProfileLockNotice" style="display:none;">
+        <div>
+          <b data-i18n="member.legalLockTitle">Bu ma'lumotlarni faqat administrator o'zgartira oladi</b>
+          <span data-i18n="member.legalLockDesc">Xavfsizlik maqsadida yuridik hisob ma'lumotlarini (F.I.O, telefon, kompaniya nomi, STIR, lavozim) faqat bosh administrator kirita/o'zgartira oladi. O'zgartirish kerak bo'lsa, administratorga murojaat qiling.</span>
+        </div>
+      </div>
       <form id="profileForm">
         <div class="field">
           <label data-i18n="reg.labelName">Ism Familiya</label>
@@ -219,7 +225,9 @@
       "member.lockTitle": "Profilingiz to'liq emas",
       "member.lockDesc": "Buyurtma yuborishdan oldin \"Profil\" bo'limida Ism-Familiya va telefon raqamingizni (yuridik shaxs uchun kompaniya ma'lumotlarini ham) to'ldiring.",
       "member.lockBtn": "Profilni to'ldirish",
-      "member.lockBlockedSubmit": "Buyurtma yuborishdan oldin profilingizni to'liq to'ldiring."
+      "member.lockBlockedSubmit": "Buyurtma yuborishdan oldin profilingizni to'liq to'ldiring.",
+      "member.legalLockTitle": "Bu ma'lumotlarni faqat administrator o'zgartira oladi",
+      "member.legalLockDesc": "Xavfsizlik maqsadida yuridik hisob ma'lumotlarini (F.I.O, telefon, kompaniya nomi, STIR, lavozim) faqat bosh administrator kirita/o'zgartira oladi. O'zgartirish kerak bo'lsa, administratorga murojaat qiling."
     },
     en: {
       "nav.home": "Home", "nav.admin": "Admin panel", "nav.logout": "Logout",
@@ -244,7 +252,9 @@
       "member.lockTitle": "Your profile is incomplete",
       "member.lockDesc": "Before sending a booking, fill in your full name and phone number (and company details for legal accounts) in the \"Profile\" tab.",
       "member.lockBtn": "Complete profile",
-      "member.lockBlockedSubmit": "Please complete your profile before sending a booking."
+      "member.lockBlockedSubmit": "Please complete your profile before sending a booking.",
+      "member.legalLockTitle": "Only an administrator can change this information",
+      "member.legalLockDesc": "For security reasons, legal account details (full name, phone, company name, tax ID, position) can only be entered or changed by the super administrator. Contact the administrator if a change is needed."
     },
     tr: {
       "nav.home": "Ana Sayfa", "nav.admin": "Admin panel", "nav.logout": "Çıkış",
@@ -269,7 +279,9 @@
       "member.lockTitle": "Profiliniz eksik",
       "member.lockDesc": "Rezervasyon göndermeden önce \"Profil\" sekmesinde ad soyad ve telefon numaranızı (tüzel kişiler için şirket bilgilerini de) doldurun.",
       "member.lockBtn": "Profili tamamla",
-      "member.lockBlockedSubmit": "Rezervasyon göndermeden önce lütfen profilinizi tamamlayın."
+      "member.lockBlockedSubmit": "Rezervasyon göndermeden önce lütfen profilinizi tamamlayın.",
+      "member.legalLockTitle": "Bu bilgileri yalnızca yönetici değiştirebilir",
+      "member.legalLockDesc": "Güvenlik nedeniyle tüzel kişi hesap bilgilerini (ad soyad, telefon, şirket adı, vergi no, unvan) yalnızca baş yönetici girebilir/değiştirebilir. Değişiklik gerekiyorsa yöneticiyle iletişime geçin."
     },
     ru: {
       "nav.home": "Главная", "nav.admin": "Админ-панель", "nav.logout": "Выйти",
@@ -294,7 +306,9 @@
       "member.lockTitle": "Ваш профиль не заполнен полностью",
       "member.lockDesc": "Прежде чем отправить заказ, заполните имя и телефон (а для юрлиц — данные компании) во вкладке «Профиль».",
       "member.lockBtn": "Заполнить профиль",
-      "member.lockBlockedSubmit": "Пожалуйста, заполните профиль полностью перед отправкой заказа."
+      "member.lockBlockedSubmit": "Пожалуйста, заполните профиль полностью перед отправкой заказа.",
+      "member.legalLockTitle": "Эти данные может изменить только администратор",
+      "member.legalLockDesc": "В целях безопасности данные юридического аккаунта (ФИО, телефон, название компании, ИНН, должность) может вносить/изменять только главный администратор. При необходимости изменений обратитесь к администратору."
     },
     ar: {
       "nav.home": "الرئيسية", "nav.admin": "لوحة الإدارة", "nav.logout": "تسجيل الخروج",
@@ -319,7 +333,9 @@
       "member.lockTitle": "ملفك الشخصي غير مكتمل",
       "member.lockDesc": "قبل إرسال الطلب، يرجى تعبئة الاسم الكامل ورقم الهاتف (وبيانات الشركة للحسابات الاعتبارية) في تبويب \"الملف الشخصي\".",
       "member.lockBtn": "إكمال الملف الشخصي",
-      "member.lockBlockedSubmit": "يرجى إكمال ملفك الشخصي قبل إرسال الطلب."
+      "member.lockBlockedSubmit": "يرجى إكمال ملفك الشخصي قبل إرسال الطلب.",
+      "member.legalLockTitle": "يمكن للمسؤول فقط تغيير هذه المعلومات",
+      "member.legalLockDesc": "لأسباب أمنية، لا يمكن إدخال أو تغيير بيانات الحساب الاعتباري (الاسم الكامل، الهاتف، اسم الشركة، الرقم الضريبي، المنصب) إلا من قبل المسؤول الرئيسي. تواصل مع الإدارة إذا كنت بحاجة إلى تغيير."
     }
   };
   const T = initLangSwitcher(TRANSLATIONS);
@@ -389,6 +405,15 @@
         const companyEl = document.getElementById('greetingCompany');
         companyEl.style.display = '';
         companyEl.textContent = '🏢 ' + (profile.companyName || T.t('member.legalBadge'));
+
+        // Yuridik hisob o'z profilini o'zi o'zgartira olmaydi — barcha maydonlar
+        // faqat o'qish uchun qulflanadi (Firestore qoidalarida ham mustahkamlangan).
+        ['pfName', 'pfPhone', 'pfCompany', 'pfStir', 'pfContactPosition'].forEach((id) => {
+          document.getElementById(id).disabled = true;
+        });
+        document.getElementById('legalProfileLockNotice').style.display = 'flex';
+        profileSubmit.disabled = true;
+        profileSubmit.style.display = 'none';
       } else {
         document.getElementById('bonusAmount').textContent = (profile.bonus || 0).toLocaleString('ru-RU') + T.t('member.somSuffix');
       }
@@ -572,21 +597,16 @@
 
   profileForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    // Yuridik hisob o'z profilini o'zi o'zgartira olmaydi — bu Firestore qoidalarida
+    // ham taqiqlangan, shu yerda ham qo'shimcha himoya sifatida qaytarib yuboramiz.
+    if (currentAccountType === 'legal') return;
     profileSubmit.disabled = true;
     profileStatus.textContent = '';
     try {
       const name = document.getElementById('pfName').value.trim();
       const phone = document.getElementById('pfPhone').value.trim();
       const updates = { name, phone };
-      if (currentAccountType === 'legal') {
-        updates.companyName = document.getElementById('pfCompany').value.trim();
-        updates.stir = document.getElementById('pfStir').value.trim();
-        updates.contactPosition = document.getElementById('pfContactPosition').value.trim();
-      }
       await updateUserProfile(currentUser.uid, updates);
-      if (currentAccountType === 'legal') {
-        document.getElementById('greetingCompany').textContent = '🏢 ' + (updates.companyName || T.t('member.legalBadge'));
-      }
       document.getElementById('greeting').textContent = T.t('member.greetingPrefix') + name + T.t('member.greetingSuffix');
       latestProfile = Object.assign({}, latestProfile, updates);
       updateBookingLock();
